@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Aldara Capital — Demo</title>
 <meta name="description" content="Aldara Capital — a demo / placeholder build: a modern, animated, multi-page finance-firm site with a multi-step contact flow. All content is fictional." />
+<script>/* apply a saved Dark choice before paint, so the page doesn't flash Gold first */try{if(localStorage.getItem('aldara-palette')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
 <style>
-/* ===================== TOKENS ===================== */
+/* ===================== TOKENS (Dark palette — toggled on; Gold default is further down) ===================== */
 :root{
   --bg:#07080d; --bg-2:#0a0c13; --surface:#10131e; --surface-2:#161a28;
   --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
@@ -298,29 +299,30 @@ footer{ border-top:1px solid var(--line); padding:4rem 0 2rem; background:var(--
 .theme-toggle:hover{ border-color:var(--gold); color:var(--text); }
 .tt-dot{ width:12px; height:12px; border-radius:50%; background:linear-gradient(135deg,var(--gold-2),var(--gold)); box-shadow:0 0 0 2px rgba(201,162,75,.2); }
 
-/* Light "Corporate" palette — warm ivory + gold/bronze */
-html[data-theme="light"]{
+/* Gold palette — warm ivory + gold/bronze. DEFAULT: applies unless html has data-theme="dark".
+   The :root tokens at the top of the file are the Dark palette (used when toggled). */
+html:not([data-theme="dark"]){
   --bg:#f6f2ea; --bg-2:#efe8db; --surface:#fffdf8; --surface-2:#f4eee2;
   --line:rgba(58,44,18,.12); --line-2:rgba(58,44,18,.20);
   --text:#221c12; --muted:#6a5e4b; --muted-2:#9a8d77;
   --gold:#9a7636; --gold-2:#c2a05c; --cool:#b08a4e;
 }
-html[data-theme="light"] body::before{ opacity:.02; }
-html[data-theme="light"] .tt-dot{ box-shadow:0 0 0 2px rgba(154,118,54,.22); }
-html[data-theme="light"] header.nav.scrolled{ background:rgba(246,242,234,.84); border-bottom-color:var(--line); }
-html[data-theme="light"] .btn-primary{ color:#fdfaf3; }
-html[data-theme="light"] .brand .mark{ color:#fdfaf3; }
-html[data-theme="light"] .orb.a{ background:radial-gradient(circle at 30% 30%,rgba(176,138,70,.28),transparent 70%); }
-html[data-theme="light"] .orb.b{ background:radial-gradient(circle at 60% 40%,rgba(201,170,110,.24),transparent 70%); }
-html[data-theme="light"] .orb.c{ background:radial-gradient(circle at 50% 50%,rgba(210,190,150,.26),transparent 70%); }
-html[data-theme="light"] .ph-orb.one{ background:radial-gradient(circle at 40% 40%,rgba(176,138,70,.22),transparent 70%); }
-html[data-theme="light"] .ph-orb.two{ background:radial-gradient(circle at 50% 50%,rgba(201,170,110,.2),transparent 70%); }
-html[data-theme="light"] .visual{ background:linear-gradient(160deg,#f1ebdf,#e6dcc9); }
-html[data-theme="light"] .visual::before{ background:radial-gradient(circle at 80% 15%,rgba(154,118,54,.18),transparent 55%); }
-html[data-theme="light"] .post .thumb{ background:linear-gradient(135deg,#f1ebdf,#e6dcc9); }
-html[data-theme="light"] .featured .fthumb{ background:linear-gradient(140deg,#f1ebdf,#e6dcc9); }
-html[data-theme="light"] .bar.mut{ background:linear-gradient(#e7ddc9,#d3c5a6); }
-html[data-theme="light"] .member .avatar{ color:#fdfaf3; }
+html:not([data-theme="dark"]) body::before{ opacity:.02; }
+html:not([data-theme="dark"]) .tt-dot{ box-shadow:0 0 0 2px rgba(154,118,54,.22); }
+html:not([data-theme="dark"]) header.nav.scrolled{ background:rgba(246,242,234,.84); border-bottom-color:var(--line); }
+html:not([data-theme="dark"]) .btn-primary{ color:#fdfaf3; }
+html:not([data-theme="dark"]) .brand .mark{ color:#fdfaf3; }
+html:not([data-theme="dark"]) .orb.a{ background:radial-gradient(circle at 30% 30%,rgba(176,138,70,.28),transparent 70%); }
+html:not([data-theme="dark"]) .orb.b{ background:radial-gradient(circle at 60% 40%,rgba(201,170,110,.24),transparent 70%); }
+html:not([data-theme="dark"]) .orb.c{ background:radial-gradient(circle at 50% 50%,rgba(210,190,150,.26),transparent 70%); }
+html:not([data-theme="dark"]) .ph-orb.one{ background:radial-gradient(circle at 40% 40%,rgba(176,138,70,.22),transparent 70%); }
+html:not([data-theme="dark"]) .ph-orb.two{ background:radial-gradient(circle at 50% 50%,rgba(201,170,110,.2),transparent 70%); }
+html:not([data-theme="dark"]) .visual{ background:linear-gradient(160deg,#f1ebdf,#e6dcc9); }
+html:not([data-theme="dark"]) .visual::before{ background:radial-gradient(circle at 80% 15%,rgba(154,118,54,.18),transparent 55%); }
+html:not([data-theme="dark"]) .post .thumb{ background:linear-gradient(135deg,#f1ebdf,#e6dcc9); }
+html:not([data-theme="dark"]) .featured .fthumb{ background:linear-gradient(140deg,#f1ebdf,#e6dcc9); }
+html:not([data-theme="dark"]) .bar.mut{ background:linear-gradient(#e7ddc9,#d3c5a6); }
+html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
 /* responsive */
 @media (max-width:980px){
@@ -354,7 +356,7 @@ html[data-theme="light"] .member .avatar{ color:#fdfaf3; }
       <a href="#insights" data-route="insights">Insights</a>
     </nav>
     <div class="nav-cta">
-      <button class="theme-toggle" id="themeToggle" title="Switch palette" aria-label="Switch palette"><span class="tt-dot"></span><span id="ttLabel">Gold</span></button>
+      <button class="theme-toggle" id="themeToggle" title="Switch to dark palette" aria-label="Switch to dark palette"><span class="tt-dot"></span><span id="ttLabel">Gold</span></button>
       <a href="#contact" class="btn btn-ghost">Investor login</a>
       <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
       <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span></button>
@@ -805,17 +807,22 @@ html[data-theme="light"] .member .avatar{ color:#fdfaf3; }
   document.getElementById('restartBtn').addEventListener('click', resetWizard);
 
   /* ---------- PALETTE TOGGLE ---------- */
-  var THEME_KEY='aldara-theme';
+  /* Gold is the default; Dark is the toggled palette. New key so old saved choices don't override the new default. */
+  var THEME_KEY='aldara-palette';
   var themeToggle=document.getElementById('themeToggle'), ttLabel=document.getElementById('ttLabel');
   function applyTheme(t){
-    if(t==='light'){ document.documentElement.setAttribute('data-theme','light'); ttLabel.textContent='Corporate'; }
-    else { document.documentElement.removeAttribute('data-theme'); ttLabel.textContent='Gold'; }
+    var dark=(t==='dark');
+    if(dark) document.documentElement.setAttribute('data-theme','dark');
+    else document.documentElement.removeAttribute('data-theme');
+    ttLabel.textContent=dark?'Dark':'Gold';
+    var hint=dark?'Switch to gold palette':'Switch to dark palette';
+    themeToggle.title=hint; themeToggle.setAttribute('aria-label',hint);
   }
-  var savedTheme='dark';
-  try{ savedTheme=localStorage.getItem(THEME_KEY)||'dark'; }catch(e){}
+  var savedTheme='gold';
+  try{ savedTheme=localStorage.getItem(THEME_KEY)||'gold'; }catch(e){}
   applyTheme(savedTheme);
   themeToggle.addEventListener('click', function(){
-    var now=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    var now=document.documentElement.getAttribute('data-theme')==='dark'?'gold':'dark';
     applyTheme(now);
     try{ localStorage.setItem(THEME_KEY, now); }catch(e){}
   });
