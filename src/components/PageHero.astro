@@ -1,0 +1,39 @@
+---
+/* The "first view" at the top of every inner page.
+   The page title goes between the tags; optional buttons go in slot="actions".
+     <PageHero eyebrow="Approach" lead="…" meta={[{ value: '3', label: 'Principles' }]}>
+       Judgment, alignment, <span class="serif-em">time</span>.
+     </PageHero>
+   Styles: src/styles/components/_page-hero.scss */
+
+interface Props {
+  eyebrow: string;
+  lead: string;
+  /** Small figures under the intro, e.g. { value: '7yr', label: 'Avg. hold' } */
+  meta?: { value: string; label: string }[];
+  /** Text next to the line at the bottom of the hero. */
+  hint?: string;
+  /** Shorter hero (used on Contact and 404). */
+  compact?: boolean;
+}
+
+const { eyebrow, lead, meta = [], hint = 'Keep scrolling', compact = false } = Astro.props;
+const hasActions = Astro.slots.has('actions');
+---
+<section class:list={['page-hero', { compact }]}>
+  <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
+  <div class="wrap ph-load">
+    <span class="eyebrow">{eyebrow}</span>
+    <h1><slot /></h1>
+    <p class="ph-lead">{lead}</p>
+    {meta.length > 0 && (
+      <div class="ph-meta">
+        {meta.map((m) => (
+          <div class="m"><div class="mv">{m.value}</div><div class="ml">{m.label}</div></div>
+        ))}
+      </div>
+    )}
+    {hasActions && <div class="ph-actions"><slot name="actions" /></div>}
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span>{hint}</span><span class="ln"></span></div>
+</section>

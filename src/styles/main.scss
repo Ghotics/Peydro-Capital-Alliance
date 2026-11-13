@@ -1,0 +1,23 @@
+/* Global styles — loaded on every page by src/layouts/BaseLayout.astro.
+   Styles used by one page only live in styles/pages/<page>.scss and are imported by that page.
+
+   abstracts/   Sass-only helpers (breakpoints, mixins) — no CSS output
+   base/        tokens (colours, fonts), reset, typography, layout helpers, shared motion
+   components/  pieces used on several pages (header, menu, footer, buttons, cards…)
+   pages/       one file per page */
+
+@use 'base/tokens';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/layout';
+@use 'base/motion';
+
+@use 'components/buttons';
+@use 'components/theme-toggle';
+@use 'components/header';
+@use 'components/mobile-menu';
+@use 'components/footer';
+@use 'components/page-hero';
+@use 'components/cap-grid';
+@use 'components/statement';
+@use 'components/split';
