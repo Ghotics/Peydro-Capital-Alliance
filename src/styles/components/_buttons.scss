@@ -1,0 +1,58 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: .85em 1.5em;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .92rem;
+  transition: transform .4s var(--ease), background .4s var(--ease), color .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+
+  .arrow {
+    transition: transform .4s var(--ease);
+  }
+
+  &:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: var(--on-gold);
+  box-shadow: 0 10px 30px -12px rgba(201, 162, 75, .6);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -14px rgba(201, 162, 75, .7);
+  }
+}
+
+.btn-ghost {
+  border: 1px solid var(--line-2);
+  color: var(--text);
+
+  &:hover {
+    background: rgba(255, 255, 255, .04);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+}
+
+/* inline "Explore our approach →" style link */
+.textlink {
+  color: var(--gold-2);
+  font-weight: 600;
+  font-size: .92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+
+  .arrow {
+    transition: transform .35s var(--ease);
+  }
+
+  &:hover .arrow {
+    transform: translateX(4px);
+  }
+}

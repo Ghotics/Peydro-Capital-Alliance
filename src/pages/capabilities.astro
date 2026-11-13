@@ -1,0 +1,63 @@
+---
+/* Capabilities — /capabilities */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import '../styles/pages/capabilities.scss';
+
+const faq = [
+  { q: 'What size businesses do you back?', a: 'Typically companies with a few million to a few hundred million in revenue — the lower-middle market, where a hands-on partner makes the biggest difference. (Illustrative, demo content.)' },
+  { q: 'Do you take control or minority stakes?', a: 'Both. Buyouts are control positions; growth equity and co-investments are often minority. We shape it around what the business needs.' },
+  { q: 'How long do you hold?', a: "Longer than most — around seven years on average, and we're happy to hold great businesses well beyond a typical fund cycle." },
+  { q: 'What happens after you invest?', a: 'We agree a short list of priorities with management and bring operators in alongside — support, not interference.' },
+];
+---
+<BaseLayout title="Capabilities" description="Six mandates, one philosophy: buyout, growth equity, private credit, real assets, co-investment and advisory.">
+  <PageHero
+    eyebrow="Capabilities"
+    lead="Six mandates, one philosophy — flexible structures matched to the moment a business is actually in."
+    meta={[{ value: '6', label: 'Mandates' }, { value: '4', label: 'Focus sectors' }, { value: '$4.2B', label: 'Deployed' }]}
+  >Where we put <span class="serif-em">capital</span> to work</PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="cap-grid">
+        <div class="cap reveal"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M4 10h16M10 10v10" /></svg><h3>Buyout</h3><p>Control positions in profitable, founder-owned companies at the point of transition.</p></div>
+        <div class="cap reveal" data-delay="1"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M5 10l7-7 7 7" /></svg><h3>Growth equity</h3><p>Minority capital for businesses with proven models and a clear path to scale.</p></div>
+        <div class="cap reveal" data-delay="2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18M7 7l-4 5 4 5M17 7l4 5-4 5" /></svg><h3>Private credit</h3><p>Flexible, patient debt where banks won't bend and sponsors want certainty.</p></div>
+        <div class="cap reveal"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V8l8-5 8 5v12M4 20h16M9 20v-6h6v6" /></svg><h3>Real assets</h3><p>Durable, cash-generative assets with inflation-linked, long-dated characteristics.</p></div>
+        <div class="cap reveal" data-delay="1"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="5" /><path d="M15 15a5 5 0 1 0 0-10M14 20a7 7 0 0 0-14 0" /></svg><h3>Co-investment</h3><p>Side-by-side capital for partners who want deeper exposure to the deals they know.</p></div>
+        <div class="cap reveal" data-delay="2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a9 9 0 1 0 9 9M12 3v9l6-6" /></svg><h3>Advisory</h3><p>Independent counsel on capital structure, succession and strategic options.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top alt-bg">
+    <div class="wrap">
+      <div class="split reveal">
+        <div class="copy">
+          <span class="eyebrow">How we structure</span>
+          <h2>Built around the business, not the template</h2>
+          <p>Every mandate can flex — equity, debt, or a blend — so the structure fits the company rather than forcing the company to fit the structure.</p>
+          <p><a href="/contact" class="textlink">Talk through a situation <span class="arrow">→</span></a></p>
+        </div>
+        <div class="visual" aria-hidden="true"><div class="bar mut" style="--h:40%"></div><div class="bar" style="--h:70%"></div><div class="bar mut" style="--h:55%"></div><div class="bar" style="--h:88%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="title">Common questions</h2></div>
+      <div class="acc" id="acc">
+        {faq.map((item) => (
+          <div class="acc-item">
+            <button class="acc-q" type="button" aria-expanded="false">{item.q} <span class="pm" aria-hidden="true">+</span></button>
+            <div class="acc-a"><p>{item.a}</p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/capabilities';</script>
+</BaseLayout>

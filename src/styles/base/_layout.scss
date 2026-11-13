@@ -1,0 +1,76 @@
+@use '../abstracts' as *;
+
+/* film-grain overlay over the whole site */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--noise-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* standard page section */
+.sec {
+  padding: clamp(5rem, 12vh, 9rem) 0;
+}
+
+.sec-head {
+  max-width: 640px;
+  margin-bottom: 3.5rem;
+}
+
+/* helpers used on sections */
+.flush-top {
+  padding-top: 0;
+}
+
+.alt-bg {
+  background: var(--bg-2);
+}
+
+.mt-link {
+  margin-top: 1.4rem;
+}
+
+/* hidden link for keyboard users, appears on Tab */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 200;
+  padding: .6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  color: var(--text);
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
+/* soft fade between pages (browsers without support simply load the page normally) */
+@view-transition {
+  navigation: auto;
+}
+
+@include reduced-motion {
+  @view-transition {
+    navigation: none;
+  }
+}

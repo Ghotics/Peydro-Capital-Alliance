@@ -1,0 +1,165 @@
+@use '../abstracts' as *;
+
+/* Phone/tablet menu (components/Header.astro, scripts/global/menu.ts).
+   Side drawer on tablets, full screen on phones. Opened by adding .menu-open to <body>. */
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 380px);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  padding: 92px var(--pad) calc(1.6rem + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-2);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .5s var(--ease), visibility 0s linear .5s;
+
+  @include down($bp-sm) {
+    width: 100%;
+    border-left: none;
+    padding-top: 76px;
+  }
+}
+
+/* dimmed background behind the tablet drawer */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, .5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s var(--ease);
+}
+
+.mm-links {
+  display: flex;
+  flex-direction: column;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 6.4vw, 1.8rem);
+    line-height: 1.2;
+    color: var(--text);
+    opacity: 0;
+    transform: translateX(18px);
+    transition: opacity .45s var(--ease-out), transform .45s var(--ease-out), color .3s var(--ease);
+
+    &:hover,
+    &.active {
+      color: var(--gold);
+
+      .mm-arrow {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+
+  .mm-i {
+    font-family: var(--font-ui);
+    font-size: .7rem;
+    letter-spacing: .14em;
+    color: var(--muted-2);
+    min-width: 1.7rem;
+  }
+
+  .mm-arrow {
+    margin-left: auto;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease);
+  }
+}
+
+.mm-foot {
+  margin-top: auto;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  opacity: 0;
+  transition: opacity .45s var(--ease-out);
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+}
+
+.mm-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: .78rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.mm-mail {
+  font-size: .85rem;
+  color: var(--muted-2);
+  text-align: center;
+  margin-top: .2rem;
+}
+
+/* ---------- open state ---------- */
+body.menu-open {
+  overflow: hidden;
+
+  header.nav,
+  header.nav.scrolled {
+    background: var(--bg-2);
+    border-bottom-color: var(--line);
+    backdrop-filter: none;
+  }
+
+  .mobile-menu {
+    transform: none;
+    visibility: visible;
+    transition: transform .5s var(--ease), visibility 0s;
+  }
+
+  .scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mm-links a {
+    opacity: 1;
+    transform: none;
+
+    /* links slide in one after another (opacity, transform, colour) */
+    &:nth-child(1) { transition-delay: .08s, .08s, 0s; }
+    &:nth-child(2) { transition-delay: .13s, .13s, 0s; }
+    &:nth-child(3) { transition-delay: .18s, .18s, 0s; }
+    &:nth-child(4) { transition-delay: .23s, .23s, 0s; }
+    &:nth-child(5) { transition-delay: .28s, .28s, 0s; }
+  }
+
+  .mm-foot {
+    opacity: 1;
+    transition-delay: .3s;
+  }
+}

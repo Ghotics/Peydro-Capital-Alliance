@@ -1,0 +1,84 @@
+@use '../abstracts' as *;
+
+/* Text on one side, animated bar chart on the other (Home, Capabilities) */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+
+  .copy h2 {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    margin-bottom: 1rem;
+  }
+
+  .copy p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .copy p.note {
+    color: var(--muted-2);
+    font-size: .85rem;
+  }
+
+  @include down($bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* chart panel */
+.visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, var(--art-1), var(--art-2));
+  overflow: hidden;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 15%, rgba(154, 118, 54, .18), transparent 55%);
+  }
+
+  @include dark {
+    &::before {
+      background: radial-gradient(circle at 80% 15%, rgba(201, 162, 75, .25), transparent 55%);
+    }
+  }
+}
+
+/* bars grow to their --h height once the panel scrolls into view */
+.bar {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  height: 0;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(var(--gold-2), var(--gold));
+  transition: height 1.1s var(--ease-out);
+
+  &:nth-child(2) { transition-delay: .1s; }
+  &:nth-child(3) { transition-delay: .2s; }
+  &:nth-child(4) { transition-delay: .3s; }
+  &:nth-child(5) { transition-delay: .4s; }
+
+  &.mut {
+    background: linear-gradient(#e7ddc9, #d3c5a6);
+    opacity: .7;
+
+    @include dark {
+      background: linear-gradient(var(--surface), #2a2f42);
+    }
+  }
+
+  .reveal.in & {
+    height: var(--h);
+  }
+}

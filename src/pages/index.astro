@@ -1,0 +1,99 @@
+---
+/* Home — /  */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/pages/home.scss';
+
+/* key figures (placeholders) — the numbers count up when they scroll into view */
+const stats = [
+  { target: 4.2, decimals: 1, prefix: '$', suffix: 'B', label: 'Assets stewarded' },
+  { target: 38, decimals: 0, prefix: '', suffix: '+', label: 'Platform companies' },
+  { target: 7, decimals: 0, prefix: '', suffix: 'yr', label: 'Avg. hold period' },
+  { target: 100, decimals: 0, prefix: '', suffix: '%', label: 'Founder-led deals' },
+];
+
+const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfield', 'Stonebridge', 'Verano'];
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"><div class="orb a" data-depth="0.20"></div><div class="orb b" data-depth="0.12"></div><div class="orb c" data-depth="0.28"></div></div>
+    <div class="wrap hero-content">
+      <span class="eyebrow">Private Capital · Est. 2019</span>
+      <h1><span class="line"><span>Patient capital for</span></span><span class="line"><span>companies built <em class="serif-em">to last</em>.</span></span></h1>
+      <p class="intro">Peydro Capital Alliance partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.</p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
+        <a href="/approach" class="btn btn-ghost">Our approach</a>
+      </div>
+    </div>
+    <button class="scroll-cue" id="scrollCue" type="button"><span>Scroll</span><span class="dotline"></span></button>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <div class="stats-grid">
+        {stats.map((s, i) => (
+          <div class="stat reveal" data-delay={i || undefined}>
+            <div class="num" data-target={s.target} data-decimals={s.decimals} data-prefix={s.prefix}>{s.prefix}{s.target.toFixed(s.decimals)}<span class="suffix">{s.suffix}</span></div>
+            <div class="label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap reveal">
+      <p class="big">We believe the best businesses are <span class="hl">built slowly</span> — and that capital should have the patience to match.</p>
+      <p class="by">— The PCA investment team</p>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Approach</span>
+        <h2 class="title">We invest like owners, <span class="serif-em">not tourists</span>.</h2>
+        <p class="lead">What compounds is judgment, alignment and the willingness to stay in the room when a business is hard.</p>
+        <p class="mt-link"><a href="/approach" class="textlink">Explore our approach <span class="arrow">→</span></a></p>
+      </div>
+      <div class="cap-grid">
+        <div class="cap reveal"><div class="idx">01</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" /></svg><h3>Conviction over consensus</h3><p>Concentrated positions in businesses we understand deeply.</p></div>
+        <div class="cap reveal" data-delay="1"><div class="idx">02</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg><h3>A longer clock</h3><p>Returns measured in years, structured so time is an ally.</p></div>
+        <div class="cap reveal" data-delay="2"><div class="idx">03</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" /></svg><h3>Operating alongside</h3><p>Operators embedded with management on what moves the needle.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="split reveal">
+        <div class="copy">
+          <span class="eyebrow">Track record</span>
+          <h2>Compounding, not fireworks</h2>
+          <p>We'd rather own a steady grower for a decade than chase a quick multiple. Most of our value is created after year three — once the plan, the people and the patience line up.</p>
+          <p class="note">Illustrative — figures are fictional.</p>
+        </div>
+        <div class="visual" aria-hidden="true"><div class="bar" style="--h:38%"></div><div class="bar" style="--h:52%"></div><div class="bar" style="--h:61%"></div><div class="bar" style="--h:78%"></div><div class="bar" style="--h:94%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap logos-wrap reveal">
+      <div class="cap-txt">Co-investing alongside</div>
+      <div class="logos">{coInvestors.map((name) => <span>{name}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <h2>Building something worth holding?</h2>
+        <p>We back a small number of companies each year. If the timing is right, we'd like to hear from you.</p>
+        <a href="/contact" class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/home';</script>
+</BaseLayout>

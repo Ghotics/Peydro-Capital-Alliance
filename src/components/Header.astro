@@ -1,0 +1,45 @@
+---
+/* Top bar + the phone/tablet menu.
+   Styles: src/styles/components/_header.scss and _mobile-menu.scss
+   Behaviour: src/scripts/global/menu.ts */
+import Brand from './Brand.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { contactHref, mainNav, menuNav, site } from '../data/site';
+
+/* Highlight the link of the page we're on (works with or without a trailing slash). */
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
+---
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <Brand />
+    <nav class="nav-links" aria-label="Main">
+      {mainNav.map((item) => (
+        <a href={item.href} class:list={[{ active: isActive(item.href) }]} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="nav-cta">
+      <ThemeToggle />
+      <a href={contactHref} class="btn btn-ghost">Investor login</a>
+      <a href={contactHref} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+
+<aside class="mobile-menu" id="mobileMenu" aria-label="Menu">
+  <nav class="mm-links">
+    {menuNav.map((item, i) => (
+      <a href={item.href} class:list={[{ active: isActive(item.href) }]} aria-current={isActive(item.href) ? 'page' : undefined}><span class="mm-i">{String(i + 1).padStart(2, '0')}</span>{item.label}<span class="mm-arrow">→</span></a>
+    ))}
+  </nav>
+  <div class="mm-foot">
+    <a href={contactHref} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+    <a href={contactHref} class="btn btn-ghost">Investor login</a>
+    <div class="mm-row"><span>Palette</span><ThemeToggle /></div>
+    <p class="mm-mail">{site.email}</p>
+  </div>
+</aside>

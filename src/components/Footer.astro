@@ -1,0 +1,37 @@
+---
+/* Site footer. Styles: src/styles/components/_footer.scss */
+import Brand from './Brand.astro';
+import { contactHref, mainNav, site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <Brand />
+        <p>Patient capital for companies built to last. A demonstration build — the figures, people and quotes on this site are placeholders.</p>
+      </div>
+      <div>
+        <h5>Firm</h5>
+        {mainNav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href={contactHref}>Contact</a>
+        <a href={contactHref}>Investor login</a>
+        <a href="/">Home</a>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Disclosures</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© {year} {site.name}. <span class="demo-tag">Demo · placeholder content</span></span>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>

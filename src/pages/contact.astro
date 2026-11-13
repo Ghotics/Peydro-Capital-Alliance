@@ -1,0 +1,91 @@
+---
+/* Contact — /contact  (the step-by-step form logic is in src/scripts/pages/contact.ts) */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+import '../styles/pages/contact.scss';
+---
+<BaseLayout title="Contact" description="Start a conversation with Peydro Capital Alliance.">
+  <PageHero
+    eyebrow="Contact"
+    lead="A few quick steps so we can route your message to the right person. Nothing is sent — this is a demo flow."
+    hint="Begin below"
+    compact
+  >Start a <span class="serif-em">conversation</span></PageHero>
+
+  <section class="sec contact-body">
+    <div class="wrap">
+      <div class="wizard" id="wizard">
+        <ol class="stepper" id="stepper">
+          <li data-i="0"><span class="sdot">1</span> Inquiry</li>
+          <li data-i="1"><span class="sdot">2</span> About you</li>
+          <li data-i="2"><span class="sdot">3</span> Details</li>
+          <li data-i="3"><span class="sdot">4</span> Review</li>
+        </ol>
+
+        <div class="wstep" data-i="0">
+          <h3>What brings you here?</h3>
+          <p class="sub">Pick the option that fits best — it decides who picks up.</p>
+          <div class="choices" id="choices">
+            <button class="choice" type="button" data-val="Founder / operator"><svg class="cic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21V9l9-6 9 6v12M9 21v-6h6v6" /></svg><div><h4>Founder / operator</h4><p>You're running a business and exploring capital or a sale.</p></div></button>
+            <button class="choice" type="button" data-val="Institutional investor"><svg class="cic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V10M9 20V6M14 20v-8M19 20V4" /></svg><div><h4>Institutional investor</h4><p>You invest in funds or co-invest alongside managers.</p></div></button>
+            <button class="choice" type="button" data-val="Advisor / intermediary"><svg class="cic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg><div><h4>Advisor / intermediary</h4><p>You're bringing a deal or a client to the table.</p></div></button>
+            <button class="choice" type="button" data-val="Media / other"><svg class="cic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v14H4zM8 9h8M8 13h5" /></svg><div><h4>Media / other</h4><p>Press, partnerships, or something else entirely.</p></div></button>
+          </div>
+          <p class="choice-error" id="err-type">Please choose one to continue.</p>
+        </div>
+
+        <div class="wstep" data-i="1">
+          <h3>About you</h3>
+          <p class="sub">So we know who we're talking to.</p>
+          <div class="two">
+            <div class="field" id="f-name"><label for="w-name">Full name</label><input id="w-name" type="text" autocomplete="name" /><div class="msg">Please enter your name.</div></div>
+            <div class="field" id="f-email"><label for="w-email">Email</label><input id="w-email" type="email" autocomplete="email" /><div class="msg">Please enter a valid email.</div></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="w-org">Organization <span class="opt">(optional)</span></label><input id="w-org" type="text" autocomplete="organization" /></div>
+            <div class="field"><label for="w-role">Role <span class="opt">(optional)</span></label><input id="w-role" type="text" /></div>
+          </div>
+        </div>
+
+        <div class="wstep" data-i="2">
+          <h3>A little more detail</h3>
+          <p class="sub" id="detailSub">Tell us what you're hoping to discuss.</p>
+          <div id="conditional"></div>
+          <div class="field" id="f-msg"><label for="w-msg">Your message</label><textarea id="w-msg" placeholder="A few sentences is plenty."></textarea><div class="msg">Please add a short message (at least 10 characters).</div></div>
+        </div>
+
+        <div class="wstep" data-i="3">
+          <h3>Review &amp; send</h3>
+          <p class="sub">Check everything looks right. You can jump back to edit any part.</p>
+          <div class="review" id="reviewList"></div>
+        </div>
+
+        <div class="wstep" data-i="4">
+          <div class="confirm">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" /></svg></div>
+            <h3>Message ready to send</h3>
+            <p>In a real build this would reach the team and you'd get a copy by email. This is a demo, so nothing left your browser.</p>
+            <div class="ref" id="refNum">PCA-2026-0000</div>
+            <div class="next">
+              <div class="n"><b>1.</b><span>We'd review and route your note within one business day.</span></div>
+              <div class="n"><b>2.</b><span>The right partner would reply to arrange a short call.</span></div>
+              <div class="n"><b>3.</b><span>If there's a fit, we'd take it from there — no pressure either way.</span></div>
+            </div>
+            <div class="actions"><a href="/" class="btn btn-ghost">Back to home</a><button class="btn btn-primary" id="restartBtn" type="button">Submit another <span class="arrow">→</span></button></div>
+          </div>
+        </div>
+
+        <div class="wnav" id="wnav"><button class="back-btn" id="wBack" type="button">← Back</button><div class="spacer"></div><button class="btn btn-primary" id="wNext" type="button">Continue <span class="arrow">→</span></button></div>
+      </div>
+
+      <div class="offices">
+        <div class="office reveal"><div class="k">General</div><div class="v">{site.email}</div></div>
+        <div class="office reveal" data-delay="1"><div class="k">Investor relations</div><div class="v">{site.irEmail}</div></div>
+        <div class="office reveal" data-delay="2"><div class="k">Offices</div><div class="v">London · Zürich · Singapore</div></div>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/contact';</script>
+</BaseLayout>

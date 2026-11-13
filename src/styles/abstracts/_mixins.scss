@@ -1,0 +1,23 @@
+/* Screens narrower than a breakpoint:
+     .grid { @include down($bp-lg) { grid-template-columns: 1fr; } } */
+@mixin down($bp) {
+  @media (max-width: $bp) {
+    @content;
+  }
+}
+
+/* Styles for the Dark palette only (Gold is the default):
+     .panel { background: #fff; @include dark { background: #000; } }
+   compiles to  [data-theme="dark"] .panel { … }  */
+@mixin dark {
+  [data-theme="dark"] & {
+    @content;
+  }
+}
+
+/* Visitors who asked their system for less motion */
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
