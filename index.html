@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aldara Capital — Demo</title>
-<meta name="description" content="Aldara Capital — a demo / placeholder build: a modern, animated, multi-page finance-firm site with a multi-step contact flow. All content is fictional." />
-<script>/* apply a saved Dark choice before paint, so the page doesn't flash Gold first */try{if(localStorage.getItem('aldara-palette')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<title>Peydro Capital Alliance — Demo</title>
+<meta name="description" content="Peydro Capital Alliance — a demo / placeholder build: a modern, animated, multi-page finance-firm site with a multi-step contact flow. Figures, people and quotes are placeholders." />
+<script>/* apply a saved Dark choice before paint, so the page doesn't flash Gold first */try{if(localStorage.getItem('pca-palette')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
@@ -51,23 +51,45 @@ header.nav.scrolled{ background:rgba(7,8,13,.72); backdrop-filter:blur(14px) sat
 .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:80px; transition:height .5s var(--ease); }
 header.nav.scrolled .nav-inner{ height:64px; }
 .brand{ display:flex; align-items:center; gap:.6em; font-family:var(--font-display); font-size:1.3rem; font-weight:700; letter-spacing:.02em; }
+.brand .brand-sub{ color:var(--muted); font-weight:500; }
 .brand .mark{ width:30px; height:30px; border-radius:8px; flex:none; background:conic-gradient(from 210deg,var(--gold),var(--gold-2),var(--gold)); display:grid; place-items:center; color:#1a1507; font-size:.9rem; font-weight:800; font-family:var(--font-ui); }
 .nav-links{ display:flex; align-items:center; gap:2rem; }
 .nav-links a{ font-size:.9rem; color:var(--muted); position:relative; transition:color .3s var(--ease); }
 .nav-links a::after{ content:""; position:absolute; left:0; bottom:-6px; height:1px; width:0; background:var(--gold); transition:width .35s var(--ease); }
 .nav-links a:hover,.nav-links a.active{ color:var(--text); } .nav-links a:hover::after,.nav-links a.active::after{ width:100%; }
-.nav-cta{ display:flex; align-items:center; gap:1.2rem; }
-.hamburger{ display:none; width:40px; height:40px; border-radius:10px; border:1px solid var(--line); place-items:center; }
+.nav-cta{ display:flex; align-items:center; gap:1.2rem; } .nav-cta > *{ flex:none; } .nav-cta .btn,.theme-toggle{ white-space:nowrap; }
+.hamburger{ display:none; width:44px; height:44px; border-radius:12px; border:1px solid var(--line-2); place-items:center; flex:none; transition:border-color .3s var(--ease); }
+.hamburger:hover{ border-color:var(--gold); }
+.brand,.brand .brand-sub{ white-space:nowrap; }
 .hamburger span{ display:block; width:18px; height:2px; background:var(--text); position:relative; transition:.3s var(--ease); }
 .hamburger span::before,.hamburger span::after{ content:""; position:absolute; left:0; width:18px; height:2px; background:var(--text); transition:.3s var(--ease); }
 .hamburger span::before{ top:-6px; } .hamburger span::after{ top:6px; }
 body.menu-open .hamburger span{ background:transparent; }
 body.menu-open .hamburger span::before{ top:0; transform:rotate(45deg); }
 body.menu-open .hamburger span::after{ top:0; transform:rotate(-45deg); }
-.mobile-menu{ position:fixed; inset:0 0 0 auto; width:min(80vw,340px); z-index:95; background:var(--bg-2); border-left:1px solid var(--line); transform:translateX(100%); transition:transform .5s var(--ease); display:flex; flex-direction:column; justify-content:center; gap:.4rem; padding:2rem; }
-body.menu-open .mobile-menu{ transform:translateX(0); }
-.mobile-menu a{ font-family:var(--font-display); font-size:1.5rem; padding:.5rem 0; color:var(--muted); transition:color .3s var(--ease),padding-left .3s var(--ease); }
-.mobile-menu a:hover,.mobile-menu a.active{ color:var(--gold-2); padding-left:.5rem; }
+/* mobile menu: side drawer on tablets, full screen on phones (see @media 620px) */
+.mobile-menu{ position:fixed; top:0; right:0; bottom:0; width:min(86vw,380px); z-index:95; background:var(--bg-2); border-left:1px solid var(--line);
+  display:flex; flex-direction:column; padding:92px var(--pad) calc(1.6rem + env(safe-area-inset-bottom,0px)); overflow-y:auto; overscroll-behavior:contain;
+  transform:translateX(100%); visibility:hidden; transition:transform .5s var(--ease),visibility 0s linear .5s; }
+body.menu-open .mobile-menu{ transform:none; visibility:visible; transition:transform .5s var(--ease),visibility 0s; }
+body.menu-open{ overflow:hidden; }
+body.menu-open header.nav,html body.menu-open header.nav.scrolled{ background:var(--bg-2); border-bottom-color:var(--line); backdrop-filter:none; }
+.mm-links{ display:flex; flex-direction:column; }
+.mm-links a{ display:flex; align-items:center; gap:1rem; padding:1.05rem 0; border-bottom:1px solid var(--line); font-family:var(--font-display); font-size:clamp(1.45rem,6.4vw,1.8rem); line-height:1.2; color:var(--text);
+  opacity:0; transform:translateX(18px); transition:opacity .45s var(--ease-out),transform .45s var(--ease-out),color .3s var(--ease); }
+.mm-links .mm-i{ font-family:var(--font-ui); font-size:.7rem; letter-spacing:.14em; color:var(--muted-2); min-width:1.7rem; }
+.mm-links .mm-arrow{ margin-left:auto; font-family:var(--font-ui); font-size:1rem; color:var(--gold); opacity:0; transform:translateX(-6px); transition:opacity .3s var(--ease),transform .3s var(--ease); }
+.mm-links a:hover,.mm-links a.active{ color:var(--gold); }
+.mm-links a:hover .mm-arrow,.mm-links a.active .mm-arrow{ opacity:1; transform:none; }
+body.menu-open .mm-links a{ opacity:1; transform:none; }
+body.menu-open .mm-links a:nth-child(1){ transition-delay:.08s,.08s,0s; } body.menu-open .mm-links a:nth-child(2){ transition-delay:.13s,.13s,0s; }
+body.menu-open .mm-links a:nth-child(3){ transition-delay:.18s,.18s,0s; } body.menu-open .mm-links a:nth-child(4){ transition-delay:.23s,.23s,0s; }
+body.menu-open .mm-links a:nth-child(5){ transition-delay:.28s,.28s,0s; }
+.mm-foot{ margin-top:auto; padding-top:2rem; display:flex; flex-direction:column; gap:.75rem; opacity:0; transition:opacity .45s var(--ease-out); }
+body.menu-open .mm-foot{ opacity:1; transition-delay:.3s; }
+.mm-foot .btn{ width:100%; justify-content:center; padding:1rem 1.5rem; }
+.mm-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:.6rem; padding-top:1rem; border-top:1px solid var(--line); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.mm-mail{ font-size:.85rem; color:var(--muted-2); text-align:center; margin-top:.2rem; }
 .scrim{ position:fixed; inset:0; z-index:90; background:rgba(0,0,0,.5); opacity:0; pointer-events:none; transition:opacity .4s var(--ease); }
 body.menu-open .scrim{ opacity:1; pointer-events:auto; }
 
@@ -325,8 +347,11 @@ html:not([data-theme="dark"]) .bar.mut{ background:linear-gradient(#e7ddc9,#d3c5
 html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
 /* responsive */
+/* top bar: tighten, then switch to the menu button before the full name and links start to collide */
+@media (max-width:1180px){ .nav-links{ gap:1.5rem; } .nav-cta{ gap:.9rem; } .nav-cta .btn-ghost{ display:none; } }
+@media (max-width:1080px){ .nav-links{ display:none; } .nav-cta .btn-ghost{ display:none; } .hamburger{ display:grid; } }
+@media (max-width:760px){ .nav-cta .theme-toggle{ display:none; } } /* palette switch lives in the menu on small screens */
 @media (max-width:980px){
-  .nav-links{ display:none; } .nav-cta .btn-ghost{ display:none; } .hamburger{ display:grid; }
   .cap-grid{ grid-template-columns:repeat(2,1fr); } .card-row{ grid-template-columns:repeat(2,1fr); }
   .team-grid{ grid-template-columns:repeat(2,1fr); } .posts{ grid-template-columns:1fr; }
   .split{ grid-template-columns:1fr; } .featured{ grid-template-columns:1fr; } .offices{ grid-template-columns:1fr; } .foot-grid{ grid-template-columns:1fr 1fr; }
@@ -335,8 +360,13 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
   .stats-grid{ grid-template-columns:repeat(2,1fr); } .stat:nth-child(odd){ border-left:none; } .stat:nth-child(n+3){ border-top:1px solid var(--line); }
   .cap-grid{ grid-template-columns:1fr; } .card-row{ grid-template-columns:1fr; } .team-grid{ grid-template-columns:1fr 1fr; }
   .choices{ grid-template-columns:1fr; } .two{ grid-template-columns:1fr; } .tl{ grid-template-columns:70px 1fr; } .foot-grid{ grid-template-columns:1fr; }
-  #ttLabel{ display:none; } .theme-toggle{ padding:.5em; }
+  /* phone header: logo + menu button only; CTA and palette move into the menu */
+  .nav-inner{ height:64px; } header.nav.scrolled .nav-inner{ height:60px; }
+  .brand{ font-size:1.12rem; gap:.5em; } .brand .mark{ width:28px; height:28px; font-size:.85rem; }
+  .nav-cta .btn-primary,.nav-cta .theme-toggle{ display:none; }
+  .mobile-menu{ width:100%; border-left:none; padding-top:76px; }
 }
+@media (max-width:350px){ .brand{ font-size:1rem; } }
 @media (prefers-reduced-motion:reduce){
   *{ animation:none !important; transition:none !important; } html{ scroll-behavior:auto; }
   .reveal{ opacity:1; transform:none; } .hero h1 .line>span{ transform:none; } .ph-load>*{ opacity:1; transform:none; } .reveal.in .visual .bar{ height:var(--h); }
@@ -348,7 +378,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="#home" class="brand"><span class="mark">A</span> Aldara<span style="color:var(--muted);font-weight:500;">Capital</span></a>
+    <a href="#home" class="brand"><span class="mark">P</span> Peydro<span class="brand-sub">Capital Alliance</span></a>
     <nav class="nav-links" id="navLinks">
       <a href="#approach" data-route="approach">Approach</a>
       <a href="#capabilities" data-route="capabilities">Capabilities</a>
@@ -356,16 +386,28 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
       <a href="#insights" data-route="insights">Insights</a>
     </nav>
     <div class="nav-cta">
-      <button class="theme-toggle" id="themeToggle" title="Switch to dark palette" aria-label="Switch to dark palette"><span class="tt-dot"></span><span id="ttLabel">Gold</span></button>
+      <button class="theme-toggle" id="themeToggle" title="Switch to dark palette" aria-label="Switch to dark palette"><span class="tt-dot"></span><span class="tt-label">Gold</span></button>
       <a href="#contact" class="btn btn-ghost">Investor login</a>
       <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span></button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
     </div>
   </div>
 </header>
 <div class="scrim" id="scrim"></div>
-<aside class="mobile-menu" id="mobileMenu">
-  <a href="#home">Home</a><a href="#approach">Approach</a><a href="#capabilities">Capabilities</a><a href="#network">Network</a><a href="#insights">Insights</a><a href="#contact">Get in touch</a>
+<aside class="mobile-menu" id="mobileMenu" aria-label="Menu">
+  <nav class="mm-links">
+    <a href="#home" data-route="home"><span class="mm-i">01</span>Home<span class="mm-arrow">→</span></a>
+    <a href="#approach" data-route="approach"><span class="mm-i">02</span>Approach<span class="mm-arrow">→</span></a>
+    <a href="#capabilities" data-route="capabilities"><span class="mm-i">03</span>Capabilities<span class="mm-arrow">→</span></a>
+    <a href="#network" data-route="network"><span class="mm-i">04</span>Network<span class="mm-arrow">→</span></a>
+    <a href="#insights" data-route="insights"><span class="mm-i">05</span>Insights<span class="mm-arrow">→</span></a>
+  </nav>
+  <div class="mm-foot">
+    <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+    <a href="#contact" class="btn btn-ghost">Investor login</a>
+    <div class="mm-row"><span>Palette</span><button class="theme-toggle" title="Switch to dark palette" aria-label="Switch to dark palette"><span class="tt-dot"></span><span class="tt-label">Gold</span></button></div>
+    <p class="mm-mail">hello@pca.example</p>
+  </div>
 </aside>
 
 <main>
@@ -377,7 +419,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
     <div class="wrap hero-content">
       <span class="eyebrow">Private Capital · Est. 2019</span>
       <h1><span class="line"><span>Patient capital for</span></span><span class="line"><span>companies built <em class="serif-em">to last</em>.</span></span></h1>
-      <p class="intro">Aldara Capital partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.</p>
+      <p class="intro">Peydro Capital Alliance partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.</p>
       <div class="hero-actions"><a href="#contact" class="btn btn-primary">Start a conversation <span class="arrow">→</span></a><a href="#approach" class="btn btn-ghost">Our approach</a></div>
     </div>
     <button class="scroll-cue" id="scrollCue"><span>Scroll</span><span class="dotline"></span></button>
@@ -392,7 +434,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
   <section class="statement"><div class="wrap reveal">
     <p class="big">We believe the best businesses are <span class="hl">built slowly</span> — and that capital should have the patience to match.</p>
-    <p class="by">— The Aldara investment team</p>
+    <p class="by">— The PCA investment team</p>
   </div></section>
 
   <section class="sec" style="padding-top:0"><div class="wrap">
@@ -448,7 +490,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
   <section class="sec" style="padding-top:0"><div class="wrap">
     <div class="sec-head reveal"><span class="eyebrow">Since 2019</span><h2 class="title">A short history</h2></div>
     <div class="timeline">
-      <div class="tl reveal"><div class="yr">2019</div><div><h4>Aldara is founded</h4><p>Three partners and a simple thesis: patient capital for the lower-middle market.</p></div></div>
+      <div class="tl reveal"><div class="yr">2019</div><div><h4>PCA is founded</h4><p>Three partners and a simple thesis: patient capital for the lower-middle market.</p></div></div>
       <div class="tl reveal"><div class="yr">2021</div><div><h4>First platform exits</h4><p>Two early partnerships reach maturity, validating the long-hold model.</p></div></div>
       <div class="tl reveal"><div class="yr">2023</div><div><h4>Credit mandate opens</h4><p>We extend into flexible private credit for situations equity alone can't solve.</p></div></div>
       <div class="tl reveal"><div class="yr">2026</div><div><h4>Third office</h4><p>Singapore joins London and Zürich as the platform goes global.</p></div></div>
@@ -536,7 +578,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
     <span class="eyebrow reveal" style="justify-content:center">Voices</span>
     <div class="quote-stage" id="quoteStage">
       <figure class="quote on"><blockquote>“They were the one investor who spent more time with our team than our spreadsheet. Three years in, that still shows.”</blockquote><figcaption class="who">A. Marchetti <span>· Founder, portfolio company</span></figcaption></figure>
-      <figure class="quote"><blockquote>“Patient money is easy to promise and rare to find. Aldara actually meant it when the quarter got hard.”</blockquote><figcaption class="who">R. Osei <span>· CEO, platform business</span></figcaption></figure>
+      <figure class="quote"><blockquote>“Patient money is easy to promise and rare to find. PCA actually meant it when the quarter got hard.”</blockquote><figcaption class="who">R. Osei <span>· CEO, platform business</span></figcaption></figure>
       <figure class="quote"><blockquote>“The diligence was the most useful strategy review we'd ever had — and we hadn't even signed yet.”</blockquote><figcaption class="who">L. Duarte <span>· Operating partner</span></figcaption></figure>
     </div>
     <div class="dots" id="quoteDots" aria-label="Choose a quote"></div>
@@ -619,7 +661,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
       <div class="wstep" data-i="4"><div class="confirm">
         <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
         <h3>Message ready to send</h3><p>In a real build this would reach the team and you'd get a copy by email. This is a demo, so nothing left your browser.</p>
-        <div class="ref" id="refNum">ALD-2026-0000</div>
+        <div class="ref" id="refNum">PCA-2026-0000</div>
         <div class="next"><div class="n"><b>1.</b><span>We'd review and route your note within one business day.</span></div><div class="n"><b>2.</b><span>The right partner would reply to arrange a short call.</span></div><div class="n"><b>3.</b><span>If there's a fit, we'd take it from there — no pressure either way.</span></div></div>
         <div class="actions"><a href="#home" class="btn btn-ghost">Back to home</a><button class="btn btn-primary" id="restartBtn">Submit another <span class="arrow">→</span></button></div>
       </div></div>
@@ -628,8 +670,8 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
     </div>
 
     <div class="offices">
-      <div class="office reveal"><div class="k">General</div><div class="v">hello@aldara.example</div></div>
-      <div class="office reveal" data-delay="1"><div class="k">Investor relations</div><div class="v">ir@aldara.example</div></div>
+      <div class="office reveal"><div class="k">General</div><div class="v">hello@pca.example</div></div>
+      <div class="office reveal" data-delay="1"><div class="k">Investor relations</div><div class="v">ir@pca.example</div></div>
       <div class="office reveal" data-delay="2"><div class="k">Offices</div><div class="v">London · Zürich · Singapore</div></div>
     </div>
   </div></section>
@@ -640,12 +682,12 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand"><a href="#home" class="brand"><span class="mark">A</span> Aldara<span style="color:var(--muted);font-weight:500;">Capital</span></a><p>Patient capital for companies built to last. A demonstration build — every name, number and quote on this page is fictional.</p></div>
+      <div class="foot-brand"><a href="#home" class="brand"><span class="mark">P</span> Peydro<span class="brand-sub">Capital Alliance</span></a><p>Patient capital for companies built to last. A demonstration build — the figures, people and quotes on this page are placeholders.</p></div>
       <div><h5>Firm</h5><a href="#approach">Approach</a><a href="#capabilities">Capabilities</a><a href="#network">Network</a><a href="#insights">Insights</a></div>
       <div><h5>Company</h5><a href="#contact">Contact</a><a href="#contact">Investor login</a><a href="#home">Home</a></div>
       <div><h5>Legal</h5><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Disclosures</a></div>
     </div>
-    <div class="foot-bottom"><span>© 2026 Aldara Capital (fictional). <span class="demo-tag">Demo · placeholder content</span></span><a href="#home" class="to-top">Back to top ↑</a></div>
+    <div class="foot-bottom"><span>© 2026 Peydro Capital Alliance. <span class="demo-tag">Demo · placeholder content</span></span><a href="#home" class="to-top">Back to top ↑</a></div>
   </div>
 </footer>
 
@@ -657,11 +699,11 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
   /* ---------- ROUTER ---------- */
   var PAGES=['home','approach','capabilities','network','insights','contact'], pageEls={};
   PAGES.forEach(function(p){ pageEls[p]=document.getElementById('page-'+p); });
-  var navLinks=[].slice.call(document.querySelectorAll('#navLinks a'));
+  var navLinks=[].slice.call(document.querySelectorAll('#navLinks a')), mobileLinks=[].slice.call(document.querySelectorAll('.mm-links a'));
   function routeFromHash(){ var h=(location.hash||'').replace('#',''); if(h==='process-page') return 'approach'; return PAGES.indexOf(h)>=0?h:'home'; }
   function showPage(name){
     PAGES.forEach(function(p){ pageEls[p].classList.toggle('active', p===name); });
-    navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-route')===name); });
+    navLinks.concat(mobileLinks).forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-route')===name); });
     window.scrollTo(0,0);
     observeReveals(pageEls[name]);
     if(name==='contact') resetWizard();
@@ -738,10 +780,17 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
   /* ---------- MOBILE MENU ---------- */
   var ham=document.getElementById('hamburger'), scrim=document.getElementById('scrim');
-  function closeMenu(){ document.body.classList.remove('menu-open'); }
-  ham.addEventListener('click',function(){ document.body.classList.toggle('menu-open'); });
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    ham.setAttribute('aria-expanded', open?'true':'false');
+    ham.setAttribute('aria-label', open?'Close menu':'Open menu');
+  }
+  function closeMenu(){ setMenu(false); }
+  ham.addEventListener('click',function(){ setMenu(!document.body.classList.contains('menu-open')); });
   scrim.addEventListener('click',closeMenu);
   document.querySelectorAll('.mobile-menu a').forEach(function(a){ a.addEventListener('click',closeMenu); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && document.body.classList.contains('menu-open')){ closeMenu(); ham.focus(); } });
+  window.addEventListener('resize',function(){ if(window.innerWidth>1080) closeMenu(); });
 
   /* ---------- SCROLL CUE ---------- */
   var cue=document.getElementById('scrollCue');
@@ -800,7 +849,7 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
   W.next.addEventListener('click', function(){
     if(!validate(W.i)) return;
     if(W.i===0) buildConditional();
-    if(W.i===3){ document.getElementById('refNum').textContent='ALD-2026-'+String(Math.floor(1000+Math.random()*9000)); goStep(4); return; }
+    if(W.i===3){ document.getElementById('refNum').textContent='PCA-2026-'+String(Math.floor(1000+Math.random()*9000)); goStep(4); return; }
     var n=W.i+1; goStep(n); if(n===3) buildReview();
   });
   W.back.addEventListener('click', function(){ if(W.i>0) goStep(W.i-1); });
@@ -808,24 +857,23 @@ html:not([data-theme="dark"]) .member .avatar{ color:#fdfaf3; }
 
   /* ---------- PALETTE TOGGLE ---------- */
   /* Gold is the default; Dark is the toggled palette. New key so old saved choices don't override the new default. */
-  var THEME_KEY='aldara-palette';
-  var themeToggle=document.getElementById('themeToggle'), ttLabel=document.getElementById('ttLabel');
+  var THEME_KEY='pca-palette';
+  var themeToggles=[].slice.call(document.querySelectorAll('.theme-toggle')); /* header + phone menu */
   function applyTheme(t){
     var dark=(t==='dark');
     if(dark) document.documentElement.setAttribute('data-theme','dark');
     else document.documentElement.removeAttribute('data-theme');
-    ttLabel.textContent=dark?'Dark':'Gold';
     var hint=dark?'Switch to gold palette':'Switch to dark palette';
-    themeToggle.title=hint; themeToggle.setAttribute('aria-label',hint);
+    themeToggles.forEach(function(b){ b.querySelector('.tt-label').textContent=dark?'Dark':'Gold'; b.title=hint; b.setAttribute('aria-label',hint); });
   }
   var savedTheme='gold';
   try{ savedTheme=localStorage.getItem(THEME_KEY)||'gold'; }catch(e){}
   applyTheme(savedTheme);
-  themeToggle.addEventListener('click', function(){
+  themeToggles.forEach(function(b){ b.addEventListener('click', function(){
     var now=document.documentElement.getAttribute('data-theme')==='dark'?'gold':'dark';
     applyTheme(now);
     try{ localStorage.setItem(THEME_KEY, now); }catch(e){}
-  });
+  }); });
 
   /* ---------- INIT ---------- */
   showPage(routeFromHash());
