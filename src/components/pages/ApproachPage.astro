@@ -1,0 +1,77 @@
+---
+/* Enfoque / Approach page layout, shared by both languages. Texts: src/i18n/pages/approach.ts
+   Routes: src/pages/enfoque.astro (es) and src/pages/en/approach.astro (en) */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import type { Lang } from '../../i18n/config';
+import { approach } from '../../i18n/pages/approach';
+import { ui } from '../../i18n/ui';
+import '../../styles/pages/approach.scss';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = approach[lang];
+
+const icons = [
+  '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />',
+  '<circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />',
+  '<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />',
+];
+---
+<BaseLayout lang={lang} page="approach" title={t.title} description={t.description}>
+  <PageHero eyebrow={t.hero.eyebrow} lead={t.hero.lead} meta={t.hero.meta} hint={ui[lang].keepScrolling}><Fragment set:html={t.hero.title} /></PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="cap-grid">
+        {t.principles.map((card, i) => (
+          <div class="cap reveal" data-delay={i || undefined}>
+            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={icons[i]} />
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="statement alt-bg">
+    <div class="wrap reveal">
+      <p class="big" set:html={t.statement} />
+      <p class="by">{t.statementBy}</p>
+    </div>
+  </section>
+
+  <section class="sec process" id="process">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.process.eyebrow}</span>
+        <h2 class="title">{t.process.title}</h2>
+        <p class="lead">{t.process.lead}</p>
+      </div>
+      <div class="steps" id="steps">
+        <div class="rail"><div class="fill" id="railFill"></div></div>
+        {t.process.steps.map((step, i) => (
+          <div class="step reveal"><div class="bullet">{i + 1}</div><div><h3>{step.title}</h3><p>{step.text}</p></div></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">{t.history.eyebrow}</span><h2 class="title">{t.history.title}</h2></div>
+      <div class="timeline">
+        {t.history.items.map((item) => (
+          <div class="tl reveal"><div class="yr">{item.year}</div><div><h4>{item.title}</h4><p>{item.text}</p></div></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>import '../../scripts/pages/approach';</script>
+</BaseLayout>

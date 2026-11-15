@@ -14,6 +14,7 @@
 
 @use 'components/buttons';
 @use 'components/theme-toggle';
+@use 'components/lang-switch';
 @use 'components/header';
 @use 'components/mobile-menu';
 @use 'components/footer';
@@ -21,6 +22,8 @@
 @use 'components/cap-grid';
 @use 'components/statement';
 @use 'components/split';
+@use 'components/process-steps';
+@use 'components/cta-band';
 @use 'components/form-fields';
 @use 'components/lead-form';
 @use 'components/funnel';

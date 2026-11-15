@@ -1,5 +1,24 @@
 ---
 /* Gold ⇄ Dark palette switch. The behaviour lives in src/scripts/global/theme.ts,
-   the styles in src/styles/components/_theme-toggle.scss */
+   the styles in src/styles/components/_theme-toggle.scss.
+   The labels for both states are passed to the script through data-* attributes. */
+import type { Lang } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = ui[lang].theme;
 ---
-<button class="theme-toggle" type="button" title="Switch to dark palette" aria-label="Switch to dark palette"><span class="tt-dot"></span><span class="tt-label">Gold</span></button>
+<button
+  class="theme-toggle"
+  type="button"
+  title={t.toDark}
+  aria-label={t.toDark}
+  data-label-gold={t.gold}
+  data-label-dark={t.dark}
+  data-hint-gold={t.toGold}
+  data-hint-dark={t.toDark}
+><span class="tt-dot"></span><span class="tt-label">{t.gold}</span></button>

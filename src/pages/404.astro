@@ -1,19 +1,22 @@
 ---
-/* Shown for any address that doesn't exist */
+/* Shown for any address that doesn't exist (one page for both languages: Spanish, with a link to the English site) */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { url } from '../utils/url';
 import PageHero from '../components/PageHero.astro';
+import { contactHref } from '../data/site';
+import { pathFor } from '../i18n/routes';
+import { url } from '../utils/url';
 ---
-<BaseLayout title="Page not found" description="This page doesn't exist.">
+<BaseLayout lang="es" title="Página no encontrada" description="Esta página no existe.">
   <PageHero
     eyebrow="404"
-    lead="The page you were looking for isn't here. It may have moved, or the link may be mistyped."
-    hint="Or use the menu"
+    lead="La página que buscabas no está aquí. Puede que se haya movido o que el enlace tenga un error. · The page you were looking for isn't here."
+    hint="O usa el menú"
     compact
-  >This page has <span class="serif-em">moved on</span>
+  >Esta página ya <span class="serif-em">no está aquí</span>
     <Fragment slot="actions">
-      <a href={url('/')} class="btn btn-primary">Back to home <span class="arrow">→</span></a>
-      <a href={url('/contact')} class="btn btn-ghost">Contact us</a>
+      <a href={url(pathFor('home', 'es'))} class="btn btn-primary">Volver al inicio <span class="arrow">→</span></a>
+      <a href={url(contactHref)} class="btn btn-ghost">Contactar</a>
+      <a href={url(pathFor('home', 'en'))} class="btn btn-ghost" lang="en" hreflang="en">English site</a>
     </Fragment>
   </PageHero>
 </BaseLayout>

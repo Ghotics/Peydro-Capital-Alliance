@@ -3,44 +3,54 @@
    Styles: src/styles/components/_header.scss and _mobile-menu.scss
    Behaviour: src/scripts/global/menu.ts */
 import Brand from './Brand.astro';
+import LangSwitch from './LangSwitch.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import { contactHref, mainNav, menuNav, site } from '../data/site';
-import { stripBase, url } from '../utils/url';
+import { contactHref, site } from '../data/site';
+import type { Lang } from '../i18n/config';
+import { mainNav, menuNav, pathFor, type PageKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+import { url } from '../utils/url';
 
-/* Highlight the link of the page we're on (works with or without a trailing slash). */
-const current = stripBase(Astro.url.pathname);
-const isActive = (href: string) =>
-  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
+interface Props {
+  lang: Lang;
+  /** The current page (highlights its link and drives the ES / EN switch). */
+  page?: PageKey;
+}
+
+const { lang, page } = Astro.props;
+const t = ui[lang];
+const isActive = (key: PageKey) => key === page;
 ---
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <Brand />
-    <nav class="nav-links" aria-label="Main">
-      {mainNav.map((item) => (
-        <a href={url(item.href)} class:list={[{ active: isActive(item.href) }]} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+    <Brand lang={lang} />
+    <nav class="nav-links" aria-label={t.mainNavLabel}>
+      {mainNav.map((key) => (
+        <a href={url(pathFor(key, lang))} class:list={[{ active: isActive(key) }]} aria-current={isActive(key) ? 'page' : undefined}>{t.nav[key]}</a>
       ))}
     </nav>
     <div class="nav-cta">
-      <ThemeToggle />
-      <a href={url(contactHref)} class="btn btn-ghost">Investor login</a>
-      <a href={url(contactHref)} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
-      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
+      <LangSwitch lang={lang} page={page} />
+      <ThemeToggle lang={lang} />
+      <a href={url(contactHref)} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
+      <button class="hamburger" id="hamburger" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="mobileMenu" data-open-label={t.openMenu} data-close-label={t.closeMenu}><span></span></button>
     </div>
   </div>
 </header>
 
 <div class="scrim" id="scrim" aria-hidden="true"></div>
 
-<aside class="mobile-menu" id="mobileMenu" aria-label="Menu">
+<aside class="mobile-menu" id="mobileMenu" aria-label={t.menuLabel}>
   <nav class="mm-links">
-    {menuNav.map((item, i) => (
-      <a href={url(item.href)} class:list={[{ active: isActive(item.href) }]} aria-current={isActive(item.href) ? 'page' : undefined}><span class="mm-i">{String(i + 1).padStart(2, '0')}</span>{item.label}<span class="mm-arrow">→</span></a>
+    {menuNav.map((key, i) => (
+      <a href={url(pathFor(key, lang))} class:list={[{ active: isActive(key) }]} aria-current={isActive(key) ? 'page' : undefined}><span class="mm-i">{String(i + 1).padStart(2, '0')}</span>{t.nav[key]}<span class="mm-arrow">→</span></a>
     ))}
   </nav>
   <div class="mm-foot">
-    <a href={url(contactHref)} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
-    <a href={url(contactHref)} class="btn btn-ghost">Investor login</a>
-    <div class="mm-row"><span>Palette</span><ThemeToggle /></div>
+    <a href={url(contactHref)} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
+    <a href={url(contactHref)} class="btn btn-ghost">{t.investorLogin}</a>
+    <div class="mm-row"><span>{t.language}</span><LangSwitch lang={lang} page={page} /></div>
+    <div class="mm-row"><span>{t.palette}</span><ThemeToggle lang={lang} /></div>
     <p class="mm-mail">{site.email}</p>
   </div>
 </aside>

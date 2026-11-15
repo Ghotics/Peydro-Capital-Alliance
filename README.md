@@ -1,7 +1,9 @@
 # Peydro Capital Alliance — website
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
-Six pages (Home, Approach, Capabilities, Network, Insights, Contact) plus a 404 page, a Gold / Dark palette switch, and a phone menu.
+Five pages in **Spanish (main) and English** — Inicio, Quiénes somos, Enfoque, Crecimiento compuesto de redes, Perspectivas — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
+Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Giza form — the only form linked from the site (Spanish only for now).
+See [Languages](#languages-es--en).
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
 > **Placeholder content.** Figures, people, quotes, offices and history are demo content until PCA provides the real details.
@@ -25,13 +27,13 @@ npm run check      # type-check .astro and .ts files
 public/                    files served as-is (favicon…)
 src/
 ├─ pages/                  one file = one page; the file name is the URL
-│  ├─ index.astro          /
-│  ├─ approach.astro       /approach
-│  ├─ capabilities.astro   /capabilities
-│  ├─ network.astro        /network
-│  ├─ insights.astro       /insights
-│  ├─ contact.astro        /contact
-│  ├─ giza.astro           /giza                      Form 1 (in the menu)
+│  ├─ index.astro          /                          ┐
+│  ├─ quienes-somos.astro  /quienes-somos             │ Spanish: tiny files that render
+│  ├─ enfoque.astro        /enfoque                   │ components/pages/*.astro with lang="es"
+│  ├─ crecimiento-compuesto.astro /crecimiento-compuesto
+│  ├─ perspectivas.astro   /perspectivas              ┘
+│  ├─ en/                  /en, /en/about, /en/approach, /en/compound-growth, /en/insights (lang="en")
+│  ├─ giza.astro           /giza                      Form 1 ("Get in touch" / "Solicitar reunión")
 │  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here)
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
 │  │  ├─ index.astro       /asesoramiento             landing + department picker
@@ -48,16 +50,24 @@ src/
 │  ├─ SiteHead.astro       everything inside <head>
 │  ├─ Brand.astro          logo + name
 │  ├─ ThemeToggle.astro    Gold ⇄ Dark switch
+│  ├─ LangSwitch.astro     ES / EN switch
+│  ├─ pages/               the layout of each translated page (HomePage, AboutPage, ApproachPage, GrowthPage, InsightsPage)
 │  ├─ forms/               LeadForm (the form card), FormAside (dark side panel), PrivacyNotice, FormIcon
 │  └─ legal/               Fill (highlights details still to fill in)
+├─ i18n/                  languages
+│  ├─ config.ts            the languages (Spanish is the main one)
+│  ├─ routes.ts            the address of each page in each language + which pages are in the menu
+│  ├─ ui.ts                shared texts: menu, buttons, footer, palette switch
+│  └─ pages/               the texts of each page, Spanish and English side by side
 ├─ data/
-│  ├─ site.ts              firm name, emails, menu links
+│  ├─ site.ts              firm name, emails, where "Contactar" points
 │  ├─ forms.ts             form texts: departments, interests, buildings, booking links
 │  └─ legal.ts             company details, providers and retention for the privacy page
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
-│  ├─ pages/               one file per page (counters, accordion, contact form…)
+│  ├─ pages/               one file per page (counters, newsletter…)
+│  ├─ components/          shared behaviour (the process line on Approach and Crecimiento compuesto)
 │  ├─ forms/               lead forms: steps + checks, QR code tracking, sending
 │  └─ utils/
 └─ styles/                 SCSS
@@ -72,8 +82,10 @@ src/
 
 | I want to… | Edit |
 | --- | --- |
-| Change page text | `src/pages/<page>.astro` (lists like team, FAQ and articles are arrays at the top of the file) |
-| Change the firm name, emails or menu links | `src/data/site.ts` |
+| Change page text (either language) | `src/i18n/pages/<page>.ts` — the Spanish text first, the English below it |
+| Change menu, button or footer text | `src/i18n/ui.ts` |
+| Change the firm name or emails | `src/data/site.ts` |
+| Change which pages are in the menu, or a page's address | `src/i18n/routes.ts` |
 | Change colours or fonts | `src/styles/base/_tokens.scss` |
 | Change a screen-size breakpoint | `src/styles/abstracts/_variables.scss` |
 | Style something on one page only | `src/styles/pages/<page>.scss` |
@@ -81,24 +93,37 @@ src/
 | Connect a specialist's calendar | `calLink` in `src/data/forms.ts` |
 | Company details or a new provider on the privacy page | `src/data/legal.ts` |
 
-### Adding a page
+### Adding a page (in both languages)
 
-1. Create `src/pages/team.astro` (the URL becomes `/team`):
+1. Add its addresses to `src/i18n/routes.ts`, e.g. `team: { es: '/equipo', en: '/en/team' }`, its menu label to `nav` in `src/i18n/ui.ts` (both languages), and the key to `mainNav` if it should be in the menu.
+2. Write its texts in `src/i18n/pages/team.ts` — a Spanish object, then `const en: typeof es = { … }` (the type check makes sure nothing is missing in English).
+3. Write its layout once in `src/components/pages/TeamPage.astro`:
 
    ```astro
    ---
-   import BaseLayout from '../layouts/BaseLayout.astro';
-   import PageHero from '../components/PageHero.astro';
-   import '../styles/pages/team.scss';
+   import BaseLayout from '../../layouts/BaseLayout.astro';
+   import PageHero from '../PageHero.astro';
+   import type { Lang } from '../../i18n/config';
+   import { team } from '../../i18n/pages/team';
+   import '../../styles/pages/team.scss';
+   const { lang } = Astro.props as { lang: Lang };
+   const t = team[lang];
    ---
-   <BaseLayout title="Team" description="…">
-     <PageHero eyebrow="Team" lead="…">Our <span class="serif-em">people</span></PageHero>
+   <BaseLayout lang={lang} page="team" title={t.title} description={t.description}>
+     <PageHero eyebrow={t.eyebrow} lead={t.lead}><Fragment set:html={t.heading} /></PageHero>
      <section class="sec"><div class="wrap">…</div></section>
    </BaseLayout>
    ```
 
-2. Create `src/styles/pages/team.scss` starting with `@use '../abstracts' as *;`.
-3. Add it to `mainNav` in `src/data/site.ts` if it should appear in the menu.
+4. Create the two tiny page files: `src/pages/equipo.astro` with `<TeamPage lang="es" />` and `src/pages/en/team.astro` with `<TeamPage lang="en" />`.
+5. Create `src/styles/pages/team.scss` starting with `@use '../abstracts' as *;`.
+
+## Languages (ES / EN)
+
+- **Spanish is the main language**: its pages have no prefix (`/quienes-somos`). English pages live under `/en/` (`/en/about`).
+- The **ES / EN switch** (top bar from 760px up, and in the phone menu) opens the same page in the other language, using `src/i18n/routes.ts`. On pages that only exist in Spanish (Giza, privacy, Business Office) it leads to the English home page.
+- Each page tells search engines about its other-language version (`hreflang` links in `<head>`), once the site address is known (on GitHub Pages).
+- **Not translated yet:** the forms (Giza, Business Office, quick form) and the privacy page are Spanish only. English buttons still lead to the Spanish Giza form.
 
 ## Styling conventions
 
@@ -112,7 +137,7 @@ src/
 
 | Form | Address | How people reach it | Steps |
 | --- | --- | --- | --- |
-| 1 · Giza (Irene) | `/giza` | site menu, QR codes | contact → optional booking |
+| 1 · Giza (Irene) | `/giza` | every "Get in touch" / "Solicitar reunión" button, QR codes | contact → optional booking |
 | 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | financial: interests → contact; others: contact only; then optional booking |
 | 3 · Quick | `/contacto-rapido` | **outside links only** | contact only (template — fields may change) |
 
@@ -148,7 +173,6 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - [ ] Set `site` in `astro.config.mjs` to the real domain.
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
-- [ ] Make the contact form actually send (a form service or a server endpoint that passes leads to the CRM).
 - [ ] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
 - [ ] Fill in the company details in `src/data/legal.ts` (highlighted in red on the privacy page until done) and have a lawyer review `/privacidad`.
 - [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.

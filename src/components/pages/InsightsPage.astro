@@ -1,0 +1,59 @@
+---
+/* Perspectivas / Insights page layout, shared by both languages. Texts: src/i18n/pages/insights.ts
+   Routes: src/pages/perspectivas.astro (es) and src/pages/en/insights.astro (en) */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import type { Lang } from '../../i18n/config';
+import { insights } from '../../i18n/pages/insights';
+import { ui } from '../../i18n/ui';
+import '../../styles/pages/insights.scss';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = insights[lang];
+---
+<BaseLayout lang={lang} page="insights" title={t.title} description={t.description}>
+  <PageHero eyebrow={t.hero.eyebrow} lead={t.hero.lead} meta={t.hero.meta} hint={ui[lang].keepScrolling}><Fragment set:html={t.hero.title} /></PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="featured reveal">
+        <div class="fthumb"></div>
+        <div class="fbody">
+          <div class="meta">{t.featured.meta}</div>
+          <h3>{t.featured.title}</h3>
+          <p>{t.featured.text}</p>
+          <span class="textlink">{t.featured.link} <span class="arrow">→</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="posts">
+        {t.posts.map((post, i) => (
+          <article class="post reveal" data-delay={i % 3 || undefined}>
+            <div class="thumb"></div>
+            <div class="body"><div class="meta">{post.meta}</div><h3>{post.title}</h3><p>{post.text}</p><span class="more">{t.readMore}</span></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="news reveal" id="newsBox" data-thanks-title={t.news.thanksTitle} data-thanks-text={t.news.thanksText}>
+        <h3>{t.news.title}</h3>
+        <p>{t.news.text}</p>
+        <form id="newsForm"><input type="email" placeholder={t.news.placeholder} aria-label={t.news.emailLabel} /><button type="submit" class="btn btn-primary">{t.news.button}</button></form>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../../scripts/pages/insights';</script>
+</BaseLayout>

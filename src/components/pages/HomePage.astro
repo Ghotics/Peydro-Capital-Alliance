@@ -1,0 +1,115 @@
+---
+/* Home page layout, shared by both languages. Texts: src/i18n/pages/home.ts
+   Routes: src/pages/index.astro (es) and src/pages/en/index.astro (en) */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { contactHref } from '../../data/site';
+import type { Lang } from '../../i18n/config';
+import { home } from '../../i18n/pages/home';
+import { pathFor } from '../../i18n/routes';
+import { url } from '../../utils/url';
+import '../../styles/pages/home.scss';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = home[lang];
+
+/* line drawings for the three approach cards */
+const icons = [
+  '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" />',
+  '<circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />',
+  '<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />',
+];
+const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfield', 'Stonebridge', 'Verano'];
+---
+<BaseLayout lang={lang} page="home" description={t.description}>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"><div class="orb a" data-depth="0.20"></div><div class="orb b" data-depth="0.12"></div><div class="orb c" data-depth="0.28"></div></div>
+    <div class="wrap hero-content">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h1>{t.titleLines.map((line) => <span class="line"><span set:html={line} /></span>)}</h1>
+      <p class="intro">{t.intro}</p>
+      <div class="hero-actions">
+        <a href={url(contactHref)} class="btn btn-primary">{t.primary} <span class="arrow">→</span></a>
+        <a href={url(pathFor('approach', lang))} class="btn btn-ghost">{t.secondary}</a>
+      </div>
+    </div>
+    <button class="scroll-cue" id="scrollCue" type="button"><span>{t.scroll}</span><span class="dotline"></span></button>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <div class="stats-grid">
+        {t.stats.map((s, i) => (
+          <div class="stat reveal" data-delay={i || undefined}>
+            <div class="num" data-target={s.target} data-decimals={s.decimals} data-prefix={s.prefix}>{s.prefix}{s.target.toFixed(s.decimals)}<span class="suffix">{s.suffix}</span></div>
+            <div class="label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap reveal">
+      <p class="big" set:html={t.statement} />
+      <p class="by">{t.statementBy}</p>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.approach.eyebrow}</span>
+        <h2 class="title" set:html={t.approach.title} />
+        <p class="lead">{t.approach.lead}</p>
+        <p class="mt-link"><a href={url(pathFor('approach', lang))} class="textlink">{t.approach.link} <span class="arrow">→</span></a></p>
+      </div>
+      <div class="cap-grid">
+        {t.approach.cards.map((card, i) => (
+          <div class="cap reveal" data-delay={i || undefined}>
+            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={icons[i]} />
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="split reveal">
+        <div class="copy">
+          <span class="eyebrow">{t.track.eyebrow}</span>
+          <h2>{t.track.title}</h2>
+          <p>{t.track.text}</p>
+          <p class="note">{t.track.note}</p>
+        </div>
+        <div class="visual" aria-hidden="true"><div class="bar" style="--h:38%"></div><div class="bar" style="--h:52%"></div><div class="bar" style="--h:61%"></div><div class="bar" style="--h:78%"></div><div class="bar" style="--h:94%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap logos-wrap reveal">
+      <div class="cap-txt">{t.coInvest}</div>
+      <div class="logos">{coInvestors.map((name) => <span>{name}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <h2>{t.cta.title}</h2>
+        <p>{t.cta.text}</p>
+        <a href={url(contactHref)} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../../scripts/pages/home';</script>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+/* ES / EN switch. Links to the same page in the other language
+   (pages without a translation, like the forms, link to the other language's home page).
+   Styles: src/styles/components/_lang-switch.scss */
+import { languages, type Lang } from '../i18n/config';
+import { routes, type PageKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+import { url } from '../utils/url';
+
+interface Props {
+  lang: Lang;
+  /** The current page, if it exists in both languages. */
+  page?: PageKey;
+}
+
+const { lang, page } = Astro.props;
+const codes = Object.keys(languages) as Lang[];
+const hrefFor = (code: Lang) => url(page ? routes[page][code] : routes.home[code]);
+---
+<nav class="lang-switch" aria-label={ui[lang].language}>
+  {codes.map((code) =>
+    code === lang ? (
+      <span class="on" aria-current="true" title={languages[code]}>{code.toUpperCase()}</span>
+    ) : (
+      <a href={hrefFor(code)} hreflang={code} lang={code} title={languages[code]}>{code.toUpperCase()}</a>
+    ),
+  )}
+</nav>

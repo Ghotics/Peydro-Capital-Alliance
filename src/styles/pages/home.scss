@@ -155,7 +155,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  @include down($bp-sm) {
+  /* two columns below 760px: the Spanish labels don't fit four across */
+  @include down($bp-md) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -169,7 +170,7 @@
     border-left: none;
   }
 
-  @include down($bp-sm) {
+  @include down($bp-md) {
     &:nth-child(odd) {
       border-left: none;
     }
@@ -230,54 +231,5 @@
       color: var(--gold-2);
       opacity: 1;
     }
-  }
-}
-
-/* ---------- closing call to action (box with a rotating gold border) ---------- */
-.cta-band {
-  padding: clamp(4rem, 10vh, 7rem) 0;
-}
-
-.cta-box {
-  position: relative;
-  border-radius: 24px;
-  padding: clamp(2.5rem, 6vw, 5rem);
-  text-align: center;
-  overflow: hidden;
-  background: var(--surface);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: 24px;
-    background: conic-gradient(from var(--a, 0deg), var(--gold), transparent 25%, var(--cool), transparent 55%, var(--gold-2), var(--gold));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: spin 8s linear infinite;
-  }
-
-  h2 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-  }
-
-  p {
-    color: var(--muted);
-    max-width: 46ch;
-    margin: 1rem auto 2rem;
-  }
-}
-
-@property --a {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes spin {
-  to {
-    --a: 360deg;
   }
 }

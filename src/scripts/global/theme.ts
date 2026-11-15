@@ -26,10 +26,12 @@ function apply(palette: Palette, toggles: HTMLButtonElement[]): void {
   if (dark) document.documentElement.setAttribute('data-theme', 'dark');
   else document.documentElement.removeAttribute('data-theme');
 
-  const hint = dark ? 'Switch to gold palette' : 'Switch to dark palette';
+  /* each button carries its own texts (Spanish or English) in data-* attributes, see ThemeToggle.astro */
   toggles.forEach((button) => {
+    const d = button.dataset;
+    const hint = (dark ? d.hintGold : d.hintDark) ?? (dark ? 'Switch to gold palette' : 'Switch to dark palette');
     const label = button.querySelector('.tt-label');
-    if (label) label.textContent = dark ? 'Dark' : 'Gold';
+    if (label) label.textContent = (dark ? d.labelDark : d.labelGold) ?? (dark ? 'Dark' : 'Gold');
     button.title = hint;
     button.setAttribute('aria-label', hint);
   });

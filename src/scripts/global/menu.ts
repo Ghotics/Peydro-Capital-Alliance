@@ -2,7 +2,7 @@
 
 const OPEN_CLASS = 'menu-open';
 /** Above this width the full top bar is shown — keep in sync with $bp-nav in styles/abstracts/_variables.scss */
-const DESKTOP_MIN_WIDTH = 1080;
+const DESKTOP_MIN_WIDTH = 1180;
 
 export function initMenu(): void {
   const button = document.getElementById('hamburger');
@@ -14,7 +14,8 @@ export function initMenu(): void {
   const setOpen = (open: boolean) => {
     document.body.classList.toggle(OPEN_CLASS, open);
     button.setAttribute('aria-expanded', String(open));
-    button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    /* texts in the page's language come from data-open-label / data-close-label (Header.astro) */
+    button.setAttribute('aria-label', (open ? button.dataset.closeLabel : button.dataset.openLabel) ?? (open ? 'Close menu' : 'Open menu'));
   };
   const close = () => setOpen(false);
 
