@@ -21,6 +21,7 @@ export const mainNav: NavItem[] = [
   { href: '/capabilities', label: 'Capabilities' },
   { href: '/network', label: 'Network' },
   { href: '/insights', label: 'Insights' },
+  { href: '/giza', label: 'Giza' },
 ];
 
 /** Links shown in the phone / tablet menu (Home first). */

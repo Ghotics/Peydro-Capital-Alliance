@@ -1,0 +1,112 @@
+---
+/* Form 2 · Business Office — landing: /asesoramiento
+   Reached ONLY through QR codes and Renta 92's own links: it is not in the site menu and is hidden from
+   search engines. Each QR points here with its own code, e.g. /asesoramiento?c=renta92-portal-14.
+   The code is passed on in the links and saved with the lead (src/scripts/forms/attribution.ts).
+   Texts: src/data/forms.ts  ·  Styles: src/styles/pages/asesoramiento.scss */
+import FunnelLayout from '../../layouts/FunnelLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FormIcon from '../../components/forms/FormIcon.astro';
+import { areas, generalArea } from '../../data/forms';
+import type { IconName } from '../../data/forms';
+import { url } from '../../utils/url';
+import '../../styles/pages/asesoramiento.scss';
+
+const links = [
+  { href: '#departamentos', label: 'Departamentos' },
+  { href: '#como-funciona', label: 'Cómo funciona' },
+];
+
+const steps: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'form', title: 'Elige tu área', text: 'Selecciona el departamento sobre el que quieres asesoramiento.' },
+  { icon: 'chat', title: 'Cuéntanos qué necesitas', text: 'Completa un breve formulario con tus datos y tu consulta.' },
+  { icon: 'calendar', title: 'Reserva si lo deseas', text: 'Puedes agendar una reunión si prefieres tratar tu caso en detalle.' },
+  { icon: 'handshake', title: 'Recibe orientación gratuita', text: 'Un especialista revisará tu caso y te ofrecerá la orientación que necesitas.' },
+];
+---
+<FunnelLayout
+  title="Business Office"
+  description="PCA Business Office en colaboración con Renta 92: orientación profesional, personal y familiar, gratuita y sin compromiso."
+  partner="Renta 92"
+  partnerNote="Business Office"
+  links={links}
+  cta={{ href: '#departamentos', label: 'Solicitar asesoramiento' }}
+>
+  <PageHero
+    id="business-office"
+    eyebrow="PCA Business Office · Renta 92"
+    lead="Accede a especialistas que te ayudan a revisar tus necesidades, resolver dudas y valorar alternativas para ti y tu negocio. Asesoramiento gratuito y sin compromiso."
+    meta={[
+      { value: '4', label: 'Departamentos' },
+      { value: '0 €', label: 'Orientación gratuita' },
+      { value: '14 · 16 · 18', label: 'Edificios Renta 92' },
+    ]}
+    hint="Elige tu área"
+  >Orientación profesional, personal y familiar <span class="serif-em">a tu disposición</span>
+    <Fragment slot="actions">
+      <a href="#departamentos" class="btn btn-primary">Solicitar asesoramiento gratuito <span class="arrow">→</span></a>
+      <a href="#como-funciona" class="btn btn-ghost">Cómo funciona</a>
+    </Fragment>
+  </PageHero>
+
+  <section class="sec bo-areas-sec" id="departamentos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Paso 1 · Elige tu departamento</span>
+        <h2 class="title">¿En qué podemos <span class="serif-em">ayudarte</span>?</h2>
+        <p class="lead">Selecciona el área que mejor encaje con lo que necesitas. Te pondremos en contacto con el equipo especializado de PCA Business Office para ofrecerte orientación gratuita y sin compromiso.</p>
+      </div>
+
+      <div class="bo-areas">
+        {areas.map((area, i) => (
+          <a class="bo-card reveal" data-delay={String(i + 1)} href={url(`/asesoramiento/${area.slug}`)}>
+            <span class="bo-card-top">
+              <span class="bo-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="bo-go" aria-hidden="true">↗</span>
+            </span>
+            <span class="bo-card-body">
+              <FormIcon name={area.icon} class="bo-icon" />
+              <span class="bo-name">{area.name}</span>
+              <span class="bo-desc">{area.description}</span>
+              <span class="bo-cta">Solicitar asesoramiento <span class="arrow">→</span></span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div class="bo-unsure reveal">
+        <div>
+          <h3>¿No tienes claro qué departamento elegir?</h3>
+          <p>Puedes escribirnos tu consulta y te orientaremos hacia el área adecuada.</p>
+        </div>
+        <a class="btn btn-ghost" href={url(`/asesoramiento/${generalArea.slug}`)}>Plantear una consulta <span class="arrow">→</span></a>
+      </div>
+      <p class="bo-note reveal">No necesitas adjuntar documentos ni contratar ningún servicio. La solicitud y la reserva posterior se gestionan desde PCA.</p>
+    </div>
+  </section>
+
+  <section class="sec alt-bg" id="como-funciona">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Cómo funciona</span>
+        <h2 class="title">Un proceso sencillo y <span class="serif-em">flexible</span></h2>
+        <p class="lead">Pensado para que obtengas la orientación que necesitas, sin papeleo.</p>
+      </div>
+      <ol class="bo-steps">
+        {steps.map((step, i) => (
+          <li class="reveal" data-delay={String(i + 1)}>
+            <span class="bo-step-top">
+              <span class="bo-step-n">{i + 1}</span>
+              <FormIcon name={step.icon} class="bo-step-icon" />
+            </span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="bo-info reveal"><strong>La reserva de cita es opcional.</strong> También puedes enviarnos tu consulta y te daremos respuesta sin necesidad de agendar una reunión.</p>
+    </div>
+  </section>
+
+  <script>import '../../scripts/pages/asesoramiento';</script>
+</FunnelLayout>

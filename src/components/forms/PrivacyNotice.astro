@@ -1,0 +1,19 @@
+---
+/* The short data-protection notice shown inside every form ("primera capa" in the AEPD's wording).
+   The law asks for this basic information at the moment the data is collected; the full detail
+   ("segunda capa") is the privacy page. Texts: src/data/legal.ts  ·  Styles: _lead-form.scss (.lf-privacy) */
+import Fill from '../legal/Fill.astro';
+import { privacyHref } from '../../data/forms';
+import { controller } from '../../data/legal';
+import { url } from '../../utils/url';
+---
+<div class="lf-privacy">
+  <p class="lf-privacy-title">Información básica sobre protección de datos</p>
+  <dl>
+    <div><dt>Responsable</dt><dd><Fill value={controller.name} /></dd></div>
+    <div><dt>Finalidad</dt><dd>Atender tu solicitud, contactarte y, si lo pides, gestionar tu cita.</dd></div>
+    <div><dt>Legitimación</dt><dd>Tu propia solicitud (art. 6.1.b RGPD).</dd></div>
+    <div><dt>Destinatarios</dt><dd>No cedemos tus datos a terceros. Algunos proveedores que nos prestan servicio están en EE. UU., con las garantías que exige el RGPD.</dd></div>
+    <div><dt>Derechos</dt><dd>Acceder, rectificar y suprimir tus datos, y los demás derechos que explicamos en la <a href={url(privacyHref)} target="_blank" rel="noopener">Política de privacidad</a>.</dd></div>
+  </dl>
+</div>

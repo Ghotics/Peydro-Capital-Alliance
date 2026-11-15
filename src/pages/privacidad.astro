@@ -1,0 +1,133 @@
+---
+/* Política de privacidad — /privacidad
+   The full data-protection information ("segunda capa") for every form on the site, as required by
+   art. 13 of the GDPR (RGPD) and Spain's LOPDGDD. The short version sits inside each form
+   (components/forms/PrivacyNotice.astro).
+   Company details, providers and retention: src/data/legal.ts. Styles: src/styles/pages/legal.scss
+   Have a lawyer or data-protection adviser review it before the site goes live. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Fill from '../components/legal/Fill.astro';
+import { authority, controller, isPlaceholder, leadRetention, privacyUpdated, processors } from '../data/legal';
+import '../styles/pages/legal.scss';
+
+const outsideEu = processors.filter((p) => p.safeguard);
+---
+<BaseLayout title="Política de privacidad" description="Qué datos recogemos con los formularios de esta web, para qué los usamos y qué derechos tienes." lang="es">
+  <PageHero
+    eyebrow="Legal"
+    lead="Qué datos recogemos con los formularios de esta web, para qué los usamos y qué derechos tienes. Explicado de forma sencilla."
+    hint="Sigue leyendo"
+    compact
+  >Política de <span class="serif-em">privacidad</span></PageHero>
+
+  <section class="sec legal-sec">
+    <div class="wrap legal">
+      <p class="legal-updated">Última actualización: {privacyUpdated}</p>
+
+      <p>Esta política se aplica a los formularios de esta web: el de Giza, los de PCA Business Office, el de contacto rápido y el de contacto general. Cumple el Reglamento General de Protección de Datos (Reglamento (UE) 2016/679, «RGPD») y la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales («LOPDGDD»).</p>
+
+      <div class="legal-summary">
+        <h2>En resumen</h2>
+        <dl>
+          <div><dt>Responsable</dt><dd><Fill value={controller.name} /></dd></div>
+          <div><dt>Finalidad</dt><dd>Atender tu solicitud, contactarte y, si lo pides, gestionar tu cita.</dd></div>
+          <div><dt>Legitimación</dt><dd>Tu propia solicitud (medidas precontractuales, art. 6.1.b RGPD).</dd></div>
+          <div><dt>Destinatarios</dt><dd>No cedemos tus datos a terceros, salvo obligación legal. Usamos proveedores que los tratan por encargo nuestro; algunos están en EE. UU., con las garantías del RGPD.</dd></div>
+          <div><dt>Derechos</dt><dd>Acceso, rectificación, supresión, oposición, limitación y portabilidad. Puedes reclamar ante la AEPD.</dd></div>
+        </dl>
+      </div>
+
+      <h2 id="responsable">1. ¿Quién es el responsable de tus datos?</h2>
+      <ul class="legal-facts">
+        <li><b>Responsable:</b> <Fill value={controller.name} /></li>
+        <li><b>NIF:</b> <Fill value={controller.taxId} /></li>
+        <li><b>Domicilio:</b> <Fill value={controller.address} /></li>
+        <li><b>Correo para temas de privacidad:</b> {isPlaceholder(controller.email) ? <Fill value={controller.email} /> : <a href={`mailto:${controller.email}`}>{controller.email}</a>}</li>
+      </ul>
+      <p>En esta página lo llamamos «PCA» o «nosotros».</p>
+
+      <h2 id="datos">2. ¿Qué datos recogemos?</h2>
+      <ul>
+        <li><b>Los que escribes en el formulario:</b> nombre, apellidos, correo electrónico y teléfono. En los formularios de Business Office, también el edificio y el número de local. Además, la nota o el mensaje, si decides escribirlo.</li>
+        <li><b>De dónde llegas:</b> el código de la campaña o del código QR por el que entras (por ejemplo, el de un cartel), la página del formulario y la fecha y hora del envío.</li>
+        <li><b>Si reservas una cita:</b> los datos que introduces en el calendario de reservas (nombre, correo, día, hora y modalidad de la reunión).</li>
+        <li><b>Datos técnicos de la visita:</b> tu dirección IP y el tipo de navegador, que registran el servicio que aloja la web y el de tipografías (ver el punto 5).</li>
+      </ul>
+      <p>Los campos marcados con <b>*</b> son necesarios para atender tu solicitud: si no los rellenas, no podremos tramitarla. La nota es siempre opcional.</p>
+      <p><b>No te pedimos</b> datos de salud, ingresos, patrimonio ni documentos. Por favor, no los incluyas en la nota: si hacen falta más adelante, te los pediremos por un canal adecuado.</p>
+
+      <h2 id="finalidad">3. ¿Para qué usamos tus datos y con qué base legal?</h2>
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead><tr><th scope="col">Para qué</th><th scope="col">Base legal</th></tr></thead>
+          <tbody>
+            <tr><td>Atender tu solicitud, llamarte o escribirte para responderte.</td><td>Aplicar, a petición tuya, medidas precontractuales (art. 6.1.b RGPD).</td></tr>
+            <tr><td>Gestionar la cita, si decides reservarla, y enviarte la confirmación.</td><td>Aplicar, a petición tuya, medidas precontractuales (art. 6.1.b RGPD).</td></tr>
+            <tr><td>Saber por qué campaña o código QR nos encontraste, para medir qué publicidad funciona.</td><td>Nuestro interés legítimo en medir nuestras campañas (art. 6.1.f RGPD). Puedes oponerte.</td></tr>
+            <tr><td>Cumplir nuestras obligaciones legales y defendernos ante posibles reclamaciones.</td><td>Obligación legal (art. 6.1.c RGPD) e interés legítimo (art. 6.1.f RGPD).</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>No te enviaremos publicidad ni boletines, salvo que nos des tu consentimiento por separado. No tomamos decisiones automatizadas sobre ti ni elaboramos perfiles.</p>
+
+      <h2 id="plazo">4. ¿Cuánto tiempo guardamos tus datos?</h2>
+      <ul>
+        <li>Mientras atendemos tu solicitud.</li>
+        <li>Si no llegas a ser cliente, como máximo <b>{leadRetention}</b> desde nuestro último contacto. Si pasas a ser cliente, mientras dure la relación.</li>
+        <li>Después, los bloqueamos: solo se conservan para atender posibles responsabilidades legales durante los plazos que marca la ley, y luego se borran (art. 32 LOPDGDD).</li>
+      </ul>
+
+      <h2 id="destinatarios">5. ¿Quién puede ver tus datos?</h2>
+      <p>Solo el equipo de PCA que atiende tu solicitud, incluido el especialista del área que elijas. No vendemos ni cedemos tus datos a terceros, salvo cuando una ley nos obliga (por ejemplo, a jueces o autoridades).</p>
+      <p>Para funcionar usamos proveedores que tratan los datos por encargo nuestro, con un contrato que les obliga a protegerlos y a usarlos solo para lo que les pedimos (art. 28 RGPD):</p>
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead><tr><th scope="col">Proveedor</th><th scope="col">Para qué</th><th scope="col">Dónde</th></tr></thead>
+          <tbody>
+            {processors.map((p) => (
+              <tr><td><Fill value={p.name} /></td><td>{p.purpose}</td><td><Fill value={p.location} /></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="transferencias">6. ¿Salen tus datos de la Unión Europea?</h2>
+      <p>Algunos de estos proveedores están en Estados Unidos o pueden acceder a los datos desde allí. En esos casos la transferencia está protegida por una de las garantías que prevé el RGPD:</p>
+      <ul>
+        {outsideEu.map((p) => (
+          <li><b><Fill value={p.name} />:</b> <Fill value={p.safeguard ?? ''} />.</li>
+        ))}
+      </ul>
+      <p>Puedes pedirnos más información o una copia de estas garantías escribiendo al correo del punto 1.</p>
+
+      <h2 id="derechos">7. ¿Qué derechos tienes?</h2>
+      <ul>
+        <li><b>Acceso:</b> saber si tratamos tus datos y recibir una copia.</li>
+        <li><b>Rectificación:</b> corregir datos que estén mal o incompletos.</li>
+        <li><b>Supresión:</b> pedir que borremos tus datos.</li>
+        <li><b>Oposición:</b> pedir que dejemos de usarlos, por ejemplo para medir campañas.</li>
+        <li><b>Limitación:</b> pedir que los guardemos sin usarlos durante un tiempo, por ejemplo mientras comprobamos una corrección.</li>
+        <li><b>Portabilidad:</b> recibir tus datos en un formato que puedas llevar a otra empresa.</li>
+        <li><b>Retirar tu consentimiento</b>, si en algún momento nos lo das para algo, sin que afecte a lo hecho antes.</li>
+      </ul>
+      <p><b>Cómo ejercerlos:</b> escríbenos al correo del punto 1 con el asunto «Protección de datos» e indica qué derecho quieres ejercer. Es gratuito. Si tenemos dudas de que eres tú, podemos pedirte algo que lo confirme. Te responderemos en un plazo de un mes, que puede ampliarse dos meses más en casos complejos (art. 12.3 RGPD); si lo ampliamos, te avisaremos.</p>
+      <p><b>Reclamar:</b> si crees que no hemos tratado bien tus datos, puedes presentar una reclamación ante la {authority.name}, {authority.address}, <a href={authority.url} target="_blank" rel="noopener">{authority.url.replace('https://', '')}</a>.</p>
+
+      <h2 id="menores">8. Menores de edad</h2>
+      <p>Nuestros servicios están dirigidos a personas mayores de edad. Si tienes menos de 14 años, no nos envíes tus datos: en ese caso tendría que hacerlo tu madre, padre o tutor (art. 7 LOPDGDD).</p>
+
+      <h2 id="seguridad">9. ¿Cómo protegemos tus datos?</h2>
+      <p>Usamos conexión cifrada (HTTPS), solo acceden las personas del equipo que los necesitan, con usuario y contraseña personales, y trabajamos con proveedores que ofrecen garantías de seguridad. Si ocurriera un incidente que pusiera en riesgo tus datos, actuaríamos como marca la ley, incluido avisar a la AEPD y, cuando corresponda, a ti.</p>
+
+      <h2 id="cookies">10. Cookies y datos en tu navegador</h2>
+      <p>Esta web no usa cookies de análisis ni de publicidad. Solo guarda en tu navegador una cosa: el estilo de colores (Gold o Dark), y solo si lo cambias tú, para recordarlo cuando vuelvas. Puedes borrarlo desde los ajustes de tu navegador. El código de campaña viaja en la dirección de la página y no se guarda en tu navegador.</p>
+
+      <h2 id="terceros">11. Si nos das datos de otra persona</h2>
+      <p>Si escribes datos de otra persona (por ejemplo, de un socio o un familiar), debes contar con su permiso e informarle de esta política.</p>
+
+      <h2 id="cambios">12. Cambios en esta política</h2>
+      <p>Si cambiamos cómo tratamos tus datos, actualizaremos esta página y la fecha de arriba. Si el cambio es importante, te lo comunicaremos.</p>
+    </div>
+  </section>
+</BaseLayout>

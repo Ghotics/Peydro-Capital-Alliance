@@ -1,0 +1,29 @@
+---
+/* The dark panel next to every form: label, title, short text and a few checkmarks.
+     <FormAside eyebrow="PCA Business Office · Renta 92" title="Tecnología y Automatización"
+                text="…" perks={['…', '…']} foot="…" />
+   Styles: src/styles/components/_lead-form.scss (.form-aside) */
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  perks?: string[];
+  /** Small line at the bottom. */
+  foot?: string;
+}
+
+const { eyebrow, title, text, perks = [], foot } = Astro.props;
+---
+<aside class="form-aside">
+  <span class="fa-eyebrow">{eyebrow}</span>
+  <h1 class="fa-title">{title}</h1>
+  <span class="fa-rule" aria-hidden="true"></span>
+  <p class="fa-text">{text}</p>
+  {perks.length > 0 && (
+    <ul class="fa-perks">
+      {perks.map((perk) => <li>{perk}</li>)}
+    </ul>
+  )}
+  {foot && <p class="fa-foot">{foot}</p>}
+</aside>
