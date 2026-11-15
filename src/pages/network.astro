@@ -1,0 +1,99 @@
+---
+/* Network — /network */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import '../styles/pages/network.scss';
+
+const tiers = [
+  {
+    label: 'Core platform',
+    cards: [
+      { title: 'Capital formation', text: 'Long-term partners aligned with a multi-year horizon.' },
+      { title: 'Value creation', text: 'Operators embedded on the few priorities that matter.' },
+      { title: 'Talent', text: 'A bench of leaders for the moments a company must level up.' },
+      { title: 'Governance', text: 'Boards built to support, challenge and steady the ship.' },
+    ],
+  },
+  {
+    label: 'Focus areas',
+    cards: [
+      { title: 'Industrial & services', text: 'Essential businesses with real assets and loyal customers.' },
+      { title: 'Software & data', text: 'Durable recurring revenue and high retention.' },
+      { title: 'Healthcare', text: 'Mission-critical providers and the infrastructure behind them.' },
+      { title: 'Consumer staples', text: 'Brands that earn their place in everyday routines.' },
+    ],
+  },
+];
+
+/* placeholder people; "ink" = dark initials on a light avatar */
+const team = [
+  { initials: 'EM', name: 'Elena Moreau', role: 'Managing Partner', from: '#e6cd8c', to: '#c9a24b', ink: false },
+  { initials: 'DA', name: 'David Arroyo', role: 'Partner, Operations', from: '#9db4ff', to: '#5f7cff', ink: true },
+  { initials: 'NK', name: 'Nadia Kessler', role: 'Partner, Credit', from: '#f0d9a8', to: '#d8a94f', ink: false },
+  { initials: 'TO', name: 'Tomas Okafor', role: 'Head of Talent', from: '#b7c4d6', to: '#7c8aa0', ink: true },
+];
+
+const quotes = [
+  { text: '“They were the one investor who spent more time with our team than our spreadsheet. Three years in, that still shows.”', who: 'A. Marchetti', role: 'Founder, portfolio company' },
+  { text: '“Patient money is easy to promise and rare to find. PCA actually meant it when the quarter got hard.”', who: 'R. Osei', role: 'CEO, platform business' },
+  { text: "“The diligence was the most useful strategy review we'd ever had — and we hadn't even signed yet.”", who: 'L. Duarte', role: 'Operating partner' },
+];
+---
+<BaseLayout title="Network" description="The team, operating platform and focus sectors behind Peydro Capital Alliance.">
+  <PageHero
+    eyebrow="Network"
+    lead="The work is held together by a core team and a set of focus areas — people and functions companies can draw on from day one."
+    meta={[{ value: '24', label: 'Team' }, { value: '3', label: 'Offices' }, { value: '60+', label: 'Operating advisors' }]}
+  >A platform, <span class="serif-em">not a fund</span></PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      {tiers.map((tier) => (
+        <div class="tier reveal">
+          <div class="tier-label">{tier.label}</div>
+          <div class="card-row">
+            {tier.cards.map((card) => (
+              <div class="ncard"><div class="dot"></div><h4>{card.title}</h4><p>{card.text}</p></div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">People</span>
+        <h2 class="title">Partners you'll actually work with</h2>
+        <p class="lead">A small senior team — the people who diligence your business are the people who stay with it. (Fictional profiles.)</p>
+      </div>
+      <div class="team-grid">
+        {team.map((person, i) => (
+          <div class="member reveal" data-delay={i || undefined}>
+            <div class:list={['avatar', { ink: person.ink }]} style={`--from:${person.from};--to:${person.to}`}>{person.initials}</div>
+            <h4>{person.name}</h4>
+            <p>{person.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec quotes alt-bg">
+    <div class="wrap">
+      <span class="eyebrow reveal">Voices</span>
+      <div class="quote-stage" id="quoteStage">
+        {quotes.map((quote, i) => (
+          <figure class:list={['quote', { on: i === 0 }]}>
+            <blockquote>{quote.text}</blockquote>
+            <figcaption class="who">{quote.who} <span>· {quote.role}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="dots" id="quoteDots" aria-label="Choose a quote"></div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/network';</script>
+</BaseLayout>

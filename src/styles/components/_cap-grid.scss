@@ -1,0 +1,57 @@
+@use '../abstracts' as *;
+
+/* Grid of icon cards with thin dividers (Home, Approach, Capabilities) */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+
+  @include down($bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cap {
+  position: relative;
+  background: var(--surface);
+  padding: 2.2rem;
+  transition: background .45s var(--ease);
+
+  &:hover {
+    background: var(--surface-2);
+  }
+
+  .ic {
+    width: 46px;
+    height: 46px;
+    color: var(--gold);
+    margin-bottom: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .idx {
+    position: absolute;
+    top: 1.6rem;
+    right: 1.8rem;
+    font-size: .75rem;
+    color: var(--muted-2);
+    letter-spacing: .1em;
+  }
+}

@@ -1,0 +1,46 @@
+@use '../abstracts' as *;
+
+/* Scroll reveal: anything with .reveal fades up when it enters the screen
+   (scripts/global/reveal.ts adds .in). data-delay="1…5" staggers items in a row. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+
+  &.in {
+    opacity: 1;
+    transform: none;
+  }
+
+  &[data-delay="1"] { transition-delay: .08s; }
+  &[data-delay="2"] { transition-delay: .16s; }
+  &[data-delay="3"] { transition-delay: .24s; }
+  &[data-delay="4"] { transition-delay: .32s; }
+  &[data-delay="5"] { transition-delay: .40s; }
+}
+
+/* shared animations */
+@keyframes drift1 { to { transform: translate(80px, 40px) scale(1.1); } }
+@keyframes drift2 { to { transform: translate(-70px, 50px) scale(1.08); } }
+@keyframes drift3 { to { transform: translate(40px, -60px) scale(1.12); } }
+@keyframes cue {
+  0% { top: -50%; }
+  100% { top: 120%; }
+}
+
+/* less motion: switch every animation off and show everything straight away */
+@include reduced-motion {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,190 @@
+@use '../abstracts' as *;
+
+/* Network page (src/pages/network.astro) */
+
+/* ---------- platform + focus areas ---------- */
+.tier {
+  margin-top: 2.5rem;
+
+  .tier-label {
+    font-size: .75rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+  }
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+
+  @include down($bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ncard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: transform .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease);
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: 0 24px 50px -30px rgba(201, 162, 75, .5);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-bottom: 1rem;
+    box-shadow: 0 0 0 4px rgba(201, 162, 75, .15);
+  }
+
+  h4 {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: .35rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .85rem;
+  }
+}
+
+/* ---------- team ---------- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+
+  @include down($bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.member {
+  .avatar {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--on-gold);
+    background: linear-gradient(135deg, var(--from), var(--to));
+    margin-bottom: 1rem;
+    transition: transform .45s var(--ease);
+
+    /* cool-toned avatars keep dark initials in both palettes */
+    &.ink {
+      color: #0a0c13;
+    }
+  }
+
+  &:hover .avatar {
+    transform: translateY(-6px);
+  }
+
+  h4 {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .85rem;
+  }
+}
+
+/* ---------- rotating quotes (scripts/pages/network.ts) ---------- */
+.quotes {
+  text-align: center;
+
+  .eyebrow {
+    justify-content: center;
+  }
+}
+
+.quote-stage {
+  position: relative;
+  min-height: 230px;
+  max-width: 800px;
+  margin: 2rem auto 0;
+}
+
+.quote {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+
+  &.on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.8vw, 1.9rem);
+    line-height: 1.4;
+  }
+
+  .who {
+    margin-top: 1.4rem;
+    color: var(--gold-2);
+    font-family: var(--font-ui);
+    font-size: .9rem;
+
+    span {
+      color: var(--muted);
+    }
+  }
+}
+
+.dots {
+  display: flex;
+  gap: .6rem;
+  justify-content: center;
+  margin-top: 2rem;
+
+  button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--line-2);
+    transition: .3s var(--ease);
+
+    &.on {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+  }
+}

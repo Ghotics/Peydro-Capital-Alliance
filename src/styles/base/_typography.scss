@@ -1,0 +1,50 @@
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+}
+
+h2.title {
+  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+  margin: .5rem 0 1rem;
+}
+
+/* small gold label above a heading, with a short line before it */
+.eyebrow {
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+
+  &::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+    opacity: .6;
+  }
+}
+
+.lead {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  max-width: 56ch;
+}
+
+.serif-em {
+  font-style: italic;
+  color: var(--gold-2);
+}
+
+/* small grey print, e.g. "Illustrative — figures are fictional." */
+.note {
+  color: var(--muted-2);
+  font-size: .85rem;
+}

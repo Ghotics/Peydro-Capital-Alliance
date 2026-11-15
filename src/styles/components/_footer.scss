@@ -1,0 +1,86 @@
+@use '../abstracts' as *;
+
+/* Site footer (components/Footer.astro) */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--line);
+  background: var(--bg-2);
+}
+
+.foot-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  h5 {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+  }
+
+  a {
+    display: block;
+    color: var(--muted);
+    font-size: .9rem;
+    padding: .3rem 0;
+    transition: color .3s var(--ease);
+
+    &:hover {
+      color: var(--gold-2);
+    }
+  }
+
+  @include down($bp-lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.foot-brand p {
+  color: var(--muted);
+  font-size: .9rem;
+  max-width: 34ch;
+  margin-top: 1rem;
+}
+
+.foot-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted-2);
+  font-size: .82rem;
+
+  .demo-tag {
+    color: var(--gold);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: .3em .9em;
+    font-size: .72rem;
+    letter-spacing: .08em;
+  }
+}
+
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  color: var(--muted);
+  transition: color .3s var(--ease);
+
+  &:hover {
+    color: var(--gold-2);
+  }
+}

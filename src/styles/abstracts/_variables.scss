@@ -1,0 +1,10 @@
+/* Breakpoints (screen widths). Use them with the down() mixin:  @include down($bp-sm) { … }
+   Colours, fonts and spacing are CSS custom properties in base/_tokens.scss,
+   so they can change at runtime (Gold / Dark palette). */
+
+$bp-nav-tight: 1180px; /* top bar starts to tighten, "Investor login" hides */
+$bp-nav: 1080px;       /* top bar switches to the menu button (keep in sync with scripts/global/menu.ts) */
+$bp-lg: 980px;         /* most grids drop to 2 columns */
+$bp-md: 760px;         /* palette switch moves into the menu */
+$bp-sm: 620px;         /* phones */
+$bp-xs: 350px;         /* very small phones */

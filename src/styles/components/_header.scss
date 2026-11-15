@@ -1,0 +1,242 @@
+@use '../abstracts' as *;
+
+/* Top bar (components/Header.astro). The phone/tablet menu is in _mobile-menu.scss */
+
+/* reading-progress line at the very top */
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  z-index: 120;
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  transition: width .1s linear;
+}
+
+header.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid transparent;
+  transition: background .5s var(--ease), border-color .5s var(--ease), backdrop-filter .5s var(--ease);
+
+  /* added by scripts/global/scroll.ts once the page is scrolled */
+  &.scrolled {
+    background: var(--header-bg);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--line);
+  }
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  transition: height .5s var(--ease);
+
+  header.nav.scrolled & {
+    height: 64px;
+  }
+
+  @include down($bp-sm) {
+    height: 64px;
+
+    header.nav.scrolled & {
+      height: 60px;
+    }
+  }
+}
+
+/* logo + name */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .6em;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+
+  .brand-sub {
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex: none;
+    background: conic-gradient(from 210deg, var(--gold), var(--gold-2), var(--gold));
+    display: grid;
+    place-items: center;
+    color: var(--on-gold);
+    font-size: .9rem;
+    font-weight: 800;
+    font-family: var(--font-ui);
+  }
+
+  @include down($bp-sm) {
+    font-size: 1.12rem;
+    gap: .5em;
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      font-size: .85rem;
+    }
+  }
+
+  @include down($bp-xs) {
+    font-size: 1rem;
+  }
+}
+
+/* desktop links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  a {
+    font-size: .9rem;
+    color: var(--muted);
+    position: relative;
+    transition: color .3s var(--ease);
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      height: 1px;
+      width: 0;
+      background: var(--gold);
+      transition: width .35s var(--ease);
+    }
+
+    &:hover,
+    &.active {
+      color: var(--text);
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  @include down($bp-nav-tight) {
+    gap: 1.5rem;
+  }
+
+  @include down($bp-nav) {
+    display: none;
+  }
+}
+
+/* right side: palette switch, buttons, menu button */
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  > * {
+    flex: none;
+  }
+
+  .btn {
+    white-space: nowrap;
+  }
+
+  /* make room as the screen narrows; everything hidden here is still in the menu */
+  @include down($bp-nav-tight) {
+    gap: .9rem;
+
+    .btn-ghost {
+      display: none;
+    }
+  }
+
+  @include down($bp-md) {
+    .theme-toggle {
+      display: none;
+    }
+  }
+
+  @include down($bp-sm) {
+    .btn-primary {
+      display: none;
+    }
+  }
+}
+
+/* menu button (three lines that turn into an X) */
+.hamburger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  place-items: center;
+  flex: none;
+  transition: border-color .3s var(--ease);
+
+  &:hover {
+    border-color: var(--gold);
+  }
+
+  span,
+  span::before,
+  span::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text);
+    transition: .3s var(--ease);
+  }
+
+  span {
+    position: relative;
+  }
+
+  span::before,
+  span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+
+  span::before {
+    top: -6px;
+  }
+
+  span::after {
+    top: 6px;
+  }
+
+  body.menu-open & {
+    span {
+      background: transparent;
+    }
+
+    span::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    span::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+  }
+
+  @include down($bp-nav) {
+    display: grid;
+  }
+}

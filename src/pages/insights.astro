@@ -1,0 +1,62 @@
+---
+/* Insights — /insights */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import '../styles/pages/insights.scss';
+
+/* placeholder articles — later these can come from Markdown files or a CMS */
+const posts = [
+  { meta: 'Operating · 4 min', title: 'Three numbers that matter', text: 'Most dashboards are noise. A simple case for tracking almost nothing.' },
+  { meta: 'People · 5 min', title: 'Hiring for the second decade', text: 'What changes when you plan to own something for ten years, not two.' },
+  { meta: 'Markets · 6 min', title: 'Patience as an edge', text: 'When everyone else is forced to sell, time becomes the scarcest asset.' },
+  { meta: 'Diligence · 5 min', title: 'The question we ask first', text: "Durability beats growth in almost every deal we've been glad we did." },
+  { meta: 'Credit · 4 min', title: 'When debt is the kinder tool', text: 'Not every good business needs to sell equity to get where it\'s going.' },
+  { meta: 'Culture · 3 min', title: 'Boring on purpose', text: 'A quiet quarter is often the sign of a company doing something right.' },
+];
+---
+<BaseLayout title="Insights" description="Occasional writing from Peydro Capital Alliance on ownership, operating and the discipline of patience.">
+  <PageHero
+    eyebrow="Insights"
+    lead="Occasional writing on ownership, operating and the discipline of patience."
+    meta={[{ value: 'Weekly', label: 'Cadence' }, { value: '4 min', label: 'Avg. read' }]}
+  >Notes from the <span class="serif-em">long view</span></PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="featured reveal">
+        <div class="fthumb"></div>
+        <div class="fbody">
+          <div class="meta">Featured · Ownership · 8 min</div>
+          <h3>The cost of a short clock</h3>
+          <p>Why quarterly thinking quietly erodes the businesses it's meant to protect — and what a longer horizon changes about every decision underneath.</p>
+          <span class="textlink">Read the essay <span class="arrow">→</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="posts">
+        {posts.map((post, i) => (
+          <article class="post reveal" data-delay={i % 3 || undefined}>
+            <div class="thumb"></div>
+            <div class="body"><div class="meta">{post.meta}</div><h3>{post.title}</h3><p>{post.text}</p><span class="more">Read →</span></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="news reveal" id="newsBox">
+        <h3>The long view, occasionally</h3>
+        <p>A short note when we publish something worth your time. No noise. (Demo — nothing is collected.)</p>
+        <form id="newsForm"><input type="email" placeholder="you@example.com" aria-label="Email" /><button type="submit" class="btn btn-primary">Subscribe</button></form>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/insights';</script>
+</BaseLayout>

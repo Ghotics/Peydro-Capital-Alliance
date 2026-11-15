@@ -1,0 +1,73 @@
+---
+/* Approach — /approach */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import '../styles/pages/approach.scss';
+
+const steps = [
+  { title: 'Originate', text: "Our best deals come from relationships years in the making. We'd rather know a company long before it's for sale." },
+  { title: 'Diligence', text: "We go deep on unit economics, people and durability — and we're honest early when the fit isn't there." },
+  { title: 'Partner', text: 'Aligned terms, a clear plan, and a small set of priorities we pursue shoulder-to-shoulder with management.' },
+  { title: 'Compound', text: "We stay patient, reinvest behind what's working, and let time and discipline do the heavy lifting." },
+];
+
+const history = [
+  { year: '2019', title: 'PCA is founded', text: 'Three partners and a simple thesis: patient capital for the lower-middle market.' },
+  { year: '2021', title: 'First platform exits', text: 'Two early partnerships reach maturity, validating the long-hold model.' },
+  { year: '2023', title: 'Credit mandate opens', text: "We extend into flexible private credit for situations equity alone can't solve." },
+  { year: '2026', title: 'Third office', text: 'Singapore joins London and Zürich as the platform goes global.' },
+];
+---
+<BaseLayout title="Approach" description="How Peydro Capital Alliance invests: three principles and a four-stage process, built around a long holding period.">
+  <PageHero
+    eyebrow="Approach"
+    lead="We underwrite people first and hold for the long arc. Three principles shape every partnership — and a four-stage process keeps us honest."
+    meta={[{ value: '3', label: 'Principles' }, { value: '4', label: 'Process stages' }, { value: '7yr', label: 'Avg. hold' }]}
+  >Judgment, alignment, <span class="serif-em">time</span>.</PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="cap-grid">
+        <div class="cap reveal"><div class="idx">01</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" /></svg><h3>Conviction over consensus</h3><p>A handful of businesses we understand deeply, rather than a sprawling book we can't.</p></div>
+        <div class="cap reveal" data-delay="1"><div class="idx">02</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg><h3>A longer clock</h3><p>We structure every partnership so time is an ally, not a pressure.</p></div>
+        <div class="cap reveal" data-delay="2"><div class="idx">03</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" /></svg><h3>Operating alongside</h3><p>A bench of operators who have built and scaled, embedded with management.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement alt-bg">
+    <div class="wrap reveal">
+      <p class="big">“We ask one question before every deal: <span class="hl">would we be proud to own this in ten years?</span>”</p>
+      <p class="by">— Investment committee principle</p>
+    </div>
+  </section>
+
+  <section class="sec process" id="process">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Process</span>
+        <h2 class="title">How a partnership takes shape</h2>
+        <p class="lead">Four stages, no shortcuts. The line fills as you scroll.</p>
+      </div>
+      <div class="steps" id="steps">
+        <div class="rail"><div class="fill" id="railFill"></div></div>
+        {steps.map((step, i) => (
+          <div class="step reveal"><div class="bullet">{i + 1}</div><div><h3>{step.title}</h3><p>{step.text}</p></div></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush-top">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">Since 2019</span><h2 class="title">A short history</h2></div>
+      <div class="timeline">
+        {history.map((item) => (
+          <div class="tl reveal"><div class="yr">{item.year}</div><div><h4>{item.title}</h4><p>{item.text}</p></div></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/pages/approach';</script>
+</BaseLayout>
