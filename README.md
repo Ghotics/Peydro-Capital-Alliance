@@ -2,6 +2,7 @@
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
 Six pages (Home, Approach, Capabilities, Network, Insights, Contact) plus a 404 page, a Gold / Dark palette switch, and a phone menu.
+It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
 > **Placeholder content.** Figures, people, quotes, offices and history are demo content until PCA provides the real details.
 > The CRM is a separate application and is **not** part of this repository.
@@ -30,21 +31,31 @@ src/
 │  ├─ network.astro        /network
 │  ├─ insights.astro       /insights
 │  ├─ contact.astro        /contact
+│  ├─ giza.astro           /giza                      Form 1 (in the menu)
+│  ├─ asesoramiento/       Form 2, QR only (hidden)
+│  │  ├─ index.astro       /asesoramiento             landing + department picker
+│  │  └─ [area].astro      /asesoramiento/<area>      one page per department
+│  ├─ contacto-rapido.astro /contacto-rapido          Form 3, outside links only (hidden)
 │  └─ 404.astro            shown for unknown addresses
 ├─ layouts/
-│  └─ BaseLayout.astro     <head>, top bar, menu, footer — shared by every page
+│  ├─ BaseLayout.astro     <head>, top bar, menu, footer — shared by the site pages
+│  └─ FunnelLayout.astro   lighter frame for the QR-only pages (no menu, not in Google)
 ├─ components/             pieces used on several pages
 │  ├─ Header.astro         top bar + phone/tablet menu
 │  ├─ Footer.astro
 │  ├─ PageHero.astro       the "first view" at the top of inner pages
+│  ├─ SiteHead.astro       everything inside <head>
 │  ├─ Brand.astro          logo + name
-│  └─ ThemeToggle.astro    Gold ⇄ Dark switch
+│  ├─ ThemeToggle.astro    Gold ⇄ Dark switch
+│  └─ forms/               LeadForm (the form card), FormAside (dark side panel), FormIcon
 ├─ data/
-│  └─ site.ts              firm name, emails, menu links
+│  ├─ site.ts              firm name, emails, menu links
+│  └─ forms.ts             form texts: departments, interests, buildings, booking links
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
 │  ├─ pages/               one file per page (counters, accordion, contact form…)
+│  ├─ forms/               lead forms: steps + checks, QR code tracking, sending
 │  └─ utils/
 └─ styles/                 SCSS
    ├─ main.scss            global styles, loaded by BaseLayout
@@ -63,6 +74,8 @@ src/
 | Change colours or fonts | `src/styles/base/_tokens.scss` |
 | Change a screen-size breakpoint | `src/styles/abstracts/_variables.scss` |
 | Style something on one page only | `src/styles/pages/<page>.scss` |
+| Change a form text, department name, interest or building | `src/data/forms.ts` |
+| Connect a specialist's calendar | `calLink` in `src/data/forms.ts` |
 
 ### Adding a page
 
@@ -91,6 +104,25 @@ src/
 - Less motion: `@include reduced-motion { … }`. All animations already switch off for visitors who ask their system for less motion.
 - Scroll reveal: add `class="reveal"` (and optionally `data-delay="1"`…`"5"`) to fade an element up as it scrolls into view.
 
+## Lead forms
+
+| Form | Address | How people reach it | Steps |
+| --- | --- | --- | --- |
+| 1 · Giza (Irene) | `/giza` | site menu, QR codes | interests → contact → optional booking |
+| 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | financial: interests → contact; others: contact only; then optional booking |
+| 3 · Quick | `/contacto-rapido` | **outside links only** | contact only (template — fields may change) |
+
+- The QR-only pages use `FunnelLayout`: no site menu, a short footer, and `noindex` so search engines leave them out.
+  Anyone with the address can still open them — hidden is not the same as private.
+- **QR / link tracking:** give every QR code or link its own code, e.g. `/asesoramiento?c=renta92-portal-14`.
+  `scripts/forms/attribution.ts` keeps the code (and any `utm_…` tags) for the visit and the form sends it with the lead.
+- **Field names** (`first_name`, `email`, `building`…) are the future database column names.
+- **Sending is a demo for now.** `scripts/forms/submit.ts` prints the lead in the browser console instead of sending it.
+  When the backend is ready, only that file changes. The forms show a small "Modo demo" note until then.
+- **Booking:** after sending, Giza and Business Office offer "Reservar asesoramiento". It opens the specialist's Cal.com page
+  with the name and email filled in. Until `calLink` is set in `data/forms.ts`, the button explains the calendar isn't connected yet.
+- A hidden "website" field catches spam bots: if it is filled in, the form pretends to succeed and sends nothing.
+
 ## Palette switch
 
 The choice is saved in the browser under the `pca-palette` key. A tiny inline script in `BaseLayout.astro` applies a saved Dark choice before the page paints, so there's no flash of Gold. The switch logic is `src/scripts/global/theme.ts`.
@@ -110,4 +142,7 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
 - [ ] Make the contact form actually send (a form service or a server endpoint that passes leads to the CRM).
+- [ ] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
+- [ ] Real privacy page for the forms' "Política de privacidad" link (`privacyHref` in `src/data/forms.ts`).
+- [ ] Cal.com links for Irene and the four specialists (`calLink` in `src/data/forms.ts`).
 - [ ] Analytics only with cookie consent.

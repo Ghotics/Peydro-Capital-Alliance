@@ -1,0 +1,473 @@
+@use '../abstracts' as *;
+
+/* Lead form pages: Giza (/giza), Business Office (/asesoramiento/…) and the quick form (/contacto-rapido).
+   Layout: a dark side panel (.form-aside) next to a card (.form-card) that holds the form (.lead-form).
+   Markup: components/forms/FormAside.astro and LeadForm.astro. Text fields: _form-fields.scss */
+
+/* ---------- page frame ---------- */
+.form-page {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(110px, 16vh, 140px) 0 clamp(4rem, 10vh, 6rem);
+
+  > .wrap {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* small rounded label above the form ("Solicitud de orientación · Un solo paso") */
+.form-badge,
+.lf-pill {
+  display: inline-block;
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(194, 160, 92, .13);
+  border: 1px solid rgba(194, 160, 92, .28);
+  padding: .45em 1em;
+  border-radius: 999px;
+}
+
+.form-badge {
+  margin-bottom: 1.4rem;
+}
+
+.form-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+
+  @include down($bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- dark side panel ---------- */
+.form-aside {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 3.5vw, 2.4rem);
+  border-radius: 20px;
+  color: #f4efe4;
+  background: linear-gradient(165deg, #2a2216 0%, #14110b 55%, #0c0a07 100%);
+  box-shadow: 0 30px 60px -40px rgba(34, 28, 18, .7);
+
+  @include dark {
+    background: linear-gradient(165deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line);
+    box-shadow: none;
+  }
+
+  /* thin arc in the bottom corner, as in the mockups */
+  &::after {
+    content: "";
+    position: absolute;
+    left: -90px;
+    bottom: -150px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 162, 75, .25);
+    pointer-events: none;
+  }
+
+  .fa-eyebrow {
+    font-size: .68rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #e6cd8c;
+  }
+
+  .fa-title {
+    font-size: clamp(1.75rem, 2.6vw, 2.05rem);
+    line-height: 1.12;
+    margin-top: 1rem;
+    color: #fbf7ee;
+    overflow-wrap: break-word;
+  }
+
+  .fa-rule {
+    width: 48px;
+    height: 2px;
+    margin: 1.4rem 0;
+    background: linear-gradient(90deg, #c9a24b, #e6cd8c);
+  }
+
+  .fa-text {
+    color: rgba(244, 239, 228, .78);
+    font-size: .95rem;
+  }
+
+  .fa-perks {
+    margin-top: 1.4rem;
+
+    li {
+      position: relative;
+      padding: .75rem 0 .75rem 1.6rem;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      font-size: .88rem;
+
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #e6cd8c;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .fa-foot {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-size: .8rem;
+    color: #e6cd8c;
+  }
+
+  @include down($bp-sm) {
+    .fa-perks,
+    .fa-foot {
+      display: none;
+    }
+
+    .fa-rule {
+      margin: 1rem 0;
+    }
+  }
+}
+
+/* ---------- the form card ---------- */
+.form-card {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  box-shadow: 0 30px 70px -50px rgba(58, 44, 18, .45);
+
+  @include dark {
+    box-shadow: none;
+  }
+}
+
+.lead-form {
+  /* room for the fixed top bar when the script scrolls the card into view */
+  scroll-margin-top: 96px;
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* only the current step is shown (scripts/forms/lead-form.ts moves the .on class) */
+.lf-step {
+  display: none;
+
+  &.on {
+    display: block;
+    animation: lfIn .45s var(--ease-out);
+  }
+}
+
+@keyframes lfIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.lf-title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin: 1rem 0 .5rem;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.lf-sub {
+  color: var(--muted);
+  font-size: .95rem;
+  margin-bottom: 1.8rem;
+  max-width: 60ch;
+}
+
+/* ---------- step 1: interest cards (tick one or more) ---------- */
+.lf-options {
+  border: 0;
+  display: grid;
+  gap: .8rem;
+
+  .msg {
+    display: none;
+    color: var(--red);
+    font-size: .78rem;
+  }
+
+  &.err {
+    .msg {
+      display: block;
+    }
+
+    .lf-option {
+      border-color: var(--red);
+    }
+  }
+}
+
+.lf-option {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+
+  /* the real checkbox stays in the page (keyboard + screen readers) but is drawn by .lf-box */
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  &:hover {
+    border-color: var(--line-2);
+  }
+
+  &:has(input:checked) {
+    border-color: var(--gold);
+    background: var(--surface-2);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+
+  strong {
+    display: block;
+    font-weight: 600;
+  }
+
+  small {
+    display: block;
+    color: var(--muted);
+    font-size: .84rem;
+    margin-top: .15rem;
+  }
+}
+
+.lf-box {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: .2rem;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--muted-2);
+  border-radius: 6px;
+  transition: background .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+
+  &::after {
+    content: "";
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid var(--on-gold);
+    border-bottom: 2px solid var(--on-gold);
+    transform: translateY(-1px) rotate(-45deg);
+    opacity: 0;
+  }
+
+  input:checked + & {
+    background: linear-gradient(135deg, var(--gold-2), var(--gold));
+    border-color: transparent;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  input:focus-visible + & {
+    box-shadow: 0 0 0 3px var(--gold-ring);
+  }
+}
+
+/* ---------- privacy tick box ---------- */
+.lf-check {
+  margin: .4rem 0 1.2rem;
+
+  .msg {
+    display: none;
+    color: var(--red);
+    font-size: .78rem;
+    margin-top: .4rem;
+    padding-left: 2rem;
+  }
+
+  &.err {
+    .msg {
+      display: block;
+    }
+
+    input {
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.lf-consent {
+  display: flex;
+  gap: .8rem;
+  align-items: flex-start;
+  font-size: .86rem;
+  color: var(--muted);
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    margin-top: .15rem;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .req {
+    color: var(--gold);
+  }
+}
+
+/* hidden trap for spam bots */
+.lf-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.lf-alert {
+  margin-bottom: 1rem;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  font-size: .86rem;
+  color: var(--text);
+  background: rgba(224, 96, 95, .1);
+  border: 1px solid rgba(224, 96, 95, .45);
+}
+
+/* ---------- back link + main button ---------- */
+.lf-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+
+  .btn[disabled] {
+    opacity: .7;
+    cursor: progress;
+    transform: none;
+  }
+
+  @include down($bp-sm) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    .btn {
+      justify-content: center;
+    }
+
+    .lf-back {
+      align-self: center;
+    }
+  }
+}
+
+.lf-back {
+  color: var(--muted);
+  font-size: .9rem;
+  transition: color .3s var(--ease);
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.lf-note {
+  margin-top: 1rem;
+  font-size: .78rem;
+  color: var(--muted-2);
+}
+
+/* ---------- after sending ---------- */
+.lf-done {
+  text-align: center;
+  padding: 1rem 0;
+
+  &.on .lf-done-icon {
+    animation: lfPop .6s var(--ease-out);
+  }
+
+  .lf-sub {
+    margin-inline: auto;
+    max-width: 52ch;
+  }
+}
+
+.lf-done-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(194, 160, 92, .14);
+  border: 1px solid var(--gold);
+
+  svg {
+    width: 32px;
+    height: 32px;
+    color: var(--gold);
+  }
+}
+
+@keyframes lfPop {
+  0% { transform: scale(.5); opacity: 0; }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.lf-actions {
+  display: flex;
+  gap: .8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.lf-info {
+  max-width: 52ch;
+  margin: 0 auto .8rem;
+  padding: .8rem 1rem;
+  font-size: .82rem;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}

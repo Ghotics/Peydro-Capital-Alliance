@@ -15,12 +15,14 @@ interface Props {
   hint?: string;
   /** Shorter hero (used on Contact and 404). */
   compact?: boolean;
+  /** id of the hero section, e.g. "business-office" (for links or page-specific styles). */
+  id?: string;
 }
 
-const { eyebrow, lead, meta = [], hint = 'Keep scrolling', compact = false } = Astro.props;
+const { eyebrow, lead, meta = [], hint = 'Keep scrolling', compact = false, id } = Astro.props;
 const hasActions = Astro.slots.has('actions');
 ---
-<section class:list={['page-hero', { compact }]}>
+<section class:list={['page-hero', { compact }]} id={id}>
   <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
   <div class="wrap ph-load">
     <span class="eyebrow">{eyebrow}</span>

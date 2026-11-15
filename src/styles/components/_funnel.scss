@@ -1,0 +1,91 @@
+@use '../abstracts' as *;
+
+/* Top bar and footer of the QR-only pages (layouts/FunnelLayout.astro).
+   The top bar reuses the normal header.nav styles (_header.scss) and only adds the partner name. */
+
+.funnel-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+/* "En colaboración con RENTA 92" next to the logo */
+.partner {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--line-2);
+  white-space: nowrap;
+
+  small {
+    font-size: .6rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  b {
+    font-size: .9rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  em {
+    font-style: normal;
+    font-size: .66rem;
+    color: var(--muted-2);
+  }
+
+  @include down($bp-md) {
+    display: none;
+  }
+}
+
+.funnel-nav .nav-links {
+  a {
+    white-space: nowrap;
+  }
+
+  @include down($bp-nav-tight) {
+    display: none;
+  }
+}
+
+/* there is no phone menu on these pages, so the palette switch stays in the bar */
+.funnel-nav .nav-cta .theme-toggle {
+  @include down($bp-md) {
+    display: inline-flex;
+  }
+}
+
+.funnel-foot {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  padding: 1.6rem 0;
+  font-size: .8rem;
+  color: var(--muted-2);
+
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: .8rem 2rem;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  a {
+    transition: color .3s var(--ease);
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}

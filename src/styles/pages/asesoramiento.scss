@@ -1,0 +1,230 @@
+@use '../abstracts' as *;
+
+/* Business Office landing (src/pages/asesoramiento/index.astro):
+   department cards, the "not sure which one" box and the four "how it works" steps. */
+
+/* the hero holds figures and two buttons: extra room at the bottom so the "Elige tu área" line never covers them */
+#business-office {
+  padding-bottom: 140px;
+}
+
+/* ---------- department cards ---------- */
+.bo-areas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+
+  @include down($bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bo-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  /* opacity is listed so the scroll fade-in (.reveal) still works */
+  transition: opacity .9s var(--ease-out), transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 24px 50px -36px rgba(58, 44, 18, .6);
+
+    .bo-go {
+      transform: translate(2px, -2px);
+      color: var(--gold);
+    }
+
+    .bo-cta {
+      border-color: var(--gold);
+      background: var(--surface-2);
+
+      .arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+}
+
+.bo-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .9rem 1.2rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.bo-num {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.bo-go {
+  color: var(--muted-2);
+  transition: transform .4s var(--ease), color .4s var(--ease);
+}
+
+.bo-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  padding: 1.3rem 1.2rem;
+}
+
+.bo-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--gold);
+}
+
+.bo-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.bo-desc {
+  flex: 1;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.bo-cta {
+  margin-top: .6rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .4em;
+  padding: .65em 1em;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--gold);
+  transition: border-color .3s var(--ease), background .3s var(--ease);
+
+  .arrow {
+    transition: transform .35s var(--ease);
+  }
+}
+
+/* "¿No tienes claro qué departamento elegir?" */
+.bo-unsure {
+  margin-top: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.2rem 2rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: .2rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .9rem;
+  }
+}
+
+.bo-note {
+  margin-top: 1rem;
+  padding: .75rem 1rem;
+  font-size: .8rem;
+  color: var(--muted);
+  background: rgba(194, 160, 92, .08);
+  border: 1px solid rgba(194, 160, 92, .2);
+  border-radius: 12px;
+}
+
+/* ---------- how it works ---------- */
+.bo-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+
+  @include down($bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  li {
+    padding: 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1rem 0 .3rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .88rem;
+  }
+}
+
+.bo-step-top {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.bo-step-n {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: var(--on-gold);
+  font-weight: 700;
+  font-size: .85rem;
+}
+
+.bo-step-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--gold);
+}
+
+.bo-info {
+  margin-top: 1.6rem;
+  padding: .9rem 1.2rem;
+  font-size: .88rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+
+  strong {
+    color: var(--text);
+  }
+}
