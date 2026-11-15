@@ -2,6 +2,7 @@
 /* Home — /  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../utils/url';
+import { contactHref } from '../data/site';
 import '../styles/pages/home.scss';
 
 /* key figures (placeholders) — the numbers count up when they scroll into view */
@@ -22,7 +23,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <h1><span class="line"><span>Patient capital for</span></span><span class="line"><span>companies built <em class="serif-em">to last</em>.</span></span></h1>
       <p class="intro">Peydro Capital Alliance partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.</p>
       <div class="hero-actions">
-        <a href={url('/contact')} class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
+        <a href={url(contactHref)} class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
         <a href={url('/approach')} class="btn btn-ghost">Our approach</a>
       </div>
     </div>
@@ -91,7 +92,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <div class="cta-box reveal">
         <h2>Building something worth holding?</h2>
         <p>We back a small number of companies each year. If the timing is right, we'd like to hear from you.</p>
-        <a href={url('/contact')} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+        <a href={url(contactHref)} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
       </div>
     </div>
   </section>

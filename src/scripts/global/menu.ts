@@ -2,7 +2,7 @@
 
 const OPEN_CLASS = 'menu-open';
 /** Above this width the full top bar is shown — keep in sync with $bp-nav in styles/abstracts/_variables.scss */
-const DESKTOP_MIN_WIDTH = 1080;
+const DESKTOP_MIN_WIDTH = 1180;
 
 export function initMenu(): void {
   const button = document.getElementById('hamburger');

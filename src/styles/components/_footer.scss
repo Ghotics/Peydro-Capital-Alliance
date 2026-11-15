@@ -24,7 +24,8 @@
     margin-bottom: 1.1rem;
   }
 
-  a {
+  /* footer links, one per line (not the logo, which is also a link) */
+  a:not(.brand) {
     display: block;
     color: var(--muted);
     font-size: .9rem;

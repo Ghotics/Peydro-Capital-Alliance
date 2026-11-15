@@ -2,6 +2,7 @@
 /* Shown for any address that doesn't exist */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../utils/url';
+import { contactHref } from '../data/site';
 import PageHero from '../components/PageHero.astro';
 ---
 <BaseLayout title="Page not found" description="This page doesn't exist.">
@@ -13,7 +14,7 @@ import PageHero from '../components/PageHero.astro';
   >This page has <span class="serif-em">moved on</span>
     <Fragment slot="actions">
       <a href={url('/')} class="btn btn-primary">Back to home <span class="arrow">→</span></a>
-      <a href={url('/contact')} class="btn btn-ghost">Contact us</a>
+      <a href={url(contactHref)} class="btn btn-ghost">Contact us</a>
     </Fragment>
   </PageHero>
 </BaseLayout>

@@ -1,0 +1,125 @@
+@use '../abstracts' as *;
+
+/* Quiénes somos page (src/pages/quienes-somos.astro) */
+
+/* ---------- "Qué es PCA": heading on the left, text on the right ---------- */
+.about-intro {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 3.5rem;
+  align-items: start;
+
+  h2.title {
+    margin-bottom: 0;
+  }
+
+  .body p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.1rem;
+
+    &:first-child {
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      line-height: 1.45;
+    }
+  }
+
+  @include down($bp-lg) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ---------- Arquitectura PCA: five areas in three groups ---------- */
+.area-group {
+  margin-top: 2.6rem;
+
+  /* group name with a line after it */
+  .group-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+    font-size: .75rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+  }
+}
+
+.area-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.area {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: transform .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease);
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 24px 50px -30px rgba(201, 162, 75, .5);
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .role {
+    margin: .7rem 0 .9rem;
+    font-size: .74rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  p {
+    color: var(--muted);
+    font-size: .92rem;
+  }
+}
+
+/* ---------- closing statement: "Más capaz de…" ---------- */
+.capable-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 2rem;
+  max-width: 820px;
+
+  li {
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: .45em 1em;
+    font-size: .88rem;
+    color: var(--muted);
+
+    &:last-child {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+  }
+}

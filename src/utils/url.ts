@@ -2,11 +2,11 @@
    sub-folder (ghotics.github.io/Peydro-Capital-Alliance/). With a custom domain the base is "/"
    and these helpers change nothing. The base is set in astro.config.mjs.
 
-   Always write internal links as  href={url('/contact')}  instead of  href="/contact". */
+   Always write internal links as  href={url('/giza')}  instead of  href="/giza". */
 
 const BASE = import.meta.env.BASE_URL.replace(/\/+$/, '');
 
-/** '/contact' → '/Peydro-Capital-Alliance/contact' (or '/contact' with a custom domain). */
+/** '/giza' → '/Peydro-Capital-Alliance/giza' (or '/giza' with a custom domain). */
 export function url(path: string): string {
   if (!path.startsWith('/')) return path;
   return path === '/' ? `${BASE}/` : `${BASE}${path}`;

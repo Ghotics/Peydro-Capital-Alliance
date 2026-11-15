@@ -17,6 +17,19 @@
   @include down($bp-sm) {
     grid-template-columns: 1fr;
   }
+
+  /* four across on wide screens (4-step methods) */
+  &.four {
+    grid-template-columns: repeat(4, 1fr);
+
+    @include down($bp-lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down($bp-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 .cap {

@@ -1,7 +1,8 @@
 # Peydro Capital Alliance — website
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
-Six pages (Home, Approach, Capabilities, Network, Insights, Contact) plus a 404 page, a Gold / Dark palette switch, and a phone menu.
+Five pages (Home, Quiénes somos, Approach, Crecimiento compuesto de redes, Insights) plus a 404 page, a Gold / Dark palette switch, and a phone menu.
+Every "Get in touch" / "Solicitar reunión" button leads to the Giza form — the only form linked from the site.
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
 > **Placeholder content.** Figures, people, quotes, offices and history are demo content until PCA provides the real details.
@@ -26,12 +27,11 @@ public/                    files served as-is (favicon…)
 src/
 ├─ pages/                  one file = one page; the file name is the URL
 │  ├─ index.astro          /
+│  ├─ quienes-somos.astro /quienes-somos
 │  ├─ approach.astro       /approach
-│  ├─ capabilities.astro   /capabilities
-│  ├─ network.astro        /network
+│  ├─ crecimiento-compuesto.astro /crecimiento-compuesto
 │  ├─ insights.astro       /insights
-│  ├─ contact.astro        /contact
-│  ├─ giza.astro           /giza                      Form 1 (in the menu)
+│  ├─ giza.astro           /giza                      Form 1 ("Get in touch" / "Solicitar reunión")
 │  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here)
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
 │  │  ├─ index.astro       /asesoramiento             landing + department picker
@@ -57,7 +57,8 @@ src/
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
-│  ├─ pages/               one file per page (counters, accordion, contact form…)
+│  ├─ pages/               one file per page (counters, newsletter…)
+│  ├─ components/          shared behaviour (the process line on Approach and Crecimiento compuesto)
 │  ├─ forms/               lead forms: steps + checks, QR code tracking, sending
 │  └─ utils/
 └─ styles/                 SCSS
@@ -72,7 +73,7 @@ src/
 
 | I want to… | Edit |
 | --- | --- |
-| Change page text | `src/pages/<page>.astro` (lists like team, FAQ and articles are arrays at the top of the file) |
+| Change page text | `src/pages/<page>.astro` (lists like the areas, steps and articles are arrays at the top of the file) |
 | Change the firm name, emails or menu links | `src/data/site.ts` |
 | Change colours or fonts | `src/styles/base/_tokens.scss` |
 | Change a screen-size breakpoint | `src/styles/abstracts/_variables.scss` |
@@ -112,7 +113,7 @@ src/
 
 | Form | Address | How people reach it | Steps |
 | --- | --- | --- | --- |
-| 1 · Giza (Irene) | `/giza` | site menu, QR codes | contact → optional booking |
+| 1 · Giza (Irene) | `/giza` | every "Get in touch" / "Solicitar reunión" button, QR codes | contact → optional booking |
 | 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | financial: interests → contact; others: contact only; then optional booking |
 | 3 · Quick | `/contacto-rapido` | **outside links only** | contact only (template — fields may change) |
 
@@ -148,7 +149,6 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - [ ] Set `site` in `astro.config.mjs` to the real domain.
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
-- [ ] Make the contact form actually send (a form service or a server endpoint that passes leads to the CRM).
 - [ ] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
 - [ ] Fill in the company details in `src/data/legal.ts` (highlighted in red on the privacy page until done) and have a lawyer review `/privacidad`.
 - [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.

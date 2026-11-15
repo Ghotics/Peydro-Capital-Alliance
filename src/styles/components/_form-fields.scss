@@ -1,7 +1,7 @@
 @use '../abstracts' as *;
 
 /* Text fields, drop-downs and the two-column row.
-   Shared by the contact page (pages/contact.scss) and the lead forms (components/_lead-form.scss).
+   Used by the lead forms (components/_lead-form.scss).
      <div class="field" data-field="email"><label>…</label><input … /><div class="msg">Error text</div></div>
    Add .err to the .field to show the red border and the message. */
 

@@ -108,6 +108,7 @@ header.nav {
     font-size: .9rem;
     color: var(--muted);
     position: relative;
+    white-space: nowrap;
     transition: color .3s var(--ease);
 
     &::after {

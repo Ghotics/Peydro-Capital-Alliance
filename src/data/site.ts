@@ -17,15 +17,14 @@ export interface NavItem {
 
 /** Links shown in the top bar on larger screens. */
 export const mainNav: NavItem[] = [
+  { href: '/quienes-somos', label: 'Quiénes somos' },
   { href: '/approach', label: 'Approach' },
-  { href: '/capabilities', label: 'Capabilities' },
-  { href: '/network', label: 'Network' },
+  { href: '/crecimiento-compuesto', label: 'Crecimiento compuesto de redes' },
   { href: '/insights', label: 'Insights' },
-  { href: '/giza', label: 'Giza' },
 ];
 
 /** Links shown in the phone / tablet menu (Home first). */
 export const menuNav: NavItem[] = [{ href: '/', label: 'Home' }, ...mainNav];
 
-/** Where every "Get in touch" button points. */
-export const contactHref = '/contact';
+/** Where every "Get in touch" / "Solicitar reunión" button points: the Giza form, the site's only form. */
+export const contactHref = '/giza';
