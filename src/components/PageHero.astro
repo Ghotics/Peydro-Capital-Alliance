@@ -19,7 +19,7 @@ interface Props {
   id?: string;
 }
 
-const { eyebrow, lead, meta = [], hint = 'Keep scrolling', compact = false, id } = Astro.props;
+const { eyebrow, lead, meta = [], hint = 'Sigue leyendo', compact = false, id } = Astro.props;
 const hasActions = Astro.slots.has('actions');
 ---
 <section class:list={['page-hero', { compact }]} id={id}>

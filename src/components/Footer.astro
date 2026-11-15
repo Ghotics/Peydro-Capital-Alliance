@@ -1,38 +1,48 @@
 ---
 /* Site footer. Styles: src/styles/components/_footer.scss */
 import Brand from './Brand.astro';
-import { contactHref, mainNav, site } from '../data/site';
+import { contactHref, site } from '../data/site';
+import type { Lang } from '../i18n/config';
+import { mainNav, pathFor } from '../i18n/routes';
+import { ui } from '../i18n/ui';
 import { url } from '../utils/url';
 
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const f = t.footer;
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <Brand />
-        <p>Patient capital for companies built to last. A demonstration build — the figures, people and quotes on this site are placeholders.</p>
+        <Brand lang={lang} />
+        <p>{f.tagline}</p>
       </div>
       <div>
-        <h5>Firm</h5>
-        {mainNav.map((item) => <a href={url(item.href)}>{item.label}</a>)}
+        <h5>{f.firm}</h5>
+        {mainNav.map((key) => <a href={url(pathFor(key, lang))}>{t.nav[key]}</a>)}
       </div>
       <div>
-        <h5>Company</h5>
-        <a href={url(contactHref)}>Contact</a>
-        <a href={url(contactHref)}>Investor login</a>
-        <a href={url('/')}>Home</a>
+        <h5>{f.company}</h5>
+        <a href={url(contactHref)}>{f.contact}</a>
+        <a href={url(contactHref)}>{t.investorLogin}</a>
+        <a href={url(pathFor('home', lang))}>{f.home}</a>
       </div>
       <div>
-        <h5>Legal</h5>
-        <a href="#">Terms</a>
-        <a href={url('/privacidad')}>Privacy</a>
-        <a href="#">Disclosures</a>
+        <h5>{f.legal}</h5>
+        <a href="#">{f.terms}</a>
+        <a href={url('/privacidad')}>{f.privacy}</a>
+        <a href="#">{f.disclosures}</a>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© {year} {site.name}. <span class="demo-tag">Demo · placeholder content</span></span>
-      <a href="#top" class="to-top">Back to top ↑</a>
+      <span>© {year} {site.name}. <span class="demo-tag">{f.demo}</span></span>
+      <a href="#top" class="to-top">{f.toTop}</a>
     </div>
   </div>
 </footer>

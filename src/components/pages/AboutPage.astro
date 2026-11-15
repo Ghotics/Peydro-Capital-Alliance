@@ -1,0 +1,104 @@
+---
+/* Quiénes somos / About us page layout, shared by both languages. Texts: src/i18n/pages/about.ts
+   Routes: src/pages/quienes-somos.astro (es) and src/pages/en/about.astro (en) */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import { contactHref } from '../../data/site';
+import type { Lang } from '../../i18n/config';
+import { about } from '../../i18n/pages/about';
+import { ui } from '../../i18n/ui';
+import { url } from '../../utils/url';
+import '../../styles/pages/quienes-somos.scss';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = about[lang];
+
+/* line drawings for the four "how we work" steps */
+const icons = [
+  '<circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" />',
+  '<circle cx="6" cy="12" r="3" /><circle cx="18" cy="6" r="3" /><circle cx="18" cy="18" r="3" /><path d="M8.7 10.7l6.6-3.4M8.7 13.3l6.6 3.4" />',
+  '<path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" />',
+  '<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />',
+];
+---
+<BaseLayout lang={lang} page="about" title={t.title} description={t.description}>
+  <PageHero eyebrow={t.hero.eyebrow} lead={t.hero.lead} hint={ui[lang].keepScrolling}><Fragment set:html={t.hero.title} /></PageHero>
+
+  <section class="sec">
+    <div class="wrap about-intro reveal">
+      <div>
+        <span class="eyebrow">{t.intro.eyebrow}</span>
+        <h2 class="title" set:html={t.intro.title} />
+      </div>
+      <div class="body">
+        {t.intro.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt-bg">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.method.eyebrow}</span>
+        <h2 class="title" set:html={t.method.title} />
+      </div>
+      <div class="cap-grid four">
+        {t.method.steps.map((step, i) => (
+          <div class="cap reveal" data-delay={i || undefined}>
+            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={icons[i]} />
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.architecture.eyebrow}</span>
+        <h2 class="title">{t.architecture.title}</h2>
+        <p class="lead">{t.architecture.lead}</p>
+      </div>
+      {t.architecture.groups.map((group) => (
+        <div class="area-group reveal">
+          <div class="group-label">{group.label}</div>
+          <div class="area-row">
+            {group.areas.map((area) => (
+              <div class="area">
+                <div class="name">{area.name}</div>
+                <div class="role">{area.role}</div>
+                <p>{area.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="statement alt-bg">
+    <div class="wrap reveal">
+      <p class="big" set:html={t.statement} />
+      <ul class="capable-list">
+        {t.capable.map((line) => <li>{line}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <h2>{t.cta.title}</h2>
+        <p>{t.cta.text}</p>
+        <a href={url(contactHref)} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

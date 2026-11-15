@@ -155,7 +155,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  @include down($bp-sm) {
+  /* two columns below 760px: the Spanish labels don't fit four across */
+  @include down($bp-md) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -169,7 +170,7 @@
     border-left: none;
   }
 
-  @include down($bp-sm) {
+  @include down($bp-md) {
     &:nth-child(odd) {
       border-left: none;
     }

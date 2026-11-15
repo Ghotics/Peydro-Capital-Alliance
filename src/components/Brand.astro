@@ -1,6 +1,15 @@
 ---
-/* Logo + firm name. Used in the top bar and the footer. */
+/* Logo + firm name. Used in the top bar and the footer; links to the home page in the current language. */
 import { site } from '../data/site';
+import type { Lang } from '../i18n/config';
+import { pathFor } from '../i18n/routes';
+import { ui } from '../i18n/ui';
 import { url } from '../utils/url';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
 ---
-<a href={url('/')} class="brand" aria-label={`${site.name} — home`}><span class="mark" aria-hidden="true">P</span> Peydro<span class="brand-sub">Capital Alliance</span></a>
+<a href={url(pathFor('home', lang))} class="brand" aria-label={`${site.name} — ${ui[lang].nav.home}`}><span class="mark" aria-hidden="true">P</span> Peydro<span class="brand-sub">Capital Alliance</span></a>

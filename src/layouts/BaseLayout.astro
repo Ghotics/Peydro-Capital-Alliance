@@ -1,38 +1,49 @@
 ---
 /* The frame every page sits in: <head>, top bar, menu, footer and the scripts that run on every page.
-   Usage in a page:  <BaseLayout title="Approach" description="…"> …page content… </BaseLayout>
+   Usage:  <BaseLayout lang="es" page="about" title="Quiénes somos" description="…"> …page content… </BaseLayout>
    Pages reached only through QR codes or outside links use FunnelLayout instead. */
 import '../styles/main.scss';
 import SiteHead from '../components/SiteHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
+import { languages, type Lang } from '../i18n/config';
+import { routes, type PageKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
 
 interface Props {
-  /** Page name shown in the browser tab, e.g. "Approach". Leave empty on the home page. */
+  /** Page name shown in the browser tab, e.g. "Quiénes somos". Leave empty on the home page. */
   title?: string;
   /** Text search engines show under the link. */
   description?: string;
-  /** Language of the page content ("es" for the Spanish forms). */
-  lang?: 'en' | 'es';
+  /** Language of the page. Spanish is the default. */
+  lang?: Lang;
+  /** Which page this is, if it exists in both languages (src/i18n/routes.ts).
+      Highlights its menu link and makes the ES / EN switch open the same page. */
+  page?: PageKey;
 }
 
-const { title, description = site.description, lang = 'en' } = Astro.props;
-const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — Patient capital`;
+const { title, lang = 'es', page } = Astro.props;
+const t = ui[lang];
+const description = Astro.props.description ?? t.siteDescription;
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${t.homeTitle}`;
+
+/* tell search engines about the other language version of this page */
+const alternates = page ? (Object.keys(languages) as Lang[]).map((code) => ({ lang: code, path: routes[page][code] })) : [];
 ---
 <!doctype html>
 <html lang={lang}>
   <head>
-    <SiteHead title={pageTitle} description={description} />
+    <SiteHead title={pageTitle} description={description} alternates={alternates} />
   </head>
   <body id="top">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t.skip}</a>
     <div id="progress" aria-hidden="true"></div>
-    <Header />
+    <Header lang={lang} page={page} />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
     <script>import '../scripts/site';</script>
   </body>
 </html>

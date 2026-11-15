@@ -8,15 +8,23 @@ interface Props {
   description: string;
   /** Keep the page out of Google and other search engines (QR-only pages). */
   noindex?: boolean;
+  /** The same page in each language, for search engines (hreflang). */
+  alternates?: { lang: string; path: string }[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, alternates = [] } = Astro.props;
+/* hreflang links must be full addresses, so they're only added when the site address is known (on GitHub Pages) */
+const absolute = (path: string) => (Astro.site ? new URL(url(path), Astro.site).href : null);
+const langLinks = alternates.map((a) => ({ ...a, href: absolute(a.path) })).filter((a) => a.href);
+const defaultLink = langLinks.find((a) => a.lang === 'es');
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{title}</title>
 <meta name="description" content={description} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
+{langLinks.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+{defaultLink && <link rel="alternate" hreflang="x-default" href={defaultLink.href} />}
 <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 <script is:inline>
   /* Apply a saved Dark palette before the first paint, so pages don't flash Gold first.

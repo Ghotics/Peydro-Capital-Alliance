@@ -57,7 +57,7 @@ header.nav {
   align-items: center;
   gap: .6em;
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: .02em;
   white-space: nowrap;
@@ -102,10 +102,10 @@ header.nav {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.6rem;
+  gap: 1.35rem;
 
   a {
-    font-size: .9rem;
+    font-size: .87rem;
     color: var(--muted);
     position: relative;
     white-space: nowrap;
@@ -145,7 +145,7 @@ header.nav {
 .nav-cta {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .8rem;
 
   > * {
     flex: none;
@@ -165,14 +165,15 @@ header.nav {
   }
 
   @include down($bp-md) {
-    .theme-toggle {
-      display: none;
+    .theme-toggle,
+    .lang-switch {
+      display: none; /* both are in the menu */
     }
   }
 
   @include down($bp-sm) {
     .btn-primary {
-      display: none;
+      display: none; /* it's in the phone menu */
     }
   }
 }
