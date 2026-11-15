@@ -2,13 +2,14 @@
 /* Form 2 · Business Office — landing: /asesoramiento
    Reached ONLY through QR codes and Renta 92's own links: it is not in the site menu and is hidden from
    search engines. Each QR points here with its own code, e.g. /asesoramiento?c=renta92-portal-14.
-   The code is kept for the whole visit and saved with the lead (src/scripts/forms/attribution.ts).
+   The code is passed on in the links and saved with the lead (src/scripts/forms/attribution.ts).
    Texts: src/data/forms.ts  ·  Styles: src/styles/pages/asesoramiento.scss */
 import FunnelLayout from '../../layouts/FunnelLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import FormIcon from '../../components/forms/FormIcon.astro';
 import { areas, generalArea } from '../../data/forms';
 import type { IconName } from '../../data/forms';
+import { url } from '../../utils/url';
 import '../../styles/pages/asesoramiento.scss';
 
 const links = [
@@ -58,7 +59,7 @@ const steps: { icon: IconName; title: string; text: string }[] = [
 
       <div class="bo-areas">
         {areas.map((area, i) => (
-          <a class="bo-card reveal" data-delay={String(i + 1)} href={`/asesoramiento/${area.slug}`}>
+          <a class="bo-card reveal" data-delay={String(i + 1)} href={url(`/asesoramiento/${area.slug}`)}>
             <span class="bo-card-top">
               <span class="bo-num">{String(i + 1).padStart(2, '0')}</span>
               <span class="bo-go" aria-hidden="true">↗</span>
@@ -78,7 +79,7 @@ const steps: { icon: IconName; title: string; text: string }[] = [
           <h3>¿No tienes claro qué departamento elegir?</h3>
           <p>Puedes escribirnos tu consulta y te orientaremos hacia el área adecuada.</p>
         </div>
-        <a class="btn btn-ghost" href={`/asesoramiento/${generalArea.slug}`}>Plantear una consulta <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href={url(`/asesoramiento/${generalArea.slug}`)}>Plantear una consulta <span class="arrow">→</span></a>
       </div>
       <p class="bo-note reveal">No necesitas adjuntar documentos ni contratar ningún servicio. La solicitud y la reserva posterior se gestionan desde PCA.</p>
     </div>

@@ -1,0 +1,12 @@
+---
+/* Shows a value from src/data/legal.ts. Placeholders still in [square brackets] are highlighted,
+   so a missing company detail can't go unnoticed.   <Fill value={controller.name} /> */
+import { isPlaceholder } from '../../data/legal';
+
+interface Props {
+  value: string;
+}
+
+const { value } = Astro.props;
+---
+{isPlaceholder(value) ? <mark class="todo" title="Falta por rellenar en src/data/legal.ts">{value}</mark> : value}

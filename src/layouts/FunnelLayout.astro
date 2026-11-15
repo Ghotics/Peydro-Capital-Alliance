@@ -10,6 +10,7 @@ import Brand from '../components/Brand.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { privacyHref } from '../data/forms';
 import { site } from '../data/site';
+import { url } from '../utils/url';
 import type { NavItem } from '../data/site';
 
 interface Props {
@@ -19,7 +20,7 @@ interface Props {
   partner?: string;
   /** Small label under the partner name. */
   partnerNote?: string;
-  /** Links in the top bar (usually anchors on the same page). Hidden on phones. */
+  /** Links in the top bar: anchors ('#departamentos') or plain site paths ('/asesoramiento#…'). Hidden on phones. */
   links?: NavItem[];
   /** Button on the right of the top bar. */
   cta?: NavItem;
@@ -49,12 +50,12 @@ const year = new Date().getFullYear();
         </div>
         {links.length > 0 && (
           <nav class="nav-links" aria-label="Secciones">
-            {links.map((item) => <a href={item.href}>{item.label}</a>)}
+            {links.map((item) => <a href={url(item.href)}>{item.label}</a>)}
           </nav>
         )}
         <div class="nav-cta">
           <ThemeToggle />
-          {cta && <a href={cta.href} class="btn btn-primary">{cta.label} <span class="arrow">→</span></a>}
+          {cta && <a href={url(cta.href)} class="btn btn-primary">{cta.label} <span class="arrow">→</span></a>}
         </div>
       </div>
     </header>
@@ -65,7 +66,7 @@ const year = new Date().getFullYear();
       <div class="wrap">
         <span>© {year} {site.name}{partner ? ` · En colaboración con ${partner}` : ''}</span>
         <nav aria-label="Legal">
-          <a href={privacyHref}>Política de privacidad</a>
+          <a href={url(privacyHref)}>Política de privacidad</a>
           <a href="#">Aviso legal</a>
         </nav>
       </div>

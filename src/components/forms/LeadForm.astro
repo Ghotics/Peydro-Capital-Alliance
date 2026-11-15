@@ -8,6 +8,8 @@
    so what the form collects and what gets saved line up one to one. */
 import type { FormKind, Interest } from '../../data/forms';
 import { buildings, privacyHref } from '../../data/forms';
+import { url } from '../../utils/url';
+import PrivacyNotice from './PrivacyNotice.astro';
 
 interface Props {
   kind: FormKind;
@@ -20,9 +22,9 @@ interface Props {
   /** Heading and intro of the contact step when there is no interests step. */
   title?: string;
   intro?: string;
+  /** The message box is always optional. */
   messageLabel?: string;
   messagePlaceholder?: string;
-  messageRequired?: boolean;
   submitLabel?: string;
   /** Offer to book a meeting after sending. */
   booking?: boolean;
@@ -30,7 +32,7 @@ interface Props {
   calLink?: string;
   /** Who the meeting is with, e.g. "Irene" or "el especialista de tu departamento". */
   bookingWith?: string;
-  /** The "← Volver a …" link under the form. */
+  /** The "← Volver a …" link under the form. Plain site paths ('/asesoramiento'); the sub-folder is added here. */
   backHref?: string;
   backLabel?: string;
   /** Where the button on the last screen goes. */
@@ -47,7 +49,6 @@ const {
   intro = 'Déjanos tus datos y, si lo deseas, una nota sobre tu consulta. No necesitas indicar el nombre de tu empresa.',
   messageLabel = 'Nota',
   messagePlaceholder = 'Cuéntanos brevemente el motivo del asesoramiento…',
-  messageRequired = false,
   submitLabel = 'Enviar solicitud',
   booking = false,
   calLink = '',
@@ -59,6 +60,8 @@ const {
 } = Astro.props;
 
 const hasInterests = interests.length > 0;
+const backLink = backHref ? url(backHref) : undefined;
+const homeLink = url(homeHref);
 const id = `lf-${kind}${area ? `-${area}` : ''}`;
 ---
 <div class="lead-form" data-lead-form data-kind={kind} data-area={area} data-cal={calLink}>
@@ -80,7 +83,7 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
           <div class="msg">Elige al menos una opción para continuar.</div>
         </fieldset>
         <div class="lf-foot">
-          {backHref ? <a class="lf-back" href={backHref}>← {backLabel}</a> : <span></span>}
+          {backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
           <button type="button" class="btn btn-primary" data-next>Continuar <span class="arrow">→</span></button>
         </div>
         <p class="lf-note">Esta pantalla no solicita datos de salud, ingresos, patrimonio ni documentación.</p>
@@ -137,11 +140,8 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
       )}
 
       <div class="field" data-field="message">
-        <label for={`${id}-message`}>
-          {messageLabel} {messageRequired ? <span class="req" aria-hidden="true">*</span> : <span class="opt">(opcional)</span>}
-        </label>
-        <textarea id={`${id}-message`} name="message" rows="4" maxlength="2000" placeholder={messagePlaceholder} data-required={messageRequired ? 'true' : undefined}></textarea>
-        <div class="msg">Escribe tu mensaje.</div>
+        <label for={`${id}-message`}>{messageLabel} <span class="opt">(opcional)</span></label>
+        <textarea id={`${id}-message`} name="message" rows="4" maxlength="2000" placeholder={messagePlaceholder}></textarea>
       </div>
 
       {/* Hidden trap for spam bots: people never see or fill it, bots usually do. */}
@@ -152,17 +152,19 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
       <div class="lf-check" data-field="privacy">
         <label class="lf-consent">
           <input type="checkbox" name="privacy" required />
-          <span>He leído la <a href={privacyHref}>Política de privacidad</a> y la información sobre el tratamiento de mis datos. <span class="req" aria-hidden="true">*</span></span>
+          <span>He leído la <a href={url(privacyHref)} target="_blank" rel="noopener">Política de privacidad</a> y la información sobre el tratamiento de mis datos. <span class="req" aria-hidden="true">*</span></span>
         </label>
         <div class="msg">Para enviar la solicitud tienes que aceptar la política de privacidad.</div>
       </div>
+
+      <PrivacyNotice />
 
       <div class="lf-alert" role="alert" data-send-error hidden>No hemos podido enviar tu solicitud. Comprueba tu conexión e inténtalo de nuevo.</div>
 
       <div class="lf-foot">
         {hasInterests
           ? <button type="button" class="lf-back" data-prev>← Volver a intereses</button>
-          : backHref ? <a class="lf-back" href={backHref}>← {backLabel}</a> : <span></span>}
+          : backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
         <button type="submit" class="btn btn-primary" data-submit><span data-label>{submitLabel}</span> <span class="arrow">→</span></button>
       </div>
       <p class="lf-note" data-demo hidden>Modo demo: todavía no se envía nada. La conexión con la base de datos llega en el siguiente paso.</p>
@@ -187,7 +189,7 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
     ) : (
       <>
         <p class="lf-sub">Te contactaremos lo antes posible en el teléfono o el correo que nos has dejado.</p>
-        <div class="lf-actions"><a class="btn btn-ghost" href={homeHref}>{homeLabel}</a></div>
+        <div class="lf-actions"><a class="btn btn-ghost" href={homeLink}>{homeLabel}</a></div>
       </>
     )}
     <p class="lf-note">Recibirás una confirmación en <strong data-echo="email"></strong>.</p>
@@ -198,7 +200,7 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
       <div class="lf-done-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" /></svg></div>
       <h2 class="lf-title" id={`${id}-t4`} tabindex="-1">Gracias, <span data-echo="first_name"></span></h2>
       <p class="lf-sub">Tu consulta queda enviada sin cita. El equipo de PCA la revisará y te responderá lo antes posible.</p>
-      <div class="lf-actions"><a class="btn btn-ghost" href={homeHref}>{homeLabel}</a></div>
+      <div class="lf-actions"><a class="btn btn-ghost" href={homeLink}>{homeLabel}</a></div>
     </section>
   )}
 </div>

@@ -32,6 +32,7 @@ src/
 │  ├─ insights.astro       /insights
 │  ├─ contact.astro        /contact
 │  ├─ giza.astro           /giza                      Form 1 (in the menu)
+│  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here)
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
 │  │  ├─ index.astro       /asesoramiento             landing + department picker
 │  │  └─ [area].astro      /asesoramiento/<area>      one page per department
@@ -47,10 +48,12 @@ src/
 │  ├─ SiteHead.astro       everything inside <head>
 │  ├─ Brand.astro          logo + name
 │  ├─ ThemeToggle.astro    Gold ⇄ Dark switch
-│  └─ forms/               LeadForm (the form card), FormAside (dark side panel), FormIcon
+│  ├─ forms/               LeadForm (the form card), FormAside (dark side panel), PrivacyNotice, FormIcon
+│  └─ legal/               Fill (highlights details still to fill in)
 ├─ data/
 │  ├─ site.ts              firm name, emails, menu links
-│  └─ forms.ts             form texts: departments, interests, buildings, booking links
+│  ├─ forms.ts             form texts: departments, interests, buildings, booking links
+│  └─ legal.ts             company details, providers and retention for the privacy page
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
@@ -76,6 +79,7 @@ src/
 | Style something on one page only | `src/styles/pages/<page>.scss` |
 | Change a form text, department name, interest or building | `src/data/forms.ts` |
 | Connect a specialist's calendar | `calLink` in `src/data/forms.ts` |
+| Company details or a new provider on the privacy page | `src/data/legal.ts` |
 
 ### Adding a page
 
@@ -108,20 +112,23 @@ src/
 
 | Form | Address | How people reach it | Steps |
 | --- | --- | --- | --- |
-| 1 · Giza (Irene) | `/giza` | site menu, QR codes | interests → contact → optional booking |
+| 1 · Giza (Irene) | `/giza` | site menu, QR codes | contact → optional booking |
 | 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | financial: interests → contact; others: contact only; then optional booking |
 | 3 · Quick | `/contacto-rapido` | **outside links only** | contact only (template — fields may change) |
 
 - The QR-only pages use `FunnelLayout`: no site menu, a short footer, and `noindex` so search engines leave them out.
   Anyone with the address can still open them — hidden is not the same as private.
 - **QR / link tracking:** give every QR code or link its own code, e.g. `/asesoramiento?c=renta92-portal-14`.
-  `scripts/forms/attribution.ts` keeps the code (and any `utm_…` tags) for the visit and the form sends it with the lead.
+  `scripts/forms/attribution.ts` reads the code (and any `utm_…` tags) and the form sends it with the lead.
+  Nothing is stored in the browser: the code is added to the page's links, so it survives going from the landing page to a form.
 - **Field names** (`first_name`, `email`, `building`…) are the future database column names.
 - **Sending is a demo for now.** `scripts/forms/submit.ts` prints the lead in the browser console instead of sending it.
   When the backend is ready, only that file changes. The forms show a small "Modo demo" note until then.
 - **Booking:** after sending, Giza and Business Office offer "Reservar asesoramiento". It opens the specialist's Cal.com page
   with the name and email filled in. Until `calLink` is set in `data/forms.ts`, the button explains the calendar isn't connected yet.
 - A hidden "website" field catches spam bots: if it is filled in, the form pretends to succeed and sends nothing.
+- **Privacy:** every form has the privacy tick box, a short data-protection notice (`PrivacyNotice`) and a link to `/privacidad`
+  that opens in a new tab, so the visitor doesn't lose what they typed. The message box is always optional.
 
 ## Palette switch
 
@@ -143,6 +150,7 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
 - [ ] Make the contact form actually send (a form service or a server endpoint that passes leads to the CRM).
 - [ ] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
-- [ ] Real privacy page for the forms' "Política de privacidad" link (`privacyHref` in `src/data/forms.ts`).
+- [ ] Fill in the company details in `src/data/legal.ts` (highlighted in red on the privacy page until done) and have a lawyer review `/privacidad`.
+- [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.
 - [ ] Cal.com links for Irene and the four specialists (`calLink` in `src/data/forms.ts`).
 - [ ] Analytics only with cookie consent.

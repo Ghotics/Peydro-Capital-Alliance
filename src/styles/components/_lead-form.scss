@@ -350,6 +350,48 @@
   }
 }
 
+/* short data-protection notice ("primera capa"), components/forms/PrivacyNotice.astro */
+.lf-privacy {
+  margin: 0 0 1.2rem;
+  padding: .9rem 1rem;
+  font-size: .74rem;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  .lf-privacy-title {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: .45rem;
+  }
+
+  dl div {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: .6rem;
+    padding: .2rem 0;
+
+    @include down($bp-sm) {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: .3rem 0;
+    }
+  }
+
+  dt {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
 /* hidden trap for spam bots */
 .lf-hp {
   position: absolute;

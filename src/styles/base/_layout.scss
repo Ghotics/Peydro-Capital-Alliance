@@ -60,6 +60,15 @@ section {
   border: 0;
 }
 
+/* a detail still to be filled in (src/data/legal.ts): highlighted so it can't be missed */
+mark.todo {
+  background: rgba(224, 96, 95, .16);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0 .25em;
+  outline: 1px dashed rgba(224, 96, 95, .6);
+}
+
 /* hidden link for keyboard users, appears on Tab */
 .skip-link {
   position: absolute;

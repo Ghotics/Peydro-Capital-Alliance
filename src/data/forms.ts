@@ -29,9 +29,8 @@ export const financialInterests: Interest[] = [
 /** Renta 92 buildings offered in the Business Office forms. */
 export const buildings = ['14', '16', '18'];
 
-/** Where the "Política de privacidad" link in every form points.
-    TODO before launch: the real privacy page. */
-export const privacyHref = '#';
+/** The privacy page every form links to (src/pages/privacidad.astro). */
+export const privacyHref = '/privacidad';
 
 /** Shown in the side panel of the Business Office forms. */
 export const officePerks = [
@@ -56,8 +55,8 @@ export interface Area {
   icon: IconName;
   /** When set, the form gets a first step where the visitor picks one or more of these. */
   interests?: Interest[];
-  /** The specialist's Cal.com page, e.g. 'pca-business-office/tecnologia' or a full https:// link.
-      Empty = not connected yet (the booking button then says so). */
+  /** The specialist's public Cal.com booking page, e.g. 'team/pca/tecnologia' or a full https:// link
+      (in Cal.com: Event types → the event → "Copy link"). Empty = not connected yet (the button then says so). */
   calLink: string;
   /** Not one of the four departments: the "not sure which one" form. */
   general?: boolean;
@@ -71,7 +70,7 @@ export const areas: Area[] = [
     description: 'Seguros, ahorro e inversión, hipotecas y financiación para empresas, autónomos y particulares.',
     icon: 'shield',
     interests: financialInterests,
-    calLink: '',
+    calLink: '', // Cal.com account: Irene (same as Giza) — to confirm
   },
   {
     slug: 'tecnologia',
@@ -79,7 +78,7 @@ export const areas: Area[] = [
     short: 'Procesos, CRM, IA.',
     description: 'Digitalización de procesos, inteligencia artificial, CRM y herramientas para mejorar la eficiencia de tu empresa.',
     icon: 'laptop',
-    calLink: '',
+    calLink: '', // Cal.com account: Tecnología
   },
   {
     slug: 'telecomunicaciones',
@@ -87,7 +86,7 @@ export const areas: Area[] = [
     short: 'Telefonía, fibra, luz y gas.',
     description: 'Revisión de contratos, tarifas y consumos para detectar posibles mejoras y oportunidades de ahorro.',
     icon: 'antenna',
-    calLink: '',
+    calLink: '', // Cal.com account: Suministros
   },
   {
     slug: 'marketing',
@@ -95,7 +94,7 @@ export const areas: Area[] = [
     short: 'Estrategia, visibilidad, campañas.',
     description: 'Estrategia, publicidad, redes sociales y sistemas de captación para impulsar la visibilidad y el crecimiento.',
     icon: 'megaphone',
-    calLink: '',
+    calLink: '', // Cal.com account: Marketing
   },
 ];
 
@@ -120,12 +119,12 @@ export const allAreas: Area[] = [...areas, generalArea];
 export const giza = {
   eyebrow: 'PCA · Giza',
   title: 'Protección y Planificación Financiera',
-  description: 'Seguros, ahorro e inversión e hipotecas. Cuéntanos qué te interesa e Irene te ayudará a revisar tus opciones.',
+  description: 'Seguros, ahorro e inversión e hipotecas. Déjanos tus datos e Irene te ayudará a revisar tus opciones.',
   perks: ['Orientación gratuita y sin compromiso', 'Atención presencial o telemática', 'Puedes enviar una consulta sin reservar cita'],
   /** Who the visitor books with. */
   specialist: 'Irene',
-  /** Irene's Cal.com page. Empty = not connected yet. */
-  calLink: '',
+  /** Irene's public Cal.com booking page. Empty = not connected yet. */
+  calLink: '', // Cal.com account: Irene
 };
 
 /* ------------------------------------------------------------------ */

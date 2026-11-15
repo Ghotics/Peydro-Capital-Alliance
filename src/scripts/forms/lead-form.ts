@@ -3,13 +3,13 @@
    Loaded by each page that shows a form:  <script>import '../scripts/forms/lead-form';</script> */
 import type { FormKind } from '../../data/forms';
 import { prefersReducedMotion } from '../utils/motion';
-import { captureAttribution } from './attribution';
+import { carryAttribution, readAttribution } from './attribution';
 import { isDemo, submitLead, type LeadPayload } from './submit';
 
 type StepName = 'interests' | 'contact' | 'done' | 'finished';
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 /** Matches the data-field="…" boxes in LeadForm.astro */
-type FieldName = 'interests' | 'first_name' | 'last_name' | 'email' | 'phone' | 'building' | 'unit' | 'message' | 'privacy';
+type FieldName = 'interests' | 'first_name' | 'last_name' | 'email' | 'phone' | 'building' | 'unit' | 'privacy';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_PATTERN = /^\+?\d{9,15}$/;
@@ -43,7 +43,7 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   const submitLabel = submitButton?.querySelector<HTMLElement>('[data-label]');
   const idleLabel = submitLabel?.textContent ?? '';
   const sendError = form.querySelector<HTMLElement>('[data-send-error]');
-  const attribution = captureAttribution();
+  const attribution = readAttribution();
 
   let current: StepName = steps.find((s) => s.classList.contains('on'))?.dataset.step as StepName;
   let busy = false;
@@ -63,7 +63,6 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
     phone: () => PHONE_PATTERN.test(normalisePhone(value('phone'))),
     building: () => value('building') !== '',
     unit: () => value('unit') !== '',
-    message: () => control('message')?.dataset.required !== 'true' || value('message').length > 0,
     privacy: () => (control('privacy') as HTMLInputElement | null)?.checked === true,
   };
 
@@ -146,7 +145,7 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
       if (validate(['interests'])) show('contact');
       return;
     }
-    if (!validate(['first_name', 'last_name', 'email', 'phone', 'building', 'unit', 'message', 'privacy'])) return;
+    if (!validate(['first_name', 'last_name', 'email', 'phone', 'building', 'unit', 'privacy'])) return;
 
     const lead = buildLead();
 
@@ -188,6 +187,7 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   if (isDemo) root.querySelectorAll<HTMLElement>('[data-demo]').forEach((note) => (note.hidden = false));
 }
 
+carryAttribution();
 document.querySelectorAll<HTMLElement>('[data-lead-form]').forEach((root) => {
   const form = root.querySelector<HTMLFormElement>('form');
   if (form) initLeadForm(root, form);
