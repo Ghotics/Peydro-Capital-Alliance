@@ -5,6 +5,7 @@ import '../styles/main.scss';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
+import { url } from '../utils/url';
 
 interface Props {
   /** Page name shown in the browser tab, e.g. "Approach". Leave empty on the home page. */
@@ -23,7 +24,7 @@ const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — Patien
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <script is:inline>
       /* Apply a saved Dark palette before the first paint, so pages don't flash Gold first.
          Keep the key in sync with src/scripts/global/theme.ts */
