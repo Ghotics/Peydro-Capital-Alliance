@@ -1,0 +1,35 @@
+---
+/* Form 1 · Giza — /giza
+   Financial planning form for Irene: interests (step 1) → contact details (step 2) → optional booking.
+   On the website (in the menu). QR codes can point here too: add ?c=<code> to the link to track each one.
+   Texts: src/data/forms.ts (giza)  ·  Behaviour: src/scripts/forms/lead-form.ts
+   Styles: src/styles/components/_lead-form.scss */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormAside from '../components/forms/FormAside.astro';
+import LeadForm from '../components/forms/LeadForm.astro';
+import { financialInterests, giza } from '../data/forms';
+---
+<BaseLayout title="Giza · Planificación financiera" description={giza.description} lang="es">
+  <section class="form-page">
+    <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
+    <div class="wrap">
+      <span class="form-badge">Giza · Orientación gratuita</span>
+      <div class="form-shell">
+        <FormAside eyebrow={giza.eyebrow} title={giza.title} text={giza.description} perks={giza.perks} />
+        <div class="form-card">
+          <LeadForm
+            kind="giza"
+            interests={financialInterests}
+            booking
+            calLink={giza.calLink}
+            bookingWith={giza.specialist}
+            homeHref="/"
+            homeLabel="Volver al inicio"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/forms/lead-form';</script>
+</BaseLayout>

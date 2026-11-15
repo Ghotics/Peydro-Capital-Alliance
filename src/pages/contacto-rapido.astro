@@ -1,0 +1,35 @@
+---
+/* Form 3 · Quick — /contacto-rapido
+   A very short form reached ONLY through outside links (ads, partners, social posts): it is not in the
+   site menu and is hidden from search engines. No booking step.
+   TEMPLATE: the final fields may still change. Add ?c=<code> to each link to know which one brought the lead. */
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import FormAside from '../components/forms/FormAside.astro';
+import LeadForm from '../components/forms/LeadForm.astro';
+import { quick } from '../data/forms';
+---
+<FunnelLayout title="Contacto" description={quick.description}>
+  <section class="form-page">
+    <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
+    <div class="wrap">
+      <span class="form-badge">Contacto rápido · Un solo paso</span>
+      <div class="form-shell">
+        <FormAside eyebrow={quick.eyebrow} title={quick.title} text={quick.description} perks={quick.perks} />
+        <div class="form-card">
+          <LeadForm
+            kind="quick"
+            title="Envíanos tu consulta"
+            intro="Déjanos tus datos y cuéntanos en qué podemos ayudarte."
+            messageLabel="Mensaje"
+            messagePlaceholder="¿En qué podemos ayudarte?"
+            submitLabel="Enviar mensaje"
+            homeHref="/"
+            homeLabel="Conocer PCA"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../scripts/forms/lead-form';</script>
+</FunnelLayout>

@@ -1,0 +1,75 @@
+---
+/* Layout for pages reached only through QR codes or outside links (Business Office, quick form).
+   No site menu, a short footer, and the page is kept out of search engines.
+     <FunnelLayout title="…" description="…" partner="Renta 92" links={[{ href: '#departamentos', label: 'Departamentos' }]}
+                   cta={{ href: '#departamentos', label: 'Solicitar asesoramiento' }}> …page… </FunnelLayout>
+   Styles: src/styles/components/_funnel.scss */
+import '../styles/main.scss';
+import SiteHead from '../components/SiteHead.astro';
+import Brand from '../components/Brand.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { privacyHref } from '../data/forms';
+import { site } from '../data/site';
+import type { NavItem } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Partner shown next to the logo, e.g. "Renta 92". */
+  partner?: string;
+  /** Small label under the partner name. */
+  partnerNote?: string;
+  /** Links in the top bar (usually anchors on the same page). Hidden on phones. */
+  links?: NavItem[];
+  /** Button on the right of the top bar. */
+  cta?: NavItem;
+}
+
+const { title, description, partner, partnerNote, links = [], cta } = Astro.props;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <SiteHead title={`${title} — ${site.name}`} description={description} noindex />
+  </head>
+  <body id="top" class="funnel-page">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <header class="nav funnel-nav" id="nav">
+      <div class="wrap nav-inner">
+        <div class="funnel-brand">
+          <Brand />
+          {partner && (
+            <span class="partner">
+              <small>En colaboración con</small>
+              <b>{partner}</b>
+              {partnerNote && <em>{partnerNote}</em>}
+            </span>
+          )}
+        </div>
+        {links.length > 0 && (
+          <nav class="nav-links" aria-label="Secciones">
+            {links.map((item) => <a href={item.href}>{item.label}</a>)}
+          </nav>
+        )}
+        <div class="nav-cta">
+          <ThemeToggle />
+          {cta && <a href={cta.href} class="btn btn-primary">{cta.label} <span class="arrow">→</span></a>}
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="funnel-foot">
+      <div class="wrap">
+        <span>© {year} {site.name}{partner ? ` · En colaboración con ${partner}` : ''}</span>
+        <nav aria-label="Legal">
+          <a href={privacyHref}>Política de privacidad</a>
+          <a href="#">Aviso legal</a>
+        </nav>
+      </div>
+    </footer>
+    <script>import '../scripts/site';</script>
+  </body>
+</html>

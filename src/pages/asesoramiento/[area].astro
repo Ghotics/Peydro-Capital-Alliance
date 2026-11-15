@@ -1,0 +1,65 @@
+---
+/* Form 2 · Business Office — one page per department: /asesoramiento/<slug>
+   Astro builds one page for each entry of `allAreas` in src/data/forms.ts (the four departments
+   + the "not sure which one" form). The financial department has two steps (interests → contact),
+   the others one. Behaviour: src/scripts/forms/lead-form.ts */
+import FunnelLayout from '../../layouts/FunnelLayout.astro';
+import FormAside from '../../components/forms/FormAside.astro';
+import LeadForm from '../../components/forms/LeadForm.astro';
+import { allAreas, officePerks } from '../../data/forms';
+import type { Area } from '../../data/forms';
+
+export function getStaticPaths() {
+  return allAreas.map((area) => ({ params: { area: area.slug }, props: { area } }));
+}
+
+interface Props {
+  area: Area;
+}
+
+const { area } = Astro.props;
+const twoSteps = (area.interests?.length ?? 0) > 0;
+---
+<FunnelLayout
+  title={area.name}
+  description={area.description}
+  partner="Renta 92"
+  partnerNote="Business Office"
+  links={[
+    { href: '/asesoramiento#departamentos', label: 'Departamentos' },
+    { href: '/asesoramiento#como-funciona', label: 'Cómo funciona' },
+  ]}
+>
+  <section class="form-page">
+    <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
+    <div class="wrap">
+      <span class="form-badge">{twoSteps ? area.name : 'Solicitud de orientación · Un solo paso'}</span>
+      <div class="form-shell">
+        <FormAside
+          eyebrow="PCA Business Office · Renta 92"
+          title={area.name}
+          text={area.description}
+          perks={officePerks}
+          foot="Para empresas, profesionales y familias del ecosistema Renta 92"
+        />
+        <div class="form-card">
+          <LeadForm
+            kind="business_office"
+            area={area.slug}
+            interests={area.interests}
+            askBuilding
+            booking={!area.general}
+            calLink={area.calLink}
+            bookingWith="el especialista de tu departamento"
+            backHref="/asesoramiento#departamentos"
+            backLabel="Volver a los departamentos"
+            homeHref="/asesoramiento"
+            homeLabel="Volver a Business Office"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../../scripts/forms/lead-form';</script>
+</FunnelLayout>
