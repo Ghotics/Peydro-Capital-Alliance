@@ -1,6 +1,7 @@
 ---
 /* Contact — /contact  (the step-by-step form logic is in src/scripts/pages/contact.ts) */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url';
 import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site';
 import '../styles/pages/contact.scss';
@@ -72,7 +73,7 @@ import '../styles/pages/contact.scss';
               <div class="n"><b>2.</b><span>The right partner would reply to arrange a short call.</span></div>
               <div class="n"><b>3.</b><span>If there's a fit, we'd take it from there — no pressure either way.</span></div>
             </div>
-            <div class="actions"><a href="/" class="btn btn-ghost">Back to home</a><button class="btn btn-primary" id="restartBtn" type="button">Submit another <span class="arrow">→</span></button></div>
+            <div class="actions"><a href={url('/')} class="btn btn-ghost">Back to home</a><button class="btn btn-primary" id="restartBtn" type="button">Submit another <span class="arrow">→</span></button></div>
           </div>
         </div>
 

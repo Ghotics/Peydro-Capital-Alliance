@@ -2,6 +2,7 @@
 /* Site footer. Styles: src/styles/components/_footer.scss */
 import Brand from './Brand.astro';
 import { contactHref, mainNav, site } from '../data/site';
+import { url } from '../utils/url';
 
 const year = new Date().getFullYear();
 ---
@@ -14,13 +15,13 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h5>Firm</h5>
-        {mainNav.map((item) => <a href={item.href}>{item.label}</a>)}
+        {mainNav.map((item) => <a href={url(item.href)}>{item.label}</a>)}
       </div>
       <div>
         <h5>Company</h5>
-        <a href={contactHref}>Contact</a>
-        <a href={contactHref}>Investor login</a>
-        <a href="/">Home</a>
+        <a href={url(contactHref)}>Contact</a>
+        <a href={url(contactHref)}>Investor login</a>
+        <a href={url('/')}>Home</a>
       </div>
       <div>
         <h5>Legal</h5>

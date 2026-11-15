@@ -1,6 +1,7 @@
 ---
 /* Home — /  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url';
 import '../styles/pages/home.scss';
 
 /* key figures (placeholders) — the numbers count up when they scroll into view */
@@ -21,8 +22,8 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <h1><span class="line"><span>Patient capital for</span></span><span class="line"><span>companies built <em class="serif-em">to last</em>.</span></span></h1>
       <p class="intro">Peydro Capital Alliance partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.</p>
       <div class="hero-actions">
-        <a href="/contact" class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
-        <a href="/approach" class="btn btn-ghost">Our approach</a>
+        <a href={url('/contact')} class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
+        <a href={url('/approach')} class="btn btn-ghost">Our approach</a>
       </div>
     </div>
     <button class="scroll-cue" id="scrollCue" type="button"><span>Scroll</span><span class="dotline"></span></button>
@@ -54,7 +55,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
         <span class="eyebrow">Approach</span>
         <h2 class="title">We invest like owners, <span class="serif-em">not tourists</span>.</h2>
         <p class="lead">What compounds is judgment, alignment and the willingness to stay in the room when a business is hard.</p>
-        <p class="mt-link"><a href="/approach" class="textlink">Explore our approach <span class="arrow">→</span></a></p>
+        <p class="mt-link"><a href={url('/approach')} class="textlink">Explore our approach <span class="arrow">→</span></a></p>
       </div>
       <div class="cap-grid">
         <div class="cap reveal"><div class="idx">01</div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" /></svg><h3>Conviction over consensus</h3><p>Concentrated positions in businesses we understand deeply.</p></div>
@@ -90,7 +91,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <div class="cta-box reveal">
         <h2>Building something worth holding?</h2>
         <p>We back a small number of companies each year. If the timing is right, we'd like to hear from you.</p>
-        <a href="/contact" class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
+        <a href={url('/contact')} class="btn btn-primary">Get in touch <span class="arrow">→</span></a>
       </div>
     </div>
   </section>

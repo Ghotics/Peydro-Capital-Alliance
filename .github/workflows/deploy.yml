@@ -1,0 +1,80 @@
+# Builds the Astro site and publishes it to GitHub Pages.
+# - push to main      → build + publish
+# - pull request      → build only (catches errors before merging)
+# - Actions tab       → "Run workflow" to publish by hand
+#
+# One-time setup: repo Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Read GitHub Pages settings
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Build
+        run: npm run build
+        env:
+          # e.g. https://ghotics.github.io and /Peydro-Capital-Alliance (empty with a custom domain)
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      # Fails the build if a page links to "/something" without the sub-folder
+      # (internal links must use url() from src/utils/url.ts).
+      - name: Check internal links
+        if: steps.pages.outputs.base_path != ''
+        env:
+          BASE: ${{ steps.pages.outputs.base_path }}
+        run: |
+          links=$(grep -rhoE '(href|src)="/[^"]*"' dist --include=*.html | sort -u)
+          echo "$links"
+          bad=$(echo "$links" | grep -v "=\"$BASE/" || true)
+          if [ -n "$bad" ]; then echo "::error::Links missing $BASE:"; echo "$bad"; exit 1; fi
+          echo "All internal links start with $BASE"
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

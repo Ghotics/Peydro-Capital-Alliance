@@ -1,6 +1,7 @@
 ---
 /* Capabilities — /capabilities */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url';
 import PageHero from '../components/PageHero.astro';
 import '../styles/pages/capabilities.scss';
 
@@ -38,7 +39,7 @@ const faq = [
           <span class="eyebrow">How we structure</span>
           <h2>Built around the business, not the template</h2>
           <p>Every mandate can flex — equity, debt, or a blend — so the structure fits the company rather than forcing the company to fit the structure.</p>
-          <p><a href="/contact" class="textlink">Talk through a situation <span class="arrow">→</span></a></p>
+          <p><a href={url('/contact')} class="textlink">Talk through a situation <span class="arrow">→</span></a></p>
         </div>
         <div class="visual" aria-hidden="true"><div class="bar mut" style="--h:40%"></div><div class="bar" style="--h:70%"></div><div class="bar mut" style="--h:55%"></div><div class="bar" style="--h:88%"></div></div>
       </div>
