@@ -150,8 +150,13 @@ src/
   `scripts/forms/attribution.ts` reads the code (and any `utm_…` tags) and the form sends it with the lead.
   Nothing is stored in the browser: the code is added to the page's links, so it survives going from the landing page to a form.
 - **Field names** (`first_name`, `email`, `building`…) are the future database column names.
-- **Sending is a demo for now.** `scripts/forms/submit.ts` prints the lead in the browser console instead of sending it.
-  When the backend is ready, only that file changes. The forms show a small "Modo demo" note until then.
+- **Sending:** `scripts/forms/submit.ts` sends the lead to the `website-intake` function in Supabase
+  (its code lives in the CRM repo, `supabase/functions/website-intake`). The function checks the data again,
+  links the campaign code and building, saves the lead and returns its id. The lead shows up in the CRM straight away.
+- **Scans:** when someone arrives from outside with `?c=…`, the page sends only that code to the same function,
+  so the CRM can show scans → leads for each campaign. No cookies, no personal data.
+- The function only answers this website's address. When the site moves to its own domain, add that domain
+  to the `ALLOWED_ORIGINS` secret of the function in Supabase (see the CRM README).
 - **Booking:** after sending, Giza and Business Office offer "Reservar asesoramiento". It opens the specialist's Cal.com page
   with the name and email filled in. Until `calLink` is set in `data/forms.ts`, the button explains the calendar isn't connected yet.
 - A hidden "website" field catches spam bots: if it is filled in, the form pretends to succeed and sends nothing.
@@ -176,7 +181,8 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - [ ] Set `site` in `astro.config.mjs` to the real domain.
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
-- [ ] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
+- [x] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
+- [ ] With the real domain: add it to `ALLOWED_ORIGINS` of the `website-intake` function in Supabase.
 - [ ] Fill in the company details in `src/data/legal.ts` (highlighted in red on the privacy page until done) and have a lawyer review `/privacidad`.
 - [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.
 - [ ] Cal.com links for Irene and the four specialists (`calLink` in `src/data/forms.ts`).

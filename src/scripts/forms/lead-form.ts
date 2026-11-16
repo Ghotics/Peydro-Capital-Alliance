@@ -4,7 +4,7 @@
 import type { FormKind } from '../../data/forms';
 import { prefersReducedMotion } from '../utils/motion';
 import { carryAttribution, readAttribution } from './attribution';
-import { isDemo, submitLead, type LeadPayload } from './submit';
+import { submitLead, type LeadPayload } from './submit';
 
 type StepName = 'contact' | 'done' | 'finished';
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -167,7 +167,6 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   });
   root.querySelector('[data-finish]')?.addEventListener('click', () => show('finished'));
 
-  if (isDemo) root.querySelectorAll<HTMLElement>('[data-demo]').forEach((note) => (note.hidden = false));
 }
 
 carryAttribution();

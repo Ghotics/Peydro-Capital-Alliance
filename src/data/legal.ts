@@ -66,7 +66,7 @@ export const processors: Processor[] = [
       es: 'Base de datos donde se guardan las solicitudes de los formularios.',
       en: 'Database where the form requests are stored.',
     },
-    location: { es: 'Unión Europea (Fráncfort, Alemania)', en: 'European Union (Frankfurt, Germany)' },
+    location: { es: 'Unión Europea (Estocolmo, Suecia)', en: 'European Union (Stockholm, Sweden)' },
     safeguard: {
       es: 'Cláusulas contractuales tipo de la Comisión Europea para los accesos de soporte desde fuera de la UE',
       en: "European Commission standard contractual clauses for support access from outside the EU",
