@@ -1,22 +1,6 @@
 ---
-/* Shown for any address that doesn't exist (one page for both languages: Spanish, with a link to the English site) */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import { contactHref } from '../data/site';
-import { pathFor } from '../i18n/routes';
-import { url } from '../utils/url';
+/* "Page not found" — Spanish version, shown by GitHub Pages for every unknown address.
+   English visitors are sent to /en/not-found (see components/pages/NotFoundPage.astro). */
+import NotFoundPage from '../components/pages/NotFoundPage.astro';
 ---
-<BaseLayout lang="es" title="Página no encontrada" description="Esta página no existe.">
-  <PageHero
-    eyebrow="404"
-    lead="La página que buscabas no está aquí. Puede que se haya movido o que el enlace tenga un error. · The page you were looking for isn't here."
-    hint="O usa el menú"
-    compact
-  >Esta página ya <span class="serif-em">no está aquí</span>
-    <Fragment slot="actions">
-      <a href={url(pathFor('home', 'es'))} class="btn btn-primary">Volver al inicio <span class="arrow">→</span></a>
-      <a href={url(contactHref)} class="btn btn-ghost">Contactar</a>
-      <a href={url(pathFor('home', 'en'))} class="btn btn-ghost" lang="en" hreflang="en">English site</a>
-    </Fragment>
-  </PageHero>
-</BaseLayout>
+<NotFoundPage lang="es" />

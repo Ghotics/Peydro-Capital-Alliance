@@ -3,16 +3,22 @@
    All three intake forms use this component; the props decide which fields appear.
      <LeadForm kind="business_office" area="tecnologia" askBuilding booking calLink="" />
    Behaviour: src/scripts/forms/lead-form.ts  ·  Styles: src/styles/components/_lead-form.scss
+   Texts: src/i18n/forms.ts (Spanish by default; the Giza form passes lang="en" on English pages).
 
    The field names (first_name, email, building…) are the names the database columns will have,
-   so what the form collects and what gets saved line up one to one. */
+   so what the form collects and what gets saved line up one to one — in either language. */
 import type { FormKind, Interest } from '../../data/forms';
-import { buildings, privacyHref } from '../../data/forms';
+import { buildings } from '../../data/forms';
+import type { Lang } from '../../i18n/config';
+import { formTexts } from '../../i18n/forms';
+import { pathFor } from '../../i18n/routes';
 import { url } from '../../utils/url';
 import PrivacyNotice from './PrivacyNotice.astro';
 
 interface Props {
   kind: FormKind;
+  /** Language of the texts. Spanish by default. */
+  lang?: Lang;
   /** Department slug, saved with the lead (Business Office only). */
   area?: string;
   /** Adds a first step with these options; the visitor picks one or more. */
@@ -40,39 +46,42 @@ interface Props {
   homeLabel?: string;
 }
 
+const lang: Lang = Astro.props.lang ?? 'es';
+const t = formTexts[lang];
 const {
   kind,
   area = '',
   interests = [],
   askBuilding = false,
-  title = 'Solicita tu asesoramiento gratuito',
-  intro = 'Déjanos tus datos y, si lo deseas, una nota sobre tu consulta. No necesitas indicar el nombre de tu empresa.',
-  messageLabel = 'Nota',
-  messagePlaceholder = 'Cuéntanos brevemente el motivo del asesoramiento…',
-  submitLabel = 'Enviar solicitud',
+  title = t.title,
+  intro = t.intro,
+  messageLabel = t.messageLabel,
+  messagePlaceholder = t.messagePlaceholder,
+  submitLabel = t.submitLabel,
   booking = false,
   calLink = '',
-  bookingWith = 'el especialista',
+  bookingWith = t.bookingWith,
   backHref,
-  backLabel = 'Volver',
-  homeHref = '/',
-  homeLabel = 'Volver al inicio',
+  backLabel = t.backLabel,
+  homeHref = pathFor('home', lang),
+  homeLabel = t.homeLabel,
 } = Astro.props;
 
 const hasInterests = interests.length > 0;
 const backLink = backHref ? url(backHref) : undefined;
 const homeLink = url(homeHref);
+const privacyLink = url(pathFor('privacy', lang));
 const id = `lf-${kind}${area ? `-${area}` : ''}`;
 ---
 <div class="lead-form" data-lead-form data-kind={kind} data-area={area} data-cal={calLink}>
   <form class="lf-form" novalidate>
     {hasInterests && (
       <section class="lf-step on" data-step="interests" aria-labelledby={`${id}-t1`}>
-        <span class="lf-pill">Paso 1 de 2 · Intereses</span>
-        <h2 class="lf-title" id={`${id}-t1`} tabindex="-1">¿Sobre qué temas te gustaría recibir orientación?</h2>
-        <p class="lf-sub">Puedes marcar una o varias opciones, incluso las tres. Basta con seleccionar una para continuar.</p>
+        <span class="lf-pill">{t.interestsPill}</span>
+        <h2 class="lf-title" id={`${id}-t1`} tabindex="-1">{t.interestsTitle}</h2>
+        <p class="lf-sub">{t.interestsSub}</p>
         <fieldset class="lf-options" data-field="interests">
-          <legend class="sr-only">Temas que te interesan</legend>
+          <legend class="sr-only">{t.interestsLegend}</legend>
           {interests.map((item) => (
             <label class="lf-option">
               <input type="checkbox" name="interests" value={item.value} />
@@ -80,126 +89,126 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
               <span class="lf-option-text"><strong>{item.label}</strong><small>{item.hint}</small></span>
             </label>
           ))}
-          <div class="msg">Elige al menos una opción para continuar.</div>
+          <div class="msg">{t.interestsError}</div>
         </fieldset>
         <div class="lf-foot">
           {backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
-          <button type="button" class="btn btn-primary" data-next>Continuar <span class="arrow">→</span></button>
+          <button type="button" class="btn btn-primary" data-next>{t.continue} <span class="arrow">→</span></button>
         </div>
-        <p class="lf-note">Esta pantalla no solicita datos de salud, ingresos, patrimonio ni documentación.</p>
+        <p class="lf-note">{t.interestsNote}</p>
       </section>
     )}
 
     <section class:list={['lf-step', { on: !hasInterests }]} data-step="contact" aria-labelledby={`${id}-t2`}>
-      <span class="lf-pill">{hasInterests ? 'Paso 2 de 2 · Datos de contacto' : 'Paso único · 1 de 1'}</span>
-      <h2 class="lf-title" id={`${id}-t2`} tabindex="-1">{hasInterests ? 'Ahora, tus datos de contacto' : title}</h2>
-      <p class="lf-sub">{hasInterests ? 'Hemos registrado los temas que te interesan. Completa el formulario para enviarnos tu solicitud.' : intro}</p>
+      <span class="lf-pill">{hasInterests ? t.contactPillTwo : t.contactPillOne}</span>
+      <h2 class="lf-title" id={`${id}-t2`} tabindex="-1">{hasInterests ? t.contactTitleTwo : title}</h2>
+      <p class="lf-sub">{hasInterests ? t.contactSubTwo : intro}</p>
 
       <div class="two">
         <div class="field" data-field="first_name">
-          <label for={`${id}-first_name`}>Nombre <span class="req" aria-hidden="true">*</span></label>
-          <input id={`${id}-first_name`} name="first_name" type="text" autocomplete="given-name" placeholder="Tu nombre" maxlength="80" required />
-          <div class="msg">Escribe tu nombre.</div>
+          <label for={`${id}-first_name`}>{t.firstName} <span class="req" aria-hidden="true">*</span></label>
+          <input id={`${id}-first_name`} name="first_name" type="text" autocomplete="given-name" placeholder={t.firstNamePlaceholder} maxlength="80" required />
+          <div class="msg">{t.firstNameError}</div>
         </div>
         <div class="field" data-field="last_name">
-          <label for={`${id}-last_name`}>Apellidos <span class="req" aria-hidden="true">*</span></label>
-          <input id={`${id}-last_name`} name="last_name" type="text" autocomplete="family-name" placeholder="Tus apellidos" maxlength="120" required />
-          <div class="msg">Escribe tus apellidos.</div>
+          <label for={`${id}-last_name`}>{t.lastName} <span class="req" aria-hidden="true">*</span></label>
+          <input id={`${id}-last_name`} name="last_name" type="text" autocomplete="family-name" placeholder={t.lastNamePlaceholder} maxlength="120" required />
+          <div class="msg">{t.lastNameError}</div>
         </div>
       </div>
 
       <div class="two">
         <div class="field" data-field="email">
-          <label for={`${id}-email`}>Correo electrónico <span class="req" aria-hidden="true">*</span></label>
-          <input id={`${id}-email`} name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@email.com" maxlength="160" required />
-          <div class="msg">Escribe un correo válido, por ejemplo nombre@email.com.</div>
+          <label for={`${id}-email`}>{t.email} <span class="req" aria-hidden="true">*</span></label>
+          <input id={`${id}-email`} name="email" type="email" inputmode="email" autocomplete="email" placeholder={t.emailPlaceholder} maxlength="160" required />
+          <div class="msg">{t.emailError}</div>
         </div>
         <div class="field" data-field="phone">
-          <label for={`${id}-phone`}>Número de teléfono <span class="req" aria-hidden="true">*</span></label>
+          <label for={`${id}-phone`}>{t.phone} <span class="req" aria-hidden="true">*</span></label>
           <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+34 600 000 000" maxlength="25" required />
-          <div class="msg">Escribe un teléfono válido, con al menos 9 cifras.</div>
+          <div class="msg">{t.phoneError}</div>
         </div>
       </div>
 
       {askBuilding && (
         <div class="two">
           <div class="field" data-field="building">
-            <label for={`${id}-building`}>Edificio <span class="req" aria-hidden="true">*</span></label>
+            <label for={`${id}-building`}>{t.building} <span class="req" aria-hidden="true">*</span></label>
             <select id={`${id}-building`} name="building" required>
-              <option value="">Selecciona tu edificio</option>
-              {buildings.map((b) => <option value={b}>Edificio {b}</option>)}
+              <option value="">{t.buildingSelect}</option>
+              {buildings.map((b) => <option value={b}>{t.buildingOption} {b}</option>)}
             </select>
-            <div class="msg">Elige tu edificio.</div>
+            <div class="msg">{t.buildingError}</div>
           </div>
           <div class="field" data-field="unit">
-            <label for={`${id}-unit`}>Número de local <span class="req" aria-hidden="true">*</span></label>
-            <input id={`${id}-unit`} name="unit" type="text" placeholder="Ej.: 101" maxlength="20" required />
-            <div class="msg">Escribe el número de tu local.</div>
+            <label for={`${id}-unit`}>{t.unit} <span class="req" aria-hidden="true">*</span></label>
+            <input id={`${id}-unit`} name="unit" type="text" placeholder={t.unitPlaceholder} maxlength="20" required />
+            <div class="msg">{t.unitError}</div>
           </div>
         </div>
       )}
 
       <div class="field" data-field="message">
-        <label for={`${id}-message`}>{messageLabel} <span class="opt">(opcional)</span></label>
+        <label for={`${id}-message`}>{messageLabel} <span class="opt">{t.optional}</span></label>
         <textarea id={`${id}-message`} name="message" rows="4" maxlength="2000" placeholder={messagePlaceholder}></textarea>
       </div>
 
       {/* Hidden trap for spam bots: people never see or fill it, bots usually do. */}
       <div class="lf-hp" aria-hidden="true">
-        <label>Página web <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+        <label>{t.honeypot} <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
       </div>
 
       <div class="lf-check" data-field="privacy">
         <label class="lf-consent">
           <input type="checkbox" name="privacy" required />
-          <span>He leído la <a href={url(privacyHref)} target="_blank" rel="noopener">Política de privacidad</a> y la información sobre el tratamiento de mis datos. <span class="req" aria-hidden="true">*</span></span>
+          <span>{t.consentBefore} <a href={privacyLink} target="_blank" rel="noopener">{t.consentLink}</a> {t.consentAfter} <span class="req" aria-hidden="true">*</span></span>
         </label>
-        <div class="msg">Para enviar la solicitud tienes que aceptar la política de privacidad.</div>
+        <div class="msg">{t.consentError}</div>
       </div>
 
-      <PrivacyNotice />
+      <PrivacyNotice lang={lang} />
 
-      <div class="lf-alert" role="alert" data-send-error hidden>No hemos podido enviar tu solicitud. Comprueba tu conexión e inténtalo de nuevo.</div>
+      <div class="lf-alert" role="alert" data-send-error hidden>{t.sendError}</div>
 
       <div class="lf-foot">
         {hasInterests
-          ? <button type="button" class="lf-back" data-prev>← Volver a intereses</button>
+          ? <button type="button" class="lf-back" data-prev>← {t.backToInterests}</button>
           : backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
-        <button type="submit" class="btn btn-primary" data-submit><span data-label>{submitLabel}</span> <span class="arrow">→</span></button>
+        <button type="submit" class="btn btn-primary" data-submit data-sending-label={t.sending}><span data-label>{submitLabel}</span> <span class="arrow">→</span></button>
       </div>
-      <p class="lf-note" data-demo hidden>Modo demo: todavía no se envía nada. La conexión con la base de datos llega en el siguiente paso.</p>
+      <p class="lf-note" data-demo hidden>{t.demoNote}</p>
     </section>
   </form>
 
   <section class="lf-step lf-done" data-step="done" aria-labelledby={`${id}-t3`}>
     <div class="lf-done-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" /></svg></div>
-    <span class="lf-pill">{booking ? 'Solicitud registrada · Paso siguiente opcional' : 'Mensaje recibido'}</span>
-    <h2 class="lf-title" id={`${id}-t3`} tabindex="-1">Hemos recibido tu solicitud</h2>
+    <span class="lf-pill">{booking ? t.donePillBooking : t.donePill}</span>
+    <h2 class="lf-title" id={`${id}-t3`} tabindex="-1">{t.doneTitle}</h2>
     {booking ? (
       <>
-        <p class="lf-sub">Tu consulta ya está registrada en PCA. Puedes reservar una sesión con {bookingWith} o, si únicamente querías plantear una duda, dejarla enviada sin agendar una reunión.</p>
+        <p class="lf-sub">{t.doneBookingText.replace('{who}', bookingWith)}</p>
         <div class="lf-actions">
-          <button type="button" class="btn btn-primary" data-book>Reservar asesoramiento <span class="arrow">→</span></button>
-          <button type="button" class="btn btn-ghost" data-finish>Finalizar sin reservar</button>
+          <button type="button" class="btn btn-primary" data-book>{t.book} <span class="arrow">→</span></button>
+          <button type="button" class="btn btn-ghost" data-finish>{t.finish}</button>
         </div>
-        <p class="lf-info" data-cal-opened hidden>Hemos abierto el calendario en una pestaña nueva. Cuando termines la reserva, recibirás la confirmación por correo.</p>
-        <p class="lf-info" data-cal-missing hidden>El calendario de reservas todavía no está conectado. Tu solicitud ya está guardada: te contactaremos para fijar la cita.</p>
-        <p class="lf-info">Si eliges reservar, verás solo los huecos libres de su calendario. Las segundas citas y los cambios se gestionan desde PCA.</p>
+        <p class="lf-info" data-cal-opened hidden>{t.calOpened}</p>
+        <p class="lf-info" data-cal-missing hidden>{t.calMissing}</p>
+        <p class="lf-info">{t.calInfo}</p>
       </>
     ) : (
       <>
-        <p class="lf-sub">Te contactaremos lo antes posible en el teléfono o el correo que nos has dejado.</p>
+        <p class="lf-sub">{t.doneText}</p>
         <div class="lf-actions"><a class="btn btn-ghost" href={homeLink}>{homeLabel}</a></div>
       </>
     )}
-    <p class="lf-note">Recibirás una confirmación en <strong data-echo="email"></strong>.</p>
+    <p class="lf-note">{t.confirmationTo} <strong data-echo="email"></strong>.</p>
   </section>
 
   {booking && (
     <section class="lf-step lf-done" data-step="finished" aria-labelledby={`${id}-t4`}>
       <div class="lf-done-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" /></svg></div>
-      <h2 class="lf-title" id={`${id}-t4`} tabindex="-1">Gracias, <span data-echo="first_name"></span></h2>
-      <p class="lf-sub">Tu consulta queda enviada sin cita. El equipo de PCA la revisará y te responderá lo antes posible.</p>
+      <h2 class="lf-title" id={`${id}-t4`} tabindex="-1">{t.thanks} <span data-echo="first_name"></span></h2>
+      <p class="lf-sub">{t.finishedText}</p>
       <div class="lf-actions"><a class="btn btn-ghost" href={homeLink}>{homeLabel}</a></div>
     </section>
   )}

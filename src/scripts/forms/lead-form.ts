@@ -157,7 +157,8 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
 
     busy = true;
     if (submitButton) submitButton.disabled = true;
-    if (submitLabel) submitLabel.textContent = 'Enviando…';
+    /* "Enviando…" / "Sending…", in the page's language (data-sending-label in LeadForm.astro) */
+    if (submitLabel) submitLabel.textContent = submitButton?.dataset.sendingLabel ?? 'Enviando…';
     if (sendError) sendError.hidden = true;
     try {
       const { leadId } = await submitLead(lead);

@@ -1,0 +1,64 @@
+---
+/* "Page not found", in both languages.
+   - Spanish: src/pages/404.astro → /404.html, which GitHub Pages shows for EVERY unknown address.
+     A tiny script there sends English visitors to the English version: anyone whose address starts
+     with /en/, or who chose English with the ES / EN switch (remembered in this browser).
+   - English: src/pages/en/not-found.astro → /en/not-found/
+   Texts are short, so they live here. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import type { Lang } from '../../i18n/config';
+import { pathFor } from '../../i18n/routes';
+import { url } from '../../utils/url';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const texts = {
+  es: {
+    title: 'Página no encontrada',
+    description: 'Esta página no existe.',
+    heading: 'Esta página ya <span class="serif-em">no está aquí</span>',
+    lead: 'La página que buscabas no existe. Puede que se haya movido o que el enlace tenga un error.',
+    hint: 'O usa el menú',
+    home: 'Volver al inicio',
+    contact: 'Contactar',
+  },
+  en: {
+    title: 'Page not found',
+    description: "This page doesn't exist.",
+    heading: 'This page has <span class="serif-em">moved on</span>',
+    lead: "The page you were looking for isn't here. It may have moved, or the link may be mistyped.",
+    hint: 'Or use the menu',
+    home: 'Back to home',
+    contact: 'Get in touch',
+  },
+};
+const t = texts[lang];
+
+/* Only on the Spanish page: switch English visitors to the English version before it shows. */
+const base = url('/').replace(/\/$/, '');
+const englishVersion = url(pathFor('notFound', 'en')) + '/';
+const redirectScript = `(function () {
+  try {
+    var path = location.pathname;
+    if (${JSON.stringify(base)} && path.indexOf(${JSON.stringify(base)}) === 0) path = path.slice(${JSON.stringify(base.length)});
+    var english = path === '/en' || path.indexOf('/en/') === 0;
+    if (!english) { try { english = localStorage.getItem('pca-lang') === 'en'; } catch (e) {} }
+    if (english) location.replace(${JSON.stringify(englishVersion)});
+  } catch (e) {}
+})();`;
+---
+<BaseLayout lang={lang} title={t.title} description={t.description} noindex>
+  {lang === 'es' && <script is:inline slot="head" set:html={redirectScript} />}
+  <PageHero eyebrow="404" lead={t.lead} hint={t.hint} compact>
+    <Fragment set:html={t.heading} />
+    <Fragment slot="actions">
+      <a href={url(pathFor('home', lang))} class="btn btn-primary">{t.home} <span class="arrow">→</span></a>
+      <a href={url(pathFor('giza', lang))} class="btn btn-ghost">{t.contact}</a>
+    </Fragment>
+  </PageHero>
+</BaseLayout>

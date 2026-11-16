@@ -1,7 +1,7 @@
 ---
 /* Site footer. Styles: src/styles/components/_footer.scss */
 import Brand from './Brand.astro';
-import { contactHref, site } from '../data/site';
+import { site } from '../data/site';
 import type { Lang } from '../i18n/config';
 import { mainNav, pathFor } from '../i18n/routes';
 import { ui } from '../i18n/ui';
@@ -29,14 +29,14 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h5>{f.company}</h5>
-        <a href={url(contactHref)}>{f.contact}</a>
-        <a href={url(contactHref)}>{t.investorLogin}</a>
+        <a href={url(pathFor('giza', lang))}>{f.contact}</a>
+        <a href={url(pathFor('giza', lang))}>{t.investorLogin}</a>
         <a href={url(pathFor('home', lang))}>{f.home}</a>
       </div>
       <div>
         <h5>{f.legal}</h5>
         <a href="#">{f.terms}</a>
-        <a href={url('/privacidad')}>{f.privacy}</a>
+        <a href={url(pathFor('privacy', lang))}>{f.privacy}</a>
         <a href="#">{f.disclosures}</a>
       </div>
     </div>

@@ -1,0 +1,123 @@
+---
+/* Privacy policy layout, shared by both languages — the full data-protection information
+   ("segunda capa") for every form on the site, as required by art. 13 GDPR and Spain's LOPDGDD.
+   The short version sits inside each form (components/forms/PrivacyNotice.astro).
+   Texts: src/i18n/pages/privacy.ts · Company details, providers, retention: src/data/legal.ts
+   Routes: src/pages/privacidad.astro (es) and src/pages/en/privacy.astro (en). Styles: src/styles/pages/legal.scss
+   Have a lawyer or data-protection adviser review it before the site goes live. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import Fill from '../legal/Fill.astro';
+import { authority, controller, isPlaceholder, leadRetention, privacyUpdated, processors } from '../../data/legal';
+import type { Lang } from '../../i18n/config';
+import { privacy } from '../../i18n/pages/privacy';
+import { ui } from '../../i18n/ui';
+import '../../styles/pages/legal.scss';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = privacy[lang];
+const outsideEu = processors.filter((p) => p.safeguard);
+const withRetention = (text: string) => text.replace('{retention}', leadRetention[lang]);
+---
+<BaseLayout lang={lang} page="privacy" title={t.title} description={t.description}>
+  <PageHero eyebrow={t.eyebrow} lead={t.lead} hint={ui[lang].keepScrolling} compact><Fragment set:html={t.heading} /></PageHero>
+
+  <section class="sec legal-sec">
+    <div class="wrap legal">
+      <p class="legal-updated">{t.updated} {privacyUpdated[lang]}</p>
+      {t.translationNote && <p class="legal-updated">{t.translationNote}</p>}
+
+      <p>{t.intro}</p>
+
+      <div class="legal-summary">
+        <h2>{t.summary.title}</h2>
+        <dl>
+          <div><dt>{t.summary.controller}</dt><dd><Fill value={controller.name} /></dd></div>
+          <div><dt>{t.summary.purpose}</dt><dd>{t.summary.purposeText}</dd></div>
+          <div><dt>{t.summary.basis}</dt><dd>{t.summary.basisText}</dd></div>
+          <div><dt>{t.summary.recipients}</dt><dd>{t.summary.recipientsText}</dd></div>
+          <div><dt>{t.summary.rights}</dt><dd>{t.summary.rightsText}</dd></div>
+        </dl>
+      </div>
+
+      <h2 id="responsable">{t.s1.title}</h2>
+      <ul class="legal-facts">
+        <li><b>{t.s1.controller}</b> <Fill value={controller.name} /></li>
+        <li><b>{t.s1.taxId}</b> <Fill value={controller.taxId} /></li>
+        <li><b>{t.s1.address}</b> <Fill value={controller.address} /></li>
+        <li><b>{t.s1.email}</b> {isPlaceholder(controller.email) ? <Fill value={controller.email} /> : <a href={`mailto:${controller.email}`}>{controller.email}</a>}</li>
+      </ul>
+      <p>{t.s1.note}</p>
+
+      <h2 id="datos">{t.s2.title}</h2>
+      <ul>
+        {t.s2.items.map((item) => <li set:html={item} />)}
+      </ul>
+      {t.s2.after.map((p) => <p set:html={p} />)}
+
+      <h2 id="finalidad">{t.s3.title}</h2>
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead><tr><th scope="col">{t.s3.headWhat}</th><th scope="col">{t.s3.headBasis}</th></tr></thead>
+          <tbody>
+            {t.s3.rows.map(([what, basis]) => <tr><td>{what}</td><td>{basis}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p>{t.s3.after}</p>
+
+      <h2 id="plazo">{t.s4.title}</h2>
+      <ul>
+        {t.s4.items.map((item) => <li set:html={withRetention(item)} />)}
+      </ul>
+
+      <h2 id="destinatarios">{t.s5.title}</h2>
+      {t.s5.paragraphs.map((p) => <p>{p}</p>)}
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead><tr><th scope="col">{t.s5.headProvider}</th><th scope="col">{t.s5.headWhat}</th><th scope="col">{t.s5.headWhere}</th></tr></thead>
+          <tbody>
+            {processors.map((p) => (
+              <tr><td><Fill value={p.name} /></td><td>{p.purpose[lang]}</td><td><Fill value={p.location[lang]} /></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="transferencias">{t.s6.title}</h2>
+      <p>{t.s6.intro}</p>
+      <ul>
+        {outsideEu.map((p) => (
+          <li><b><Fill value={p.name} />:</b> <Fill value={p.safeguard?.[lang] ?? ''} />.</li>
+        ))}
+      </ul>
+      <p>{t.s6.after}</p>
+
+      <h2 id="derechos">{t.s7.title}</h2>
+      <ul>
+        {t.s7.items.map((item) => <li set:html={item} />)}
+      </ul>
+      <p set:html={t.s7.how} />
+      <p><Fragment set:html={t.s7.complainBefore} /> {authority.name[lang]}, {authority.address}, <a href={authority.url} target="_blank" rel="noopener">{authority.url.replace('https://', '')}</a>.</p>
+
+      <h2 id="menores">{t.s8.title}</h2>
+      <p>{t.s8.text}</p>
+
+      <h2 id="seguridad">{t.s9.title}</h2>
+      <p>{t.s9.text}</p>
+
+      <h2 id="cookies">{t.s10.title}</h2>
+      <p>{t.s10.text}</p>
+
+      <h2 id="terceros">{t.s11.title}</h2>
+      <p>{t.s11.text}</p>
+
+      <h2 id="cambios">{t.s12.title}</h2>
+      <p>{t.s12.text}</p>
+    </div>
+  </section>
+</BaseLayout>

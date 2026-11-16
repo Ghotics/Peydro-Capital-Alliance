@@ -21,9 +21,11 @@ interface Props {
   /** Which page this is, if it exists in both languages (src/i18n/routes.ts).
       Highlights its menu link and makes the ES / EN switch open the same page. */
   page?: PageKey;
+  /** Keep the page out of search engines (the "page not found" pages). */
+  noindex?: boolean;
 }
 
-const { title, lang = 'es', page } = Astro.props;
+const { title, lang = 'es', page, noindex = false } = Astro.props;
 const t = ui[lang];
 const description = Astro.props.description ?? t.siteDescription;
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${t.homeTitle}`;
@@ -34,7 +36,8 @@ const alternates = page ? (Object.keys(languages) as Lang[]).map((code) => ({ la
 <!doctype html>
 <html lang={lang}>
   <head>
-    <SiteHead title={pageTitle} description={description} alternates={alternates} />
+    <SiteHead title={pageTitle} description={description} alternates={alternates} noindex={noindex} />
+    <slot name="head" />
   </head>
   <body id="top">
     <a class="skip-link" href="#main">{t.skip}</a>

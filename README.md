@@ -2,7 +2,7 @@
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
 Five pages in **Spanish (main) and English** — Inicio, Quiénes somos, Enfoque, Crecimiento compuesto de redes, Perspectivas — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
-Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Giza form — the only form linked from the site (Spanish only for now).
+Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Giza form, in the visitor's language — the only form linked from the site.
 See [Languages](#languages-es--en).
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
@@ -32,14 +32,14 @@ src/
 │  ├─ enfoque.astro        /enfoque                   │ components/pages/*.astro with lang="es"
 │  ├─ crecimiento-compuesto.astro /crecimiento-compuesto
 │  ├─ perspectivas.astro   /perspectivas              ┘
-│  ├─ en/                  /en, /en/about, /en/approach, /en/compound-growth, /en/insights (lang="en")
-│  ├─ giza.astro           /giza                      Form 1 ("Get in touch" / "Solicitar reunión")
-│  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here)
+│  ├─ en/                  /en, /en/about, /en/approach, /en/compound-growth, /en/insights, /en/giza, /en/privacy, /en/not-found
+│  ├─ giza.astro           /giza                      Form 1 ("Contactar" / "Solicitar reunión"); English: /en/giza
+│  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here); English: /en/privacy
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
 │  │  ├─ index.astro       /asesoramiento             landing + department picker
 │  │  └─ [area].astro      /asesoramiento/<area>      one page per department
 │  ├─ contacto-rapido.astro /contacto-rapido          Form 3, outside links only (hidden)
-│  └─ 404.astro            shown for unknown addresses
+│  └─ 404.astro            shown for unknown addresses (sends English visitors to /en/not-found)
 ├─ layouts/
 │  ├─ BaseLayout.astro     <head>, top bar, menu, footer — shared by the site pages
 │  └─ FunnelLayout.astro   lighter frame for the QR-only pages (no menu, not in Google)
@@ -123,7 +123,11 @@ src/
 - **Spanish is the main language**: its pages have no prefix (`/quienes-somos`). English pages live under `/en/` (`/en/about`).
 - The **ES / EN switch** (top bar from 760px up, and in the phone menu) opens the same page in the other language, using `src/i18n/routes.ts`. On pages that only exist in Spanish (Giza, privacy, Business Office) it leads to the English home page.
 - Each page tells search engines about its other-language version (`hreflang` links in `<head>`), once the site address is known (on GitHub Pages).
-- **Not translated yet:** the forms (Giza, Business Office, quick form) and the privacy page are Spanish only. English buttons still lead to the Spanish Giza form.
+- **The language never changes by itself:** every link, button and form on an English page leads to English pages (`/en/giza`, `/en/privacy`…), and the same for Spanish.
+- **"Page not found":** GitHub Pages shows `/404.html` (Spanish) for every unknown address. A small script there sends English visitors to `/en/not-found`: anyone whose address starts with `/en/`, or who chose English with the switch (remembered in the browser under `pca-lang`, see the privacy policy, section 10).
+- **The Giza form** exists in both languages (`/giza`, `/en/giza`) and saves exactly the same fields in both; only the `page` value shows which one was used. Its texts: `src/i18n/pages/giza.ts` (page) and `src/i18n/forms.ts` (form card).
+- **The privacy policy** exists in both languages (`/privacidad`, `/en/privacy`); the English one says the Spanish version prevails. Bilingual details (dates, providers, retention) are in `src/data/legal.ts`.
+- **Spanish only, on purpose:** the Business Office forms and the quick form (reached through QR codes and outside links, for a Spanish audience).
 
 ## Styling conventions
 

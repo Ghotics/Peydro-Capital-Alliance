@@ -2,7 +2,6 @@
 /* Home page layout, shared by both languages. Texts: src/i18n/pages/home.ts
    Routes: src/pages/index.astro (es) and src/pages/en/index.astro (en) */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { contactHref } from '../../data/site';
 import type { Lang } from '../../i18n/config';
 import { home } from '../../i18n/pages/home';
 import { pathFor } from '../../i18n/routes';
@@ -32,7 +31,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <h1>{t.titleLines.map((line) => <span class="line"><span set:html={line} /></span>)}</h1>
       <p class="intro">{t.intro}</p>
       <div class="hero-actions">
-        <a href={url(contactHref)} class="btn btn-primary">{t.primary} <span class="arrow">→</span></a>
+        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.primary} <span class="arrow">→</span></a>
         <a href={url(pathFor('approach', lang))} class="btn btn-ghost">{t.secondary}</a>
       </div>
     </div>
@@ -106,7 +105,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <div class="cta-box reveal">
         <h2>{t.cta.title}</h2>
         <p>{t.cta.text}</p>
-        <a href={url(contactHref)} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
+        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
