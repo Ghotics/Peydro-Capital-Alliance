@@ -6,7 +6,11 @@
 
    Nothing is stored in the visitor's browser (no cookies, no storage), so no consent banner is needed
    for this. To keep the code when the visitor moves from /asesoramiento to a department form,
-   carryAttribution() adds it to the links on the page instead. */
+   carryAttribution() adds it to the links on the page instead.
+
+   carryAttribution() also counts the visit as a "scan" for the CRM, but only when the visitor arrives
+   from outside (QR camera, Instagram…), not when moving between pages of this site. */
+import { recordArrival } from './submit';
 
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const;
 /** Campaign codes: letters, numbers, - and _ only (anything else is ignored). */
@@ -34,6 +38,7 @@ export function readAttribution(): Attribution {
     so the next page still knows where the visitor came from. Same-page links (#…) are left alone. */
 export function carryAttribution(): void {
   const { campaign, utm } = readAttribution();
+  if (campaign && cameFromOutside()) recordArrival(campaign);
   const extra = new URLSearchParams();
   if (campaign) extra.set('c', campaign);
   Object.entries(utm).forEach(([key, value]) => {
@@ -48,4 +53,14 @@ export function carryAttribution(): void {
     extra.forEach((value, key) => target.searchParams.set(key, value));
     link.href = target.toString();
   });
+}
+
+/** True when the visitor didn't come from another page of this site (QR scans have no referrer at all). */
+function cameFromOutside(): boolean {
+  if (!document.referrer) return true;
+  try {
+    return new URL(document.referrer).origin !== window.location.origin;
+  } catch {
+    return true;
+  }
 }

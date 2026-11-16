@@ -42,7 +42,6 @@ const es = {
   consentAfter: 'y la información sobre el tratamiento de mis datos.',
   consentError: 'Para enviar la solicitud tienes que aceptar la política de privacidad.',
   sendError: 'No hemos podido enviar tu solicitud. Comprueba tu conexión e inténtalo de nuevo.',
-  demoNote: 'Modo demo: todavía no se envía nada. La conexión con la base de datos llega en el siguiente paso.',
 
   /* after sending */
   donePillBooking: 'Solicitud registrada · Paso siguiente opcional',
@@ -113,7 +112,6 @@ const en: typeof es = {
   consentAfter: 'and the information about how my data is used.',
   consentError: 'To send the request you need to accept the privacy policy.',
   sendError: "We couldn't send your request. Check your connection and try again.",
-  demoNote: 'Demo mode: nothing is sent yet. The database connection comes in the next step.',
 
   donePillBooking: 'Request received · Optional next step',
   donePill: 'Message received',
