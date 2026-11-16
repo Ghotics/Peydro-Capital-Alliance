@@ -17,13 +17,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = about[lang];
 
-/* line drawings for the four "how we work" steps */
-const icons = [
-  '<circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" />',
-  '<circle cx="6" cy="12" r="3" /><circle cx="18" cy="6" r="3" /><circle cx="18" cy="18" r="3" /><path d="M8.7 10.7l6.6-3.4M8.7 13.3l6.6 3.4" />',
-  '<path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" />',
-  '<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />',
-];
 ---
 <BaseLayout lang={lang} page="about" title={t.title} description={t.description}>
   <PageHero eyebrow={t.hero.eyebrow} lead={t.hero.lead} hint={ui[lang].keepScrolling}><Fragment set:html={t.hero.title} /></PageHero>
@@ -40,20 +33,17 @@ const icons = [
     </div>
   </section>
 
-  <section class="sec alt-bg">
+  <section class="sec alt-bg" id="method">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">{t.method.eyebrow}</span>
         <h2 class="title" set:html={t.method.title} />
       </div>
-      <div class="cap-grid four">
+      {/* numbered steps on a line that fills as you scroll: styles/components/_process-steps.scss */}
+      <div class="steps" id="steps">
+        <div class="rail"><div class="fill" id="railFill"></div></div>
         {t.method.steps.map((step, i) => (
-          <div class="cap reveal" data-delay={i || undefined}>
-            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={icons[i]} />
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </div>
+          <div class="step reveal"><div class="bullet">{i + 1}</div><div><h3>{step.title}</h3><p>{step.text}</p></div></div>
         ))}
       </div>
     </div>
@@ -101,4 +91,6 @@ const icons = [
       </div>
     </div>
   </section>
+
+  <script>import '../../scripts/pages/about';</script>
 </BaseLayout>
