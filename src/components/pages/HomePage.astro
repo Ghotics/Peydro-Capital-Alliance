@@ -1,10 +1,11 @@
 ---
-/* Home page layout, shared by both languages. Texts: src/i18n/pages/home.ts
+/* Home page layout ("Crecimiento compuesto de redes" / "Compound network growth"), shared by both languages.
+   Texts: src/i18n/pages/home.ts
    Routes: src/pages/index.astro (es) and src/pages/en/index.astro (en) */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { Lang } from '../../i18n/config';
-import { home } from '../../i18n/pages/home';
 import { pathFor } from '../../i18n/routes';
+import { home } from '../../i18n/pages/home';
 import { url } from '../../utils/url';
 import '../../styles/pages/home.scss';
 
@@ -15,96 +16,156 @@ interface Props {
 const { lang } = Astro.props;
 const t = home[lang];
 
-/* line drawings for the three approach cards */
-const icons = [
-  '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" />',
-  '<circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />',
-  '<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />',
+/* line drawings for the three ecosystem cards */
+const ecoIcons = [
+  '<rect x="4" y="4" width="16" height="16" rx="2" /><path d="M4 10h16M10 10v10" />',
+  '<path d="M4 20V9l8-6 8 6v11M4 20h16M9 20v-6h6v6" />',
+  '<circle cx="9" cy="8" r="4" /><path d="M2 21a7 7 0 0 1 14 0M16 3.5a4 4 0 0 1 0 9M22 21a7 7 0 0 0-4-6.3" />',
 ];
-const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfield', 'Stonebridge', 'Verano'];
 ---
 <BaseLayout lang={lang} page="home" description={t.description}>
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"><div class="orb a" data-depth="0.20"></div><div class="orb b" data-depth="0.12"></div><div class="orb c" data-depth="0.28"></div></div>
     <div class="wrap hero-content">
-      <span class="eyebrow">{t.eyebrow}</span>
-      <h1>{t.titleLines.map((line) => <span class="line"><span set:html={line} /></span>)}</h1>
-      <p class="intro">{t.intro}</p>
+      <span class="eyebrow">{t.hero.eyebrow}</span>
+      <h1>{t.hero.titleLines.map((line) => <span class="line"><span set:html={line} /></span>)}</h1>
+      <p class="intro">{t.hero.lead}</p>
       <div class="hero-actions">
-        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.primary} <span class="arrow">→</span></a>
-        <a href={url(pathFor('about', lang))} class="btn btn-ghost">{t.secondary}</a>
+        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.hero.primary} <span class="arrow">→</span></a>
+        <a href={url(pathFor('about', lang))} class="btn btn-ghost">{t.hero.secondary}</a>
       </div>
     </div>
-    <button class="scroll-cue" id="scrollCue" type="button"><span>{t.scroll}</span><span class="dotline"></span></button>
+    <button class="scroll-cue" id="scrollCue" type="button"><span>{t.hero.scroll}</span><span class="dotline"></span></button>
   </section>
 
-  <section class="stats">
+  <section class="sec">
     <div class="wrap">
-      <div class="stats-grid">
-        {t.stats.map((s, i) => (
-          <div class="stat reveal" data-delay={i || undefined}>
-            <div class="num" data-target={s.target} data-decimals={s.decimals} data-prefix={s.prefix}>{s.prefix}{s.target.toFixed(s.decimals)}<span class="suffix">{s.suffix}</span></div>
-            <div class="label">{s.label}</div>
-          </div>
+      <div class="two-col reveal">
+        <div>
+          <span class="eyebrow">{t.ecosystem.eyebrow}</span>
+          <h2 class="title" set:html={t.ecosystem.title} />
+        </div>
+        <div class="body">
+          {t.ecosystem.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <div class="flow reveal" aria-label={[...t.ecosystem.flow, t.ecosystem.flowEnd].join(' → ')}>
+        {t.ecosystem.flow.map((step) => (
+          <Fragment><span class="node">{step}</span><span class="arrow" aria-hidden="true">→</span></Fragment>
         ))}
+        <span class="node end">{t.ecosystem.flowEnd}</span>
       </div>
     </div>
   </section>
 
-  <section class="statement">
-    <div class="wrap reveal">
-      <p class="big" set:html={t.statement} />
-      <p class="by">{t.statementBy}</p>
-    </div>
-  </section>
-
-  <section class="sec flush-top">
+  <section class="sec alt-bg">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">{t.approach.eyebrow}</span>
-        <h2 class="title" set:html={t.approach.title} />
-        <p class="lead">{t.approach.lead}</p>
-        <p class="mt-link"><a href={url(pathFor('about', lang) + '#method')} class="textlink">{t.approach.link} <span class="arrow">→</span></a></p>
+        <span class="eyebrow">{t.types.eyebrow}</span>
+        <h2 class="title" set:html={t.types.title} />
+        <p class="lead">{t.types.lead}</p>
       </div>
       <div class="cap-grid">
-        {t.approach.cards.map((card, i) => (
+        {t.types.cards.map((eco, i) => (
           <div class="cap reveal" data-delay={i || undefined}>
-            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={icons[i]} />
-            <h3>{card.title}</h3>
-            <p>{card.text}</p>
+            {eco.badge && <span class="badge">{eco.badge}</span>}
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={ecoIcons[i]} />
+            <h3>{eco.title}</h3>
+            <p>{eco.text}</p>
           </div>
         ))}
       </div>
-    </div>
-  </section>
-
-  <section class="sec flush-top">
-    <div class="wrap">
-      <div class="split reveal">
-        <div class="copy">
-          <span class="eyebrow">{t.track.eyebrow}</span>
-          <h2>{t.track.title}</h2>
-          <p>{t.track.text}</p>
-          <p class="note">{t.track.note}</p>
+      <div class="two-col same-arch reveal">
+        <h3 set:html={t.types.sameTitle} />
+        <div class="body">
+          {t.types.sameParagraphs.map((p) => <p>{p}</p>)}
         </div>
-        <div class="visual" aria-hidden="true"><div class="bar" style="--h:38%"></div><div class="bar" style="--h:52%"></div><div class="bar" style="--h:61%"></div><div class="bar" style="--h:78%"></div><div class="bar" style="--h:94%"></div></div>
       </div>
     </div>
   </section>
 
+  <section class="sec">
+    <div class="wrap">
+      <div class="two-col reveal">
+        <div>
+          <span class="eyebrow">{t.opus.eyebrow}</span>
+          <h2 class="title" set:html={t.opus.title} />
+        </div>
+        <div class="body">
+          {t.opus.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <div class="cap-grid four after-text">
+        {t.opus.steps.map((step, i) => (
+          <div class="cap reveal" data-delay={i || undefined}>
+            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        ))}
+      </div>
+      <ul class="loop reveal" aria-label={t.opus.loopLabel}>
+        {t.opus.loop.map((word) => <li>{word}</li>)}
+        <li class="again" aria-hidden="true">↻</li>
+      </ul>
+    </div>
+  </section>
+
   <section class="sec flush-top">
-    <div class="wrap logos-wrap reveal">
-      <div class="cap-txt">{t.coInvest}</div>
-      <div class="logos">{coInvestors.map((name) => <span>{name}</span>)}</div>
+    <div class="wrap layers">
+      <div class="layer reveal">
+        <div class="name">PCA OS</div>
+        <h3>{t.os.title}</h3>
+        {t.os.paragraphs.map((p) => <p>{p}</p>)}
+        <ul class="tags">
+          {t.os.tags.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="layer reveal" data-delay="1">
+        <div class="name">LOGOS</div>
+        <h3>{t.logos.title}</h3>
+        {t.logos.paragraphs.map((p) => <p>{p}</p>)}
+        <div class="flow compact" aria-label={`OPUS → LOGOS → ${t.logos.flowEnd}`}>
+          <span class="node">OPUS</span><span class="arrow" aria-hidden="true">→</span><span class="node">LOGOS</span><span class="arrow" aria-hidden="true">→</span><span class="node end">{t.logos.flowEnd}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt-bg">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.cycle.eyebrow}</span>
+        <h2 class="title" set:html={t.cycle.title} />
+      </div>
+      <div class="steps" id="steps">
+        <div class="rail"><div class="fill" id="railFill"></div></div>
+        {t.cycle.steps.map((step, i) => (
+          <div class="step reveal"><div class="bullet">{i + 1}</div><div><h3>{step.title}</h3><p>{step.text}</p></div></div>
+        ))}
+      </div>
+      <p class="cycle-end reveal">{t.cycle.end}</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">{t.model.eyebrow}</span>
+        <h2 class="title" set:html={t.model.title} />
+        <p class="lead">{t.model.lead}</p>
+      </div>
+      <ul class="tags big reveal">
+        {t.model.items.map((item) => <li>{item}</li>)}
+      </ul>
     </div>
   </section>
 
   <section class="cta-band">
     <div class="wrap">
       <div class="cta-box reveal">
+        <span class="eyebrow">{t.cta.eyebrow}</span>
         <h2>{t.cta.title}</h2>
-        <p>{t.cta.text}</p>
         <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
       </div>
     </div>
