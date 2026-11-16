@@ -7,7 +7,7 @@ const es = {
   titleLines: ['Capital paciente para', 'empresas hechas <em class="serif-em">para durar</em>.'],
   intro: 'Peydro Capital Alliance acompaña a fundadores y equipos directivos de la mediana empresa, aportando convicción, estructura y un horizonte largo a empresas en un punto de inflexión.',
   primary: 'Iniciar una conversación',
-  secondary: 'Nuestro enfoque',
+  secondary: 'Quiénes somos',
   scroll: 'Desliza',
   /* key figures (placeholders): the numbers count up when they scroll into view */
   stats: [
@@ -22,7 +22,7 @@ const es = {
     eyebrow: 'Enfoque',
     title: 'Invertimos como propietarios, <span class="serif-em">no como turistas</span>.',
     lead: 'Lo que se acumula con el tiempo es el criterio, la alineación y la voluntad de quedarse cuando una empresa atraviesa momentos difíciles.',
-    link: 'Descubre nuestro enfoque',
+    link: 'Descubre cómo trabajamos',
     cards: [
       { title: 'Convicción antes que consenso', text: 'Posiciones concentradas en empresas que entendemos a fondo.' },
       { title: 'Un reloj más largo', text: 'Rentabilidades medidas en años, con estructuras en las que el tiempo juega a favor.' },
@@ -49,7 +49,7 @@ const en: typeof es = {
   titleLines: ['Patient capital for', 'companies built <em class="serif-em">to last</em>.'],
   intro: 'Peydro Capital Alliance partners with founders and operators across the lower-middle market — bringing conviction, structure and a long horizon to businesses at an inflection point.',
   primary: 'Start a conversation',
-  secondary: 'Our approach',
+  secondary: 'About us',
   scroll: 'Scroll',
   stats: [
     { target: 4.2, decimals: 1, prefix: '$', suffix: 'B', label: 'Assets stewarded' },
@@ -63,7 +63,7 @@ const en: typeof es = {
     eyebrow: 'Approach',
     title: 'We invest like owners, <span class="serif-em">not tourists</span>.',
     lead: 'What compounds is judgment, alignment and the willingness to stay in the room when a business is hard.',
-    link: 'Explore our approach',
+    link: 'See how we work',
     cards: [
       { title: 'Conviction over consensus', text: 'Concentrated positions in businesses we understand deeply.' },
       { title: 'A longer clock', text: 'Returns measured in years, structured so time is an ally.' },

@@ -1,6 +1,6 @@
 @use '../abstracts' as *;
 
-/* Text on one side, animated bar chart on the other (Home, Capabilities) */
+/* Text on one side, animated bar chart on the other (Home) */
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -1,7 +1,7 @@
 # Peydro Capital Alliance — website
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
-Five pages in **Spanish (main) and English** — Inicio, Quiénes somos, Enfoque, Crecimiento compuesto de redes, Perspectivas — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
+Three pages in **Spanish (main) and English** — Inicio, Quiénes somos, Crecimiento compuesto de redes — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
 Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Giza form, in the visitor's language — the only form linked from the site.
 See [Languages](#languages-es--en).
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
@@ -29,10 +29,8 @@ src/
 ├─ pages/                  one file = one page; the file name is the URL
 │  ├─ index.astro          /                          ┐
 │  ├─ quienes-somos.astro  /quienes-somos             │ Spanish: tiny files that render
-│  ├─ enfoque.astro        /enfoque                   │ components/pages/*.astro with lang="es"
-│  ├─ crecimiento-compuesto.astro /crecimiento-compuesto
-│  ├─ perspectivas.astro   /perspectivas              ┘
-│  ├─ en/                  /en, /en/about, /en/approach, /en/compound-growth, /en/insights, /en/giza, /en/privacy, /en/not-found
+│  ├─ crecimiento-compuesto.astro /crecimiento-compuesto ┘ components/pages/*.astro with lang="es"
+│  ├─ en/                  /en, /en/about, /en/compound-growth, /en/giza, /en/privacy, /en/not-found
 │  ├─ giza.astro           /giza                      Form 1 ("Contactar" / "Solicitar reunión"); English: /en/giza
 │  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here); English: /en/privacy
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
@@ -51,7 +49,7 @@ src/
 │  ├─ Brand.astro          logo + name
 │  ├─ ThemeToggle.astro    Gold ⇄ Dark switch
 │  ├─ LangSwitch.astro     ES / EN switch
-│  ├─ pages/               the layout of each translated page (HomePage, AboutPage, ApproachPage, GrowthPage, InsightsPage)
+│  ├─ pages/               the layout of each translated page (HomePage, AboutPage, GrowthPage…)
 │  ├─ forms/               LeadForm (the form card), FormAside (dark side panel), PrivacyNotice, FormIcon
 │  └─ legal/               Fill (highlights details still to fill in)
 ├─ i18n/                  languages
@@ -66,8 +64,8 @@ src/
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
-│  ├─ pages/               one file per page (counters, newsletter…)
-│  ├─ components/          shared behaviour (the process line on Approach and Crecimiento compuesto)
+│  ├─ pages/               one file per page (counters, the process line…)
+│  ├─ components/          shared behaviour (the process line on Quiénes somos and Crecimiento compuesto)
 │  ├─ forms/               lead forms: steps + checks, QR code tracking, sending
 │  └─ utils/
 └─ styles/                 SCSS

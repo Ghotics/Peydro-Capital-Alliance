@@ -32,7 +32,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
       <p class="intro">{t.intro}</p>
       <div class="hero-actions">
         <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.primary} <span class="arrow">→</span></a>
-        <a href={url(pathFor('approach', lang))} class="btn btn-ghost">{t.secondary}</a>
+        <a href={url(pathFor('about', lang))} class="btn btn-ghost">{t.secondary}</a>
       </div>
     </div>
     <button class="scroll-cue" id="scrollCue" type="button"><span>{t.scroll}</span><span class="dotline"></span></button>
@@ -64,7 +64,7 @@ const coInvestors = ['Brightwater', 'Kestrel Partners', 'Meridian Trust', 'Oakfi
         <span class="eyebrow">{t.approach.eyebrow}</span>
         <h2 class="title" set:html={t.approach.title} />
         <p class="lead">{t.approach.lead}</p>
-        <p class="mt-link"><a href={url(pathFor('approach', lang))} class="textlink">{t.approach.link} <span class="arrow">→</span></a></p>
+        <p class="mt-link"><a href={url(pathFor('about', lang) + '#method')} class="textlink">{t.approach.link} <span class="arrow">→</span></a></p>
       </div>
       <div class="cap-grid">
         {t.approach.cards.map((card, i) => (

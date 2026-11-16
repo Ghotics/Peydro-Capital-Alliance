@@ -9,9 +9,7 @@ const es = {
   nav: {
     home: 'Inicio',
     about: 'Quiénes somos',
-    approach: 'Enfoque',
     growth: 'Crecimiento compuesto de redes',
-    insights: 'Perspectivas',
   },
   mainNavLabel: 'Principal',
   menuLabel: 'Menú',
@@ -51,9 +49,7 @@ const en: typeof es = {
   nav: {
     home: 'Home',
     about: 'About us',
-    approach: 'Approach',
     growth: 'Compound network growth',
-    insights: 'Insights',
   },
   mainNavLabel: 'Main',
   menuLabel: 'Menu',
