@@ -1,5 +1,4 @@
-/* Home page: headline entrance, drifting background, scroll cue, the "El ciclo compuesto" line. */
-import { initProcessRail } from '../components/process-rail';
+/* Home page: headline entrance, drifting background, scroll cue. */
 import { prefersReducedMotion } from '../utils/motion';
 import { onScrollFrame } from '../utils/scroll';
 
@@ -30,6 +29,3 @@ if (!reduced && orbs.length) {
 document.getElementById('scrollCue')?.addEventListener('click', () => {
   window.scrollTo({ top: window.innerHeight * 0.9, behavior: reduced ? 'auto' : 'smooth' });
 });
-
-/* ---------- "El ciclo compuesto": the line fills and each step lights up as you scroll ---------- */
-initProcessRail();

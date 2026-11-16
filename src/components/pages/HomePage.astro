@@ -1,6 +1,5 @@
 ---
-/* Home page layout ("Crecimiento compuesto de redes" / "Compound network growth"), shared by both languages.
-   Texts: src/i18n/pages/home.ts
+/* Home page layout, shared by both languages. Texts: src/i18n/pages/home.ts
    Routes: src/pages/index.astro (es) and src/pages/en/index.astro (en) */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { Lang } from '../../i18n/config';
@@ -15,13 +14,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = home[lang];
-
-/* line drawings for the three ecosystem cards */
-const ecoIcons = [
-  '<rect x="4" y="4" width="16" height="16" rx="2" /><path d="M4 10h16M10 10v10" />',
-  '<path d="M4 20V9l8-6 8 6v11M4 20h16M9 20v-6h6v6" />',
-  '<circle cx="9" cy="8" r="4" /><path d="M2 21a7 7 0 0 1 14 0M16 3.5a4 4 0 0 1 0 9M22 21a7 7 0 0 0-4-6.3" />',
-];
 ---
 <BaseLayout lang={lang} page="home" description={t.description}>
   <section class="hero">
@@ -31,8 +23,7 @@ const ecoIcons = [
       <h1>{t.hero.titleLines.map((line) => <span class="line"><span set:html={line} /></span>)}</h1>
       <p class="intro">{t.hero.lead}</p>
       <div class="hero-actions">
-        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.hero.primary} <span class="arrow">→</span></a>
-        <a href={url(pathFor('about', lang))} class="btn btn-ghost">{t.hero.secondary}</a>
+        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.hero.button} <span class="arrow">→</span></a>
       </div>
     </div>
     <button class="scroll-cue" id="scrollCue" type="button"><span>{t.hero.scroll}</span><span class="dotline"></span></button>
@@ -42,130 +33,68 @@ const ecoIcons = [
     <div class="wrap">
       <div class="two-col reveal">
         <div>
-          <span class="eyebrow">{t.ecosystem.eyebrow}</span>
-          <h2 class="title" set:html={t.ecosystem.title} />
+          <span class="eyebrow">{t.capital.eyebrow}</span>
+          <h2 class="title" set:html={t.capital.title} />
         </div>
         <div class="body">
-          {t.ecosystem.paragraphs.map((p) => <p>{p}</p>)}
+          {t.capital.paragraphs.map((p) => <p>{p}</p>)}
         </div>
       </div>
-      <div class="flow reveal" aria-label={[...t.ecosystem.flow, t.ecosystem.flowEnd].join(' → ')}>
-        {t.ecosystem.flow.map((step) => (
-          <Fragment><span class="node">{step}</span><span class="arrow" aria-hidden="true">→</span></Fragment>
-        ))}
-        <span class="node end">{t.ecosystem.flowEnd}</span>
-      </div>
+      <ul class="tags big capitals reveal" aria-label={t.capital.kindsLabel}>
+        {t.capital.kinds.map((kind) => <li>{kind}</li>)}
+      </ul>
     </div>
   </section>
 
   <section class="sec alt-bg">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">{t.types.eyebrow}</span>
-        <h2 class="title" set:html={t.types.title} />
-        <p class="lead">{t.types.lead}</p>
-      </div>
-      <div class="cap-grid">
-        {t.types.cards.map((eco, i) => (
-          <div class="cap reveal" data-delay={i || undefined}>
-            {eco.badge && <span class="badge">{eco.badge}</span>}
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={ecoIcons[i]} />
-            <h3>{eco.title}</h3>
-            <p>{eco.text}</p>
-          </div>
-        ))}
-      </div>
-      <div class="two-col same-arch reveal">
-        <h3 set:html={t.types.sameTitle} />
-        <div class="body">
-          {t.types.sameParagraphs.map((p) => <p>{p}</p>)}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
     <div class="wrap">
       <div class="two-col reveal">
         <div>
-          <span class="eyebrow">{t.opus.eyebrow}</span>
-          <h2 class="title" set:html={t.opus.title} />
+          <span class="eyebrow">{t.why.eyebrow}</span>
+          <h2 class="title" set:html={t.why.title} />
         </div>
         <div class="body">
-          {t.opus.paragraphs.map((p) => <p>{p}</p>)}
+          {t.why.paragraphs.map((p, i) => <p class:list={[{ strong: i === t.why.strong }]}>{p}</p>)}
         </div>
       </div>
-      <div class="cap-grid four after-text">
-        {t.opus.steps.map((step, i) => (
-          <div class="cap reveal" data-delay={i || undefined}>
-            <div class="idx">{String(i + 1).padStart(2, '0')}</div>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </div>
+      <div class="flow reveal" aria-label={[...t.why.flow, t.why.flowEnd].join(' → ')}>
+        {t.why.flow.map((step) => (
+          <Fragment><span class="node">{step}</span><span class="arrow" aria-hidden="true">→</span></Fragment>
         ))}
+        <span class="node end">{t.why.flowEnd}</span>
       </div>
-      <ul class="loop reveal" aria-label={t.opus.loopLabel}>
-        {t.opus.loop.map((word) => <li>{word}</li>)}
-        <li class="again" aria-hidden="true">↻</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="sec flush-top">
-    <div class="wrap layers">
-      <div class="layer reveal">
-        <div class="name">PCA OS</div>
-        <h3>{t.os.title}</h3>
-        {t.os.paragraphs.map((p) => <p>{p}</p>)}
-        <ul class="tags">
-          {t.os.tags.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
-      <div class="layer reveal" data-delay="1">
-        <div class="name">LOGOS</div>
-        <h3>{t.logos.title}</h3>
-        {t.logos.paragraphs.map((p) => <p>{p}</p>)}
-        <div class="flow compact" aria-label={`OPUS → LOGOS → ${t.logos.flowEnd}`}>
-          <span class="node">OPUS</span><span class="arrow" aria-hidden="true">→</span><span class="node">LOGOS</span><span class="arrow" aria-hidden="true">→</span><span class="node end">{t.logos.flowEnd}</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec alt-bg">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">{t.cycle.eyebrow}</span>
-        <h2 class="title" set:html={t.cycle.title} />
-      </div>
-      <div class="steps" id="steps">
-        <div class="rail"><div class="fill" id="railFill"></div></div>
-        {t.cycle.steps.map((step, i) => (
-          <div class="step reveal"><div class="bullet">{i + 1}</div><div><h3>{step.title}</h3><p>{step.text}</p></div></div>
-        ))}
-      </div>
-      <p class="cycle-end reveal">{t.cycle.end}</p>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">{t.model.eyebrow}</span>
-        <h2 class="title" set:html={t.model.title} />
-        <p class="lead">{t.model.lead}</p>
+        <span class="eyebrow">{t.architecture.eyebrow}</span>
+        <h2 class="title" set:html={t.architecture.title} />
+        <p class="lead">{t.architecture.lead}</p>
       </div>
-      <ul class="tags big reveal">
-        {t.model.items.map((item) => <li>{item}</li>)}
-      </ul>
+      {t.architecture.groups.map((group) => (
+        <div class="area-group reveal">
+          <div class="group-label">{group.label}</div>
+          <div class="area-row">
+            {group.areas.map((area) => (
+              <div class="area">
+                <div class="name">{area.name}</div>
+                <div class="role">{area.role}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      <p class="arch-link reveal"><a href={url(pathFor('growth', lang))} class="btn btn-ghost">{t.architecture.link} <span class="arrow">→</span></a></p>
     </div>
   </section>
 
   <section class="cta-band">
     <div class="wrap">
       <div class="cta-box reveal">
-        <span class="eyebrow">{t.cta.eyebrow}</span>
         <h2>{t.cta.title}</h2>
+        <p>{t.cta.text}</p>
         <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
       </div>
     </div>

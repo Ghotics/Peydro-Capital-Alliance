@@ -1,0 +1,106 @@
+@use '../abstracts' as *;
+
+/* Content blocks shared by Home and Crecimiento compuesto:
+   two columns, chains of steps joined by arrows, small labels. */
+
+/* ---------- two columns: heading left, text right ---------- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3.5rem;
+  align-items: start;
+
+  h2.title {
+    margin-bottom: 0;
+  }
+
+  .body p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  @include down($bp-lg) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ---------- chain of steps joined by arrows: Red → Conocimiento → … ---------- */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .7rem;
+  margin-top: 3rem;
+
+  .node {
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: .65em 1.25em;
+    background: var(--surface);
+    font-size: .95rem;
+    white-space: nowrap;
+
+    /* the last step: gold */
+    &.end {
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      border-color: transparent;
+      color: var(--on-gold);
+      font-weight: 600;
+    }
+  }
+
+  .arrow {
+    color: var(--gold);
+    font-size: 1.1rem;
+  }
+
+  &.compact {
+    margin-top: 1.6rem;
+
+    .node {
+      font-size: .85rem;
+      padding: .5em 1em;
+
+      /* the long last label may wrap on narrow phones */
+      &.end {
+        white-space: normal;
+      }
+    }
+  }
+}
+
+/* ---------- small labels: kinds of capital, what PCA OS connects, the economic models ---------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.4rem;
+
+  li {
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: .35em .9em;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  &.big {
+    gap: .8rem;
+    margin-top: 2.2rem;
+
+    li {
+      padding: .7em 1.3em;
+      font-size: .95rem;
+      color: var(--text);
+      background: var(--surface);
+      border-color: var(--line);
+      transition: border-color .3s var(--ease), color .3s var(--ease);
+
+      &:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+    }
+  }
+}

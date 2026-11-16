@@ -4,11 +4,12 @@
 const es = {
   siteDescription:
     'Peydró Capital Alliance construye arquitecturas que conectan personas, empresas, activos, conocimiento y relaciones para crear nuevas posibilidades de valor.',
-  homeTitle: 'Crecimiento compuesto de redes',
+  homeTitle: 'Conectamos capitales',
   skip: 'Saltar al contenido',
   nav: {
     home: 'Inicio',
     about: 'Quiénes somos',
+    growth: 'Crecimiento compuesto de redes',
   },
   mainNavLabel: 'Principal',
   menuLabel: 'Menú',
@@ -30,6 +31,7 @@ const es = {
     firm: 'Firma',
     company: 'Compañía',
     contact: 'Contacto',
+    home: 'Inicio',
     legal: 'Legal',
     terms: 'Términos',
     privacy: 'Privacidad',
@@ -42,11 +44,12 @@ const es = {
 const en: typeof es = {
   siteDescription:
     'Peydró Capital Alliance builds architectures that connect people, companies, assets, knowledge and relationships to create new possibilities for value.',
-  homeTitle: 'Compound network growth',
+  homeTitle: 'We connect capital',
   skip: 'Skip to content',
   nav: {
     home: 'Home',
     about: 'About us',
+    growth: 'Compound network growth',
   },
   mainNavLabel: 'Main',
   menuLabel: 'Menu',
@@ -68,6 +71,7 @@ const en: typeof es = {
     firm: 'Firm',
     company: 'Company',
     contact: 'Contact',
+    home: 'Home',
     legal: 'Legal',
     terms: 'Terms',
     privacy: 'Privacy',
