@@ -1,0 +1,45 @@
+---
+/* Form 1 · Giza — the site's contact form, in both languages ("Contactar" / "Get in touch" open it).
+   Financial planning form for Irene: contact details (one step) → optional booking.
+   QR codes can point here too: add ?c=<code> to the link to track each one.
+   Texts: src/i18n/pages/giza.ts (page) and src/i18n/forms.ts (form card)
+   Booking settings: src/data/forms.ts (giza) · Behaviour: src/scripts/forms/lead-form.ts
+   Routes: src/pages/giza.astro (es) and src/pages/en/giza.astro (en). Styles: src/styles/components/_lead-form.scss
+   Whatever the language, the form saves exactly the same fields. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormAside from '../forms/FormAside.astro';
+import LeadForm from '../forms/LeadForm.astro';
+import { giza } from '../../data/forms';
+import type { Lang } from '../../i18n/config';
+import { gizaPage } from '../../i18n/pages/giza';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = gizaPage[lang];
+---
+<BaseLayout lang={lang} page="giza" title={t.title} description={t.description}>
+  <section class="form-page">
+    <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
+    <div class="wrap">
+      <span class="form-badge">{t.badge}</span>
+      <div class="form-shell">
+        <FormAside eyebrow={t.eyebrow} title={t.heading} text={t.description} perks={t.perks} />
+        <div class="form-card">
+          <LeadForm
+            kind="giza"
+            lang={lang}
+            intro={t.intro}
+            booking
+            calLink={giza.calLink}
+            bookingWith={giza.specialist}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>import '../../scripts/forms/lead-form';</script>
+</BaseLayout>

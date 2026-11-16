@@ -2,7 +2,7 @@
    Change a text here and every form and page picks it up.
 
    The three intake forms:
-     Form 1 · Giza            /giza                    on the website, in the menu
+     Form 1 · Giza            /giza  (+ /en/giza)      on the website: every "Contactar" / "Get in touch" button
      Form 2 · Business Office /asesoramiento (+ areas) only through QR codes, hidden from the menu and Google
      Form 3 · Quick           /contacto-rapido         only through an outside link, hidden too */
 
@@ -116,11 +116,8 @@ export const allAreas: Area[] = [...areas, generalArea];
 /* Form 1 · Giza                                                       */
 /* ------------------------------------------------------------------ */
 
+/* The Giza page texts (Spanish and English) are in src/i18n/pages/giza.ts */
 export const giza = {
-  eyebrow: 'PCA · Giza',
-  title: 'Protección y Planificación Financiera',
-  description: 'Seguros, ahorro e inversión e hipotecas. Déjanos tus datos e Irene te ayudará a revisar tus opciones.',
-  perks: ['Orientación gratuita y sin compromiso', 'Atención presencial o telemática', 'Puedes enviar una consulta sin reservar cita'],
   /** Who the visitor books with. */
   specialist: 'Irene',
   /** Irene's public Cal.com booking page. Empty = not connected yet. */

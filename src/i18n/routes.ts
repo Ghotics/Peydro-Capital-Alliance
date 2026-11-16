@@ -9,6 +9,10 @@ export const routes = {
   approach: { es: '/enfoque', en: '/en/approach' },
   growth: { es: '/crecimiento-compuesto', en: '/en/compound-growth' },
   insights: { es: '/perspectivas', en: '/en/insights' },
+  /* not in the menu */
+  giza: { es: '/giza', en: '/en/giza' }, // the contact form: every "Contactar" / "Get in touch" button
+  privacy: { es: '/privacidad', en: '/en/privacy' },
+  notFound: { es: '/404', en: '/en/not-found' }, // see src/pages/404.astro
 } satisfies Record<string, Record<Lang, string>>;
 
 export type PageKey = keyof typeof routes;

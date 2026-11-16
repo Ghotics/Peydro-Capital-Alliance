@@ -3,8 +3,8 @@
    Routes: src/pages/quienes-somos.astro (es) and src/pages/en/about.astro (en) */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../PageHero.astro';
-import { contactHref } from '../../data/site';
 import type { Lang } from '../../i18n/config';
+import { pathFor } from '../../i18n/routes';
 import { about } from '../../i18n/pages/about';
 import { ui } from '../../i18n/ui';
 import { url } from '../../utils/url';
@@ -97,7 +97,7 @@ const icons = [
       <div class="cta-box reveal">
         <h2>{t.cta.title}</h2>
         <p>{t.cta.text}</p>
-        <a href={url(contactHref)} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
+        <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.cta.button} <span class="arrow">→</span></a>
       </div>
     </div>
   </section>

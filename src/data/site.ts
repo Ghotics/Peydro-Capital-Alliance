@@ -13,6 +13,5 @@ export interface NavItem {
   label: string;
 }
 
-/** Where every "Contactar" / "Get in touch" / "Solicitar reunión" button points:
-    the Giza form, the site's only form (Spanish only for now). */
-export const contactHref = '/giza';
+/* Every "Contactar" / "Get in touch" / "Solicitar reunión" button points to the Giza form
+   in the page's language: pathFor('giza', lang) (src/i18n/routes.ts). */

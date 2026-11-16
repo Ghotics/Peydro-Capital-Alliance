@@ -5,7 +5,7 @@
 import Brand from './Brand.astro';
 import LangSwitch from './LangSwitch.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import { contactHref, site } from '../data/site';
+import { site } from '../data/site';
 import type { Lang } from '../i18n/config';
 import { mainNav, menuNav, pathFor, type PageKey } from '../i18n/routes';
 import { ui } from '../i18n/ui';
@@ -32,7 +32,7 @@ const isActive = (key: PageKey) => key === page;
     <div class="nav-cta">
       <LangSwitch lang={lang} page={page} />
       <ThemeToggle lang={lang} />
-      <a href={url(contactHref)} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
+      <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
       <button class="hamburger" id="hamburger" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="mobileMenu" data-open-label={t.openMenu} data-close-label={t.closeMenu}><span></span></button>
     </div>
   </div>
@@ -47,8 +47,8 @@ const isActive = (key: PageKey) => key === page;
     ))}
   </nav>
   <div class="mm-foot">
-    <a href={url(contactHref)} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
-    <a href={url(contactHref)} class="btn btn-ghost">{t.investorLogin}</a>
+    <a href={url(pathFor('giza', lang))} class="btn btn-primary">{t.contact} <span class="arrow">→</span></a>
+    <a href={url(pathFor('giza', lang))} class="btn btn-ghost">{t.investorLogin}</a>
     <div class="mm-row"><span>{t.language}</span><LangSwitch lang={lang} page={page} /></div>
     <div class="mm-row"><span>{t.palette}</span><ThemeToggle lang={lang} /></div>
     <p class="mm-mail">{site.email}</p>
