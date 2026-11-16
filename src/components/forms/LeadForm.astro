@@ -8,7 +8,7 @@
    The field names (first_name, email, building…) are the names the database columns will have,
    so what the form collects and what gets saved line up one to one — in either language. */
 import type { FormKind } from '../../data/forms';
-import { buildings } from '../../data/forms';
+import { buildings, confirmationEmails } from '../../data/forms';
 import type { Lang } from '../../i18n/config';
 import { formTexts } from '../../i18n/forms';
 import { pathFor } from '../../i18n/routes';
@@ -169,7 +169,7 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
         <div class="lf-actions"><a class="btn btn-ghost" href={homeLink}>{homeLabel}</a></div>
       </>
     )}
-    <p class="lf-note">{t.confirmationTo} <strong data-echo="email"></strong>.</p>
+    {confirmationEmails && <p class="lf-note">{t.confirmationTo} <strong data-echo="email"></strong>.</p>}
   </section>
 
   {booking && (
