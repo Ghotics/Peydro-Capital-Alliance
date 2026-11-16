@@ -1,4 +1,4 @@
-/* Everything the lead forms show: department names, interests, buildings and booking links.
+/* Everything the lead forms show: department names, buildings and booking links.
    Change a text here and every form and page picks it up.
 
    The three intake forms:
@@ -11,20 +11,6 @@ export type FormKind = 'giza' | 'business_office' | 'quick';
 
 /** Small line icons drawn by components/forms/FormIcon.astro */
 export type IconName = 'shield' | 'laptop' | 'antenna' | 'megaphone' | 'chat' | 'form' | 'calendar' | 'handshake';
-
-export interface Interest {
-  /** Saved in the database. Lowercase, no spaces. */
-  value: string;
-  label: string;
-  hint: string;
-}
-
-/** The interests step of the financial forms (Giza and Business Office). Pick one or more. */
-export const financialInterests: Interest[] = [
-  { value: 'seguros', label: 'Seguros', hint: 'Protección para ti, tu familia, tu empresa y tu patrimonio.' },
-  { value: 'ahorro_inversion', label: 'Ahorro e inversión', hint: 'Opciones de ahorro, inversión y planificación de objetivos.' },
-  { value: 'hipotecas', label: 'Hipotecas', hint: 'Asesoramiento sobre financiación y alternativas hipotecarias.' },
-];
 
 /** Renta 92 buildings offered in the Business Office forms. */
 export const buildings = ['14', '16', '18'];
@@ -53,8 +39,6 @@ export interface Area {
   /** Longer text on the department picker and in the side panel of the form. */
   description: string;
   icon: IconName;
-  /** When set, the form gets a first step where the visitor picks one or more of these. */
-  interests?: Interest[];
   /** The specialist's public Cal.com booking page, e.g. 'team/pca/tecnologia' or a full https:// link
       (in Cal.com: Event types → the event → "Copy link"). Empty = not connected yet (the button then says so). */
   calLink: string;
@@ -69,7 +53,6 @@ export const areas: Area[] = [
     short: 'Seguros, ahorro e inversión, hipotecas.',
     description: 'Seguros, ahorro e inversión, hipotecas y financiación para empresas, autónomos y particulares.',
     icon: 'shield',
-    interests: financialInterests,
     calLink: '', // Cal.com account: Irene (same as Giza) — to confirm
   },
   {

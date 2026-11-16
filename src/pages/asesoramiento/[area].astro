@@ -1,8 +1,7 @@
 ---
 /* Form 2 · Business Office — one page per department: /asesoramiento/<slug>
    Astro builds one page for each entry of `allAreas` in src/data/forms.ts (the four departments
-   + the "not sure which one" form). The financial department has two steps (interests → contact),
-   the others one. Behaviour: src/scripts/forms/lead-form.ts */
+   + the "not sure which one" form). Every form is a single page. Behaviour: src/scripts/forms/lead-form.ts */
 import FunnelLayout from '../../layouts/FunnelLayout.astro';
 import FormAside from '../../components/forms/FormAside.astro';
 import LeadForm from '../../components/forms/LeadForm.astro';
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const { area } = Astro.props;
-const twoSteps = (area.interests?.length ?? 0) > 0;
 ---
 <FunnelLayout
   title={area.name}
@@ -33,7 +31,7 @@ const twoSteps = (area.interests?.length ?? 0) > 0;
   <section class="form-page">
     <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
     <div class="wrap">
-      <span class="form-badge">{twoSteps ? area.name : 'Solicitud de orientación · Un solo paso'}</span>
+      <span class="form-badge">{area.name}</span>
       <div class="form-shell">
         <FormAside
           eyebrow="PCA Business Office · Renta 92"
@@ -46,7 +44,6 @@ const twoSteps = (area.interests?.length ?? 0) > 0;
           <LeadForm
             kind="business_office"
             area={area.slug}
-            interests={area.interests}
             askBuilding
             booking={!area.general}
             calLink={area.calLink}

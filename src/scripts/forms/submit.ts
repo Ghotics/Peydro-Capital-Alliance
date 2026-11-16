@@ -11,7 +11,8 @@ export interface LeadPayload {
   form: FormKind;
   /** Department slug (Business Office), otherwise null. */
   area: string | null;
-  /** Interest values picked in the first step, e.g. ['seguros', 'hipotecas']. */
+  /** Always [] now: the interests step was removed (all forms are one page). Kept so the saved data
+      keeps the same shape; drop it together with the database column if it's no longer wanted. */
   interests: string[];
   first_name: string;
   last_name: string;

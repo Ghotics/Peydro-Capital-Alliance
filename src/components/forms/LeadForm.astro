@@ -1,5 +1,5 @@
 ---
-/* One lead form card: an optional "interests" step, the contact step, and the screens shown after sending.
+/* One lead form card: a single page of contact details, then the screens shown after sending.
    All three intake forms use this component; the props decide which fields appear.
      <LeadForm kind="business_office" area="tecnologia" askBuilding booking calLink="" />
    Behaviour: src/scripts/forms/lead-form.ts  ·  Styles: src/styles/components/_lead-form.scss
@@ -7,7 +7,7 @@
 
    The field names (first_name, email, building…) are the names the database columns will have,
    so what the form collects and what gets saved line up one to one — in either language. */
-import type { FormKind, Interest } from '../../data/forms';
+import type { FormKind } from '../../data/forms';
 import { buildings } from '../../data/forms';
 import type { Lang } from '../../i18n/config';
 import { formTexts } from '../../i18n/forms';
@@ -21,11 +21,9 @@ interface Props {
   lang?: Lang;
   /** Department slug, saved with the lead (Business Office only). */
   area?: string;
-  /** Adds a first step with these options; the visitor picks one or more. */
-  interests?: Interest[];
   /** Ask for the Renta 92 building and unit number (Business Office). */
   askBuilding?: boolean;
-  /** Heading and intro of the contact step when there is no interests step. */
+  /** Heading and intro above the fields. */
   title?: string;
   intro?: string;
   /** The message box is always optional. */
@@ -51,7 +49,6 @@ const t = formTexts[lang];
 const {
   kind,
   area = '',
-  interests = [],
   askBuilding = false,
   title = t.title,
   intro = t.intro,
@@ -67,7 +64,6 @@ const {
   homeLabel = t.homeLabel,
 } = Astro.props;
 
-const hasInterests = interests.length > 0;
 const backLink = backHref ? url(backHref) : undefined;
 const homeLink = url(homeHref);
 const privacyLink = url(pathFor('privacy', lang));
@@ -75,34 +71,9 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
 ---
 <div class="lead-form" data-lead-form data-kind={kind} data-area={area} data-cal={calLink}>
   <form class="lf-form" novalidate>
-    {hasInterests && (
-      <section class="lf-step on" data-step="interests" aria-labelledby={`${id}-t1`}>
-        <span class="lf-pill">{t.interestsPill}</span>
-        <h2 class="lf-title" id={`${id}-t1`} tabindex="-1">{t.interestsTitle}</h2>
-        <p class="lf-sub">{t.interestsSub}</p>
-        <fieldset class="lf-options" data-field="interests">
-          <legend class="sr-only">{t.interestsLegend}</legend>
-          {interests.map((item) => (
-            <label class="lf-option">
-              <input type="checkbox" name="interests" value={item.value} />
-              <span class="lf-box" aria-hidden="true"></span>
-              <span class="lf-option-text"><strong>{item.label}</strong><small>{item.hint}</small></span>
-            </label>
-          ))}
-          <div class="msg">{t.interestsError}</div>
-        </fieldset>
-        <div class="lf-foot">
-          {backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
-          <button type="button" class="btn btn-primary" data-next>{t.continue} <span class="arrow">→</span></button>
-        </div>
-        <p class="lf-note">{t.interestsNote}</p>
-      </section>
-    )}
-
-    <section class:list={['lf-step', { on: !hasInterests }]} data-step="contact" aria-labelledby={`${id}-t2`}>
-      <span class="lf-pill">{hasInterests ? t.contactPillTwo : t.contactPillOne}</span>
-      <h2 class="lf-title" id={`${id}-t2`} tabindex="-1">{hasInterests ? t.contactTitleTwo : title}</h2>
-      <p class="lf-sub">{hasInterests ? t.contactSubTwo : intro}</p>
+    <section class="lf-step on" data-step="contact" aria-labelledby={`${id}-t2`}>
+      <h2 class="lf-title" id={`${id}-t2`} tabindex="-1">{title}</h2>
+      <p class="lf-sub">{intro}</p>
 
       <div class="two">
         <div class="field" data-field="first_name">
@@ -171,9 +142,7 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
       <div class="lf-alert" role="alert" data-send-error hidden>{t.sendError}</div>
 
       <div class="lf-foot">
-        {hasInterests
-          ? <button type="button" class="lf-back" data-prev>← {t.backToInterests}</button>
-          : backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
+        {backLink ? <a class="lf-back" href={backLink}>← {backLabel}</a> : <span></span>}
         <button type="submit" class="btn btn-primary" data-submit data-sending-label={t.sending}><span data-label>{submitLabel}</span> <span class="arrow">→</span></button>
       </div>
       <p class="lf-note" data-demo hidden>{t.demoNote}</p>

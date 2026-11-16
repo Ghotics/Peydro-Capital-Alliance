@@ -32,16 +32,6 @@ const es = {
       { title: 'Hacer crecer', text: 'Mantenemos la paciencia, reinvertimos en lo que funciona y dejamos que el tiempo y la disciplina hagan el trabajo pesado.' },
     ],
   },
-  history: {
-    eyebrow: 'Desde 2019',
-    title: 'Una breve historia',
-    items: [
-      { year: '2019', title: 'Nace PCA', text: 'Tres socios y una tesis sencilla: capital paciente para la mediana empresa.' },
-      { year: '2021', title: 'Primeras desinversiones', text: 'Dos de las primeras alianzas llegan a su madurez y validan el modelo de permanencia larga.' },
-      { year: '2023', title: 'Abrimos el mandato de crédito', text: 'Ampliamos a crédito privado flexible para situaciones que el capital por sí solo no resuelve.' },
-      { year: '2026', title: 'Tercera oficina', text: 'Singapur se une a Londres y Zúrich y la plataforma se vuelve global.' },
-    ],
-  },
 };
 
 const en: typeof es = {
@@ -73,16 +63,6 @@ const en: typeof es = {
       { title: 'Diligence', text: "We go deep on unit economics, people and durability — and we're honest early when the fit isn't there." },
       { title: 'Partner', text: 'Aligned terms, a clear plan, and a small set of priorities we pursue shoulder-to-shoulder with management.' },
       { title: 'Compound', text: "We stay patient, reinvest behind what's working, and let time and discipline do the heavy lifting." },
-    ],
-  },
-  history: {
-    eyebrow: 'Since 2019',
-    title: 'A short history',
-    items: [
-      { year: '2019', title: 'PCA is founded', text: 'Three partners and a simple thesis: patient capital for the lower-middle market.' },
-      { year: '2021', title: 'First platform exits', text: 'Two early partnerships reach maturity, validating the long-hold model.' },
-      { year: '2023', title: 'Credit mandate opens', text: "We extend into flexible private credit for situations equity alone can't solve." },
-      { year: '2026', title: 'Third office', text: 'Singapore joins London and Zürich as the platform goes global.' },
     ],
   },
 };
