@@ -1,43 +1,8 @@
 @use '../abstracts' as *;
 
-/* Approach page (src/pages/approach.astro) */
+/* Enfoque / Approach page (src/components/pages/ApproachPage.astro) */
 
 /* ---------- process (the numbered steps themselves: components/_process-steps.scss) ---------- */
 .process {
   background: var(--bg-2);
-}
-
-/* ---------- history ---------- */
-.timeline {
-  margin-top: 1rem;
-}
-
-.tl {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 1.6rem;
-  padding: 1.6rem 0;
-  border-top: 1px solid var(--line);
-
-  .yr {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--gold-2);
-  }
-
-  h4 {
-    font-family: var(--font-ui);
-    font-weight: 600;
-    margin-bottom: .3rem;
-  }
-
-  p {
-    color: var(--muted);
-    font-size: .92rem;
-    max-width: 52ch;
-  }
-
-  @include down($bp-sm) {
-    grid-template-columns: 70px 1fr;
-  }
 }

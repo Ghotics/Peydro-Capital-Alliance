@@ -16,7 +16,7 @@
   }
 }
 
-/* small rounded label above the form ("Solicitud de orientación · Un solo paso") */
+/* small rounded labels: above the form (department name) and on the screens after sending */
 .form-badge,
 .lf-pill {
   display: inline-block;
@@ -195,107 +195,6 @@
   font-size: .95rem;
   margin-bottom: 1.8rem;
   max-width: 60ch;
-}
-
-/* ---------- step 1: interest cards (tick one or more) ---------- */
-.lf-options {
-  border: 0;
-  display: grid;
-  gap: .8rem;
-
-  .msg {
-    display: none;
-    color: var(--red);
-    font-size: .78rem;
-  }
-
-  &.err {
-    .msg {
-      display: block;
-    }
-
-    .lf-option {
-      border-color: var(--red);
-    }
-  }
-}
-
-.lf-option {
-  position: relative;
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  padding: 1.1rem 1.2rem;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--bg);
-  cursor: pointer;
-  transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
-
-  /* the real checkbox stays in the page (keyboard + screen readers) but is drawn by .lf-box */
-  input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-  }
-
-  &:hover {
-    border-color: var(--line-2);
-  }
-
-  &:has(input:checked) {
-    border-color: var(--gold);
-    background: var(--surface-2);
-    box-shadow: 0 0 0 1px var(--gold);
-  }
-
-  strong {
-    display: block;
-    font-weight: 600;
-  }
-
-  small {
-    display: block;
-    color: var(--muted);
-    font-size: .84rem;
-    margin-top: .15rem;
-  }
-}
-
-.lf-box {
-  width: 20px;
-  height: 20px;
-  flex: none;
-  margin-top: .2rem;
-  display: grid;
-  place-items: center;
-  border: 1.5px solid var(--muted-2);
-  border-radius: 6px;
-  transition: background .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
-
-  &::after {
-    content: "";
-    width: 10px;
-    height: 5px;
-    border-left: 2px solid var(--on-gold);
-    border-bottom: 2px solid var(--on-gold);
-    transform: translateY(-1px) rotate(-45deg);
-    opacity: 0;
-  }
-
-  input:checked + & {
-    background: linear-gradient(135deg, var(--gold-2), var(--gold));
-    border-color: transparent;
-
-    &::after {
-      opacity: 1;
-    }
-  }
-
-  input:focus-visible + & {
-    box-shadow: 0 0 0 3px var(--gold-ring);
-  }
 }
 
 /* ---------- privacy tick box ---------- */

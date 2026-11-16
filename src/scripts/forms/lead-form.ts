@@ -1,15 +1,15 @@
 /* Behaviour of every lead form (components/forms/LeadForm.astro):
-   moving between steps, checking the fields, sending, and the screens after sending.
+   checking the fields, sending, and the screens after sending.
    Loaded by each page that shows a form:  <script>import '../scripts/forms/lead-form';</script> */
 import type { FormKind } from '../../data/forms';
 import { prefersReducedMotion } from '../utils/motion';
 import { carryAttribution, readAttribution } from './attribution';
 import { isDemo, submitLead, type LeadPayload } from './submit';
 
-type StepName = 'interests' | 'contact' | 'done' | 'finished';
+type StepName = 'contact' | 'done' | 'finished';
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 /** Matches the data-field="…" boxes in LeadForm.astro */
-type FieldName = 'interests' | 'first_name' | 'last_name' | 'email' | 'phone' | 'building' | 'unit' | 'privacy';
+type FieldName = 'first_name' | 'last_name' | 'email' | 'phone' | 'building' | 'unit' | 'privacy';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_PATTERN = /^\+?\d{9,15}$/;
@@ -45,18 +45,14 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   const sendError = form.querySelector<HTMLElement>('[data-send-error]');
   const attribution = readAttribution();
 
-  let current: StepName = steps.find((s) => s.classList.contains('on'))?.dataset.step as StepName;
   let busy = false;
   let sent: { lead: LeadPayload; leadId: string } | null = null;
 
   const control = (name: string) => form.querySelector<Control>(`[name="${name}"]`);
   const value = (name: string) => (control(name)?.value ?? '').trim();
-  const checkedInterests = () =>
-    Array.from(form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked')).map((box) => box.value);
 
   /* one rule per field; a field shows its red message while its rule fails */
   const rules: Record<FieldName, () => boolean> = {
-    interests: () => checkedInterests().length > 0,
     first_name: () => value('first_name').length > 0,
     last_name: () => value('last_name').length > 0,
     email: () => EMAIL_PATTERN.test(value('email')),
@@ -76,15 +72,11 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
     const failed = present.filter((name) => !rules[name]());
     present.forEach((name) => setError(name, failed.includes(name)));
     const [firstWrong] = failed;
-    if (firstWrong) {
-      const target = firstWrong === 'interests' ? form.querySelector<HTMLInputElement>('input[name="interests"]') : control(firstWrong);
-      target?.focus();
-    }
+    if (firstWrong) control(firstWrong)?.focus();
     return failed.length === 0;
   }
 
   function show(name: StepName): void {
-    current = name;
     steps.forEach((step) => step.classList.toggle('on', step.dataset.step === name));
     root.querySelector<HTMLElement>(`[data-step="${name}"] .lf-title`)?.focus({ preventScroll: true });
     /* on phones the card can be taller than the screen: bring its top back into view */
@@ -98,7 +90,7 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
     return {
       form: kind,
       area,
-      interests: checkedInterests(),
+      interests: [], // the interests step was removed: always empty, kept so the saved data keeps its shape
       first_name: value('first_name'),
       last_name: value('last_name'),
       email: value('email').toLowerCase(),
@@ -122,12 +114,6 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
     show('done');
   }
 
-  /* ---------- step 1 → step 2 (financial forms only) ---------- */
-  root.querySelector('[data-next]')?.addEventListener('click', () => {
-    if (validate(['interests'])) show('contact');
-  });
-  root.querySelector('[data-prev]')?.addEventListener('click', () => show('interests'));
-
   /* once a field has been marked wrong, re-check it while the visitor fixes it */
   const recheck = (event: Event) => {
     const box = (event.target as HTMLElement).closest<HTMLElement>('[data-field]');
@@ -141,10 +127,6 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (busy) return;
-    if (current === 'interests') {
-      if (validate(['interests'])) show('contact');
-      return;
-    }
     if (!validate(['first_name', 'last_name', 'email', 'phone', 'building', 'unit', 'privacy'])) return;
 
     const lead = buildLead();

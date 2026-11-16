@@ -15,20 +15,8 @@ const es = {
   backLabel: 'Volver',
   homeLabel: 'Volver al inicio',
 
-  /* interests step (financial forms) */
-  interestsPill: 'Paso 1 de 2 · Intereses',
-  interestsTitle: '¿Sobre qué temas te gustaría recibir orientación?',
-  interestsSub: 'Puedes marcar una o varias opciones, incluso las tres. Basta con seleccionar una para continuar.',
-  interestsLegend: 'Temas que te interesan',
-  interestsError: 'Elige al menos una opción para continuar.',
-  continue: 'Continuar',
-  interestsNote: 'Esta pantalla no solicita datos de salud, ingresos, patrimonio ni documentación.',
 
-  /* contact step */
-  contactPillTwo: 'Paso 2 de 2 · Datos de contacto',
-  contactPillOne: 'Paso único · 1 de 1',
-  contactTitleTwo: 'Ahora, tus datos de contacto',
-  contactSubTwo: 'Hemos registrado los temas que te interesan. Completa el formulario para enviarnos tu solicitud.',
+  /* the form */
   firstName: 'Nombre',
   firstNamePlaceholder: 'Tu nombre',
   firstNameError: 'Escribe tu nombre.',
@@ -54,7 +42,6 @@ const es = {
   consentAfter: 'y la información sobre el tratamiento de mis datos.',
   consentError: 'Para enviar la solicitud tienes que aceptar la política de privacidad.',
   sendError: 'No hemos podido enviar tu solicitud. Comprueba tu conexión e inténtalo de nuevo.',
-  backToInterests: 'Volver a intereses',
   demoNote: 'Modo demo: todavía no se envía nada. La conexión con la base de datos llega en el siguiente paso.',
 
   /* after sending */
@@ -100,18 +87,7 @@ const en: typeof es = {
   backLabel: 'Back',
   homeLabel: 'Back to home',
 
-  interestsPill: 'Step 1 of 2 · Interests',
-  interestsTitle: 'Which topics would you like guidance on?',
-  interestsSub: 'You can tick one or more options, even all three. One is enough to continue.',
-  interestsLegend: 'Topics you are interested in',
-  interestsError: 'Choose at least one option to continue.',
-  continue: 'Continue',
-  interestsNote: 'This screen does not ask for health, income, wealth or document details.',
 
-  contactPillTwo: 'Step 2 of 2 · Contact details',
-  contactPillOne: 'Single step · 1 of 1',
-  contactTitleTwo: 'Now, your contact details',
-  contactSubTwo: "We've noted the topics you're interested in. Fill in the form to send us your request.",
   firstName: 'First name',
   firstNamePlaceholder: 'Your first name',
   firstNameError: 'Enter your first name.',
@@ -137,7 +113,6 @@ const en: typeof es = {
   consentAfter: 'and the information about how my data is used.',
   consentError: 'To send the request you need to accept the privacy policy.',
   sendError: "We couldn't send your request. Check your connection and try again.",
-  backToInterests: 'Back to interests',
   demoNote: 'Demo mode: nothing is sent yet. The database connection comes in the next step.',
 
   donePillBooking: 'Request received · Optional next step',

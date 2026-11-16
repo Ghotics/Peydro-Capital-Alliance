@@ -61,7 +61,7 @@ src/
 │  └─ pages/               the texts of each page, Spanish and English side by side
 ├─ data/
 │  ├─ site.ts              firm name, emails, where "Contactar" points
-│  ├─ forms.ts             form texts: departments, interests, buildings, booking links
+│  ├─ forms.ts             form settings: departments, buildings, booking links
 │  └─ legal.ts             company details, providers and retention for the privacy page
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
@@ -89,7 +89,8 @@ src/
 | Change colours or fonts | `src/styles/base/_tokens.scss` |
 | Change a screen-size breakpoint | `src/styles/abstracts/_variables.scss` |
 | Style something on one page only | `src/styles/pages/<page>.scss` |
-| Change a form text, department name, interest or building | `src/data/forms.ts` |
+| Change a department name, building or booking link | `src/data/forms.ts` |
+| Change a text inside the form card (both languages) | `src/i18n/forms.ts` |
 | Connect a specialist's calendar | `calLink` in `src/data/forms.ts` |
 | Company details or a new provider on the privacy page | `src/data/legal.ts` |
 
@@ -141,8 +142,8 @@ src/
 
 | Form | Address | How people reach it | Steps |
 | --- | --- | --- | --- |
-| 1 · Giza (Irene) | `/giza` | every "Get in touch" / "Solicitar reunión" button, QR codes | contact → optional booking |
-| 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | financial: interests → contact; others: contact only; then optional booking |
+| 1 · Giza (Irene) | `/giza`, `/en/giza` | every "Get in touch" / "Solicitar reunión" button, QR codes | contact → optional booking |
+| 2 · Business Office | `/asesoramiento` → `/asesoramiento/<area>` | **QR codes only** | one page of contact details, then optional booking |
 | 3 · Quick | `/contacto-rapido` | **outside links only** | contact only (template — fields may change) |
 
 - The QR-only pages use `FunnelLayout`: no site menu, a short footer, and `noindex` so search engines leave them out.
