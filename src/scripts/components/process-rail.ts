@@ -1,6 +1,6 @@
 /* Numbered steps on a vertical line (styles: styles/components/_process-steps.scss).
    The line fills in gold and each step lights up as you scroll past it.
-   Used by the Quiénes somos and Crecimiento compuesto pages. */
+   Used by the Home and Quiénes somos pages. */
 import { onScrollFrame } from '../utils/scroll';
 
 export function initProcessRail(): void {

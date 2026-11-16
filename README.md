@@ -1,12 +1,12 @@
 # Peydro Capital Alliance — website
 
 Public website for Peydro Capital Alliance (PCA), built with [Astro](https://astro.build) and SCSS.
-Three pages in **Spanish (main) and English** — Inicio, Quiénes somos, Crecimiento compuesto de redes — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
+Two pages in **Spanish (main) and English** — Inicio ("Crecimiento compuesto de redes") and Quiénes somos — plus a 404 page, an ES / EN switch, a Gold / Dark palette switch, and a phone menu.
 Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Giza form, in the visitor's language — the only form linked from the site.
 See [Languages](#languages-es--en).
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
-> **Placeholder content.** Figures, people, quotes, offices and history are demo content until PCA provides the real details.
+> **Placeholder content.** The contact emails and the footer legal links are still placeholders until PCA provides the real details.
 > The CRM is a separate application and is **not** part of this repository.
 
 ## Getting started
@@ -27,10 +27,9 @@ npm run check      # type-check .astro and .ts files
 public/                    files served as-is (favicon…)
 src/
 ├─ pages/                  one file = one page; the file name is the URL
-│  ├─ index.astro          /                          ┐
-│  ├─ quienes-somos.astro  /quienes-somos             │ Spanish: tiny files that render
-│  ├─ crecimiento-compuesto.astro /crecimiento-compuesto ┘ components/pages/*.astro with lang="es"
-│  ├─ en/                  /en, /en/about, /en/compound-growth, /en/giza, /en/privacy, /en/not-found
+│  ├─ index.astro          /                          ┐ Spanish: tiny files that render
+│  ├─ quienes-somos.astro  /quienes-somos             ┘ components/pages/*.astro with lang="es"
+│  ├─ en/                  /en, /en/about, /en/giza, /en/privacy, /en/not-found
 │  ├─ giza.astro           /giza                      Form 1 ("Contactar" / "Solicitar reunión"); English: /en/giza
 │  ├─ privacidad.astro     /privacidad                privacy policy (all forms link here); English: /en/privacy
 │  ├─ asesoramiento/       Form 2, QR only (hidden)
@@ -49,7 +48,7 @@ src/
 │  ├─ Brand.astro          logo + name
 │  ├─ ThemeToggle.astro    Gold ⇄ Dark switch
 │  ├─ LangSwitch.astro     ES / EN switch
-│  ├─ pages/               the layout of each translated page (HomePage, AboutPage, GrowthPage…)
+│  ├─ pages/               the layout of each translated page (HomePage, AboutPage…)
 │  ├─ forms/               LeadForm (the form card), FormAside (dark side panel), PrivacyNotice, FormIcon
 │  └─ legal/               Fill (highlights details still to fill in)
 ├─ i18n/                  languages
@@ -64,8 +63,8 @@ src/
 ├─ scripts/                browser TypeScript
 │  ├─ site.ts              runs on every page (palette, menu, scroll effects)
 │  ├─ global/              …its parts
-│  ├─ pages/               one file per page (counters, the process line…)
-│  ├─ components/          shared behaviour (the process line on Quiénes somos and Crecimiento compuesto)
+│  ├─ pages/               one file per page (headline entrance, the process line…)
+│  ├─ components/          shared behaviour (the process line on Home and Quiénes somos)
 │  ├─ forms/               lead forms: steps + checks, QR code tracking, sending
 │  └─ utils/
 └─ styles/                 SCSS
@@ -172,7 +171,7 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 
 ## Before launch
 
-- [ ] Replace the placeholder content (figures, team, quotes, offices, history, articles).
+- [ ] Replace the remaining placeholders (contact emails, footer legal links).
 - [ ] Set `site` in `astro.config.mjs` to the real domain.
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.

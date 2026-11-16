@@ -4,12 +4,11 @@
 const es = {
   siteDescription:
     'Peydró Capital Alliance construye arquitecturas que conectan personas, empresas, activos, conocimiento y relaciones para crear nuevas posibilidades de valor.',
-  homeTitle: 'Capital paciente',
+  homeTitle: 'Crecimiento compuesto de redes',
   skip: 'Saltar al contenido',
   nav: {
     home: 'Inicio',
     about: 'Quiénes somos',
-    growth: 'Crecimiento compuesto de redes',
   },
   mainNavLabel: 'Principal',
   menuLabel: 'Menú',
@@ -27,11 +26,10 @@ const es = {
   },
   keepScrolling: 'Sigue leyendo',
   footer: {
-    tagline: 'Capital paciente para empresas hechas para durar. Versión de demostración: las cifras, personas y citas de esta web son de ejemplo.',
+    tagline: 'Arquitecturas que conectan personas, empresas, activos, conocimiento y relaciones para crear nuevas posibilidades de valor.',
     firm: 'Firma',
     company: 'Compañía',
     contact: 'Contacto',
-    home: 'Inicio',
     legal: 'Legal',
     terms: 'Términos',
     privacy: 'Privacidad',
@@ -44,12 +42,11 @@ const es = {
 const en: typeof es = {
   siteDescription:
     'Peydró Capital Alliance builds architectures that connect people, companies, assets, knowledge and relationships to create new possibilities for value.',
-  homeTitle: 'Patient capital',
+  homeTitle: 'Compound network growth',
   skip: 'Skip to content',
   nav: {
     home: 'Home',
     about: 'About us',
-    growth: 'Compound network growth',
   },
   mainNavLabel: 'Main',
   menuLabel: 'Menu',
@@ -67,11 +64,10 @@ const en: typeof es = {
   },
   keepScrolling: 'Keep scrolling',
   footer: {
-    tagline: 'Patient capital for companies built to last. A demonstration build — the figures, people and quotes on this site are placeholders.',
+    tagline: 'Architectures that connect people, companies, assets, knowledge and relationships to create new possibilities for value.',
     firm: 'Firm',
     company: 'Company',
     contact: 'Contact',
-    home: 'Home',
     legal: 'Legal',
     terms: 'Terms',
     privacy: 'Privacy',

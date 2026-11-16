@@ -6,7 +6,6 @@ import type { Lang } from './config';
 export const routes = {
   home: { es: '/', en: '/en' },
   about: { es: '/quienes-somos', en: '/en/about' },
-  growth: { es: '/crecimiento-compuesto', en: '/en/compound-growth' },
   /* not in the menu */
   giza: { es: '/giza', en: '/en/giza' }, // the contact form: every "Contactar" / "Get in touch" button
   privacy: { es: '/privacidad', en: '/en/privacy' },
@@ -16,10 +15,10 @@ export const routes = {
 export type PageKey = keyof typeof routes;
 
 /** Pages in the top bar (labels in src/i18n/ui.ts → nav). */
-export const mainNav: PageKey[] = ['about', 'growth'];
+export const mainNav: PageKey[] = ['home', 'about'];
 
-/** Pages in the phone / tablet menu (Home first). */
-export const menuNav: PageKey[] = ['home', ...mainNav];
+/** Pages in the phone / tablet menu. */
+export const menuNav: PageKey[] = mainNav;
 
 /** Path of a page in a language, e.g. pathFor('about', 'en') → '/en/about'. Wrap it in url() for links. */
 export function pathFor(page: PageKey, lang: Lang): string {
