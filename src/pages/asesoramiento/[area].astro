@@ -7,6 +7,7 @@ import FormAside from '../../components/forms/FormAside.astro';
 import LeadForm from '../../components/forms/LeadForm.astro';
 import { allAreas, officePerks } from '../../data/forms';
 import type { Area } from '../../data/forms';
+import { url } from '../../utils/url';
 
 export function getStaticPaths() {
   return allAreas.map((area) => ({ params: { area: area.slug }, props: { area } }));
@@ -31,7 +32,10 @@ const { area } = Astro.props;
   <section class="form-page">
     <div class="ph-bg" aria-hidden="true"><div class="ph-orb one"></div><div class="ph-orb two"></div></div>
     <div class="wrap">
-      <span class="form-badge">{area.name}</span>
+      <div class="form-top">
+        <a class="form-back" href={url('/asesoramiento')}>← Volver a Business Office</a>
+        <span class="form-badge">{area.name}</span>
+      </div>
       <div class="form-shell">
         <FormAside
           eyebrow="PCA Business Office · Renta 92"
