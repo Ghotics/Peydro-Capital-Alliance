@@ -35,6 +35,45 @@
   margin-bottom: 1.4rem;
 }
 
+/* back button + badge row (Business Office department pages) */
+.form-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .8rem 1rem;
+  margin-bottom: 1.4rem;
+
+  .form-badge {
+    margin-bottom: 0;
+  }
+}
+
+.form-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--text);
+  border: 1px solid var(--line-2);
+  padding: .5em 1.1em;
+  border-radius: 999px;
+  transition: border-color .3s var(--ease), transform .3s var(--ease);
+
+  &:hover {
+    border-color: var(--gold);
+    transform: translateX(-2px);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
 .form-shell {
   display: grid;
   grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
