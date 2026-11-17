@@ -175,10 +175,29 @@ The site builds to plain static files in `dist/`, so any static host works (Netl
 - output directory: `dist`
 - Node version: 22
 
+**Now:** GitHub Pages (`.github/workflows/deploy.yml`). The workflow takes the address from the Pages settings,
+so the site works both at `ghotics.github.io/Peydro-Capital-Alliance` and on a custom domain without code changes.
+
+**Moving to the real domain** (e.g. `www.peydrocapitalalliance.com`):
+
+1. At the domain provider, add a `CNAME` record: `www` → `ghotics.github.io`.
+2. GitHub → this repo → Settings → Pages → Custom domain: `www.peydrocapitalalliance.com` → Save, then tick "Enforce HTTPS".
+3. Run the deploy again (Actions → "Deploy site to GitHub Pages" → Run workflow). Links and the base path follow automatically.
+4. Tell the backend about the new address (CRM repo README, "Keys and settings"): `ALLOWED_ORIGINS` in Supabase and
+   `VITE_WEBSITE_URL` in the CRM, then download the campaign QR codes again — **only then print them**.
+
+## Keys and switches that live in this repo
+
+| What | Where | Now |
+| --- | --- | --- |
+| Cal.com booking pages (one per specialist) | `calLink` in `src/data/forms.ts` (4 departments + Giza) | empty: the button says the calendar isn't connected |
+| "You'll receive a confirmation at…" line | `confirmationEmails` in `src/data/forms.ts` | `false`: turn on when confirmation emails are on in Supabase |
+| Backend address | `PUBLIC_INTAKE_URL` (build variable, optional) | the PCA Supabase project |
+
 ## Before launch
 
 - [ ] Replace the remaining placeholders (contact emails, footer legal links).
-- [ ] Set `site` in `astro.config.mjs` to the real domain.
+- [ ] Move to the real domain (see "Moving to the real domain" above).
 - [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
 - [x] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.

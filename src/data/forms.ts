@@ -15,6 +15,10 @@ export type IconName = 'shield' | 'laptop' | 'antenna' | 'megaphone' | 'chat' | 
 /** Renta 92 buildings offered in the Business Office forms. */
 export const buildings = ['14', '16', '18'];
 
+/** Turn on (true) once confirmation emails are switched on in Supabase (RESEND_API_KEY on the
+    website-intake function, see the CRM README). While false, the forms don't promise an email. */
+export const confirmationEmails = false;
+
 /** The privacy page every form links to (src/pages/privacidad.astro). */
 export const privacyHref = '/privacidad';
 
