@@ -10,6 +10,9 @@ export const routes = {
   /* not in the menu */
   giza: { es: '/giza', en: '/en/giza' }, // the contact form: every "Contactar" / "Get in touch" button
   privacy: { es: '/privacidad', en: '/en/privacy' },
+  legalNotice: { es: '/aviso-legal', en: '/en/legal-notice' },
+  terms: { es: '/terminos', en: '/en/terms' },
+  disclosures: { es: '/informacion-regulatoria', en: '/en/disclosures' },
   notFound: { es: '/404', en: '/en/not-found' }, // see src/pages/404.astro
 } satisfies Record<string, Record<Lang, string>>;
 
