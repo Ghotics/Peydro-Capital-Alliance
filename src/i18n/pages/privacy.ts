@@ -38,7 +38,7 @@ const es = {
       '<b>Los que escribes en el formulario:</b> nombre, apellidos, correo electrónico y teléfono. En los formularios de Business Office, también el edificio y el número de local. Además, la nota o el mensaje, si decides escribirlo.',
       '<b>De dónde llegas:</b> el código de la campaña o del código QR por el que entras (por ejemplo, el de un cartel), la página del formulario y la fecha y hora del envío.',
       '<b>Si reservas una cita:</b> los datos que introduces en el calendario de reservas (nombre, correo, día, hora y modalidad de la reunión).',
-      '<b>Datos técnicos de la visita:</b> tu dirección IP y el tipo de navegador, que registran el servicio que aloja la web y el de tipografías (ver el punto 5).',
+      '<b>Datos técnicos de la visita:</b> tu dirección IP y el tipo de navegador, que registra el servicio que aloja la web (ver el punto 5).',
     ],
     after: [
       'Los campos marcados con <b>*</b> son necesarios para atender tu solicitud: si no los rellenas, no podremos tramitarla. La nota es siempre opcional.',
@@ -151,7 +151,7 @@ const en: typeof es = {
       '<b>What you type in the form:</b> first name, last name, email and phone number. In the Business Office forms, also the building and unit number. And the note or message, if you choose to write one.',
       '<b>Where you come from:</b> the campaign or QR code you came through (for example, one on a poster), the form page, and the date and time it was sent.',
       '<b>If you book an appointment:</b> the details you enter in the booking calendar (name, email, day, time and type of meeting).',
-      '<b>Technical data about the visit:</b> your IP address and browser type, recorded by the service that hosts the website and the font service (see section 5).',
+      '<b>Technical data about the visit:</b> your IP address and browser type, recorded by the service that hosts the website (see section 5).',
     ],
     after: [
       "Fields marked with <b>*</b> are needed to handle your request: if you don't fill them in, we can't process it. The note is always optional.",

@@ -1,5 +1,6 @@
 ---
 /* Everything inside <head>, shared by both layouts (BaseLayout and FunnelLayout). */
+import { Font } from 'astro:assets';
 import { url } from '../utils/url';
 
 interface Props {
@@ -31,6 +32,6 @@ const defaultLink = langLinks.find((a) => a.lang === 'es');
      Keep the key in sync with src/scripts/global/theme.ts */
   try { if (localStorage.getItem('pca-palette') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
+{/* Fonts served from this site (configured in astro.config.mjs), nothing loaded from Google */}
+<Font cssVariable="--font-inter" preload />
+<Font cssVariable="--font-playfair" preload />
