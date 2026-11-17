@@ -1,4 +1,4 @@
-/* Gold ⇄ Dark palette switch (components/ThemeToggle.astro) */
+/* Light ⇄ Dark mode switch (components/ThemeToggle.astro): dot + label, the same on every page */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -23,14 +23,4 @@
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold-2), var(--gold));
   box-shadow: 0 0 0 2px var(--gold-ring);
-}
-
-/* main site top bar: just the dot, to leave room for the menu and the ES / EN switch
-   (the full label is in the phone menu; the tooltip names the action) */
-.nav:not(.funnel-nav) .nav-cta .theme-toggle {
-  padding: .55em;
-
-  .tt-label {
-    display: none;
-  }
 }

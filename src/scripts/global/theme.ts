@@ -1,4 +1,4 @@
-/* Gold ⇄ Dark palette switch. Gold is the default; the choice is remembered in this browser.
+/* Light ⇄ Dark mode switch. Light (the gold palette, internally 'gold') is the default; the choice is remembered in this browser.
    The small inline script in layouts/BaseLayout.astro applies a saved Dark choice before the
    first paint, so keep STORAGE_KEY in sync with it. */
 
@@ -29,9 +29,9 @@ function apply(palette: Palette, toggles: HTMLButtonElement[]): void {
   /* each button carries its own texts (Spanish or English) in data-* attributes, see ThemeToggle.astro */
   toggles.forEach((button) => {
     const d = button.dataset;
-    const hint = (dark ? d.hintGold : d.hintDark) ?? (dark ? 'Switch to gold palette' : 'Switch to dark palette');
+    const hint = (dark ? d.hintGold : d.hintDark) ?? (dark ? 'Switch to light mode' : 'Switch to dark mode');
     const label = button.querySelector('.tt-label');
-    if (label) label.textContent = (dark ? d.labelDark : d.labelGold) ?? (dark ? 'Dark' : 'Gold');
+    if (label) label.textContent = (dark ? d.labelDark : d.labelGold) ?? (dark ? 'Dark' : 'Light');
     button.title = hint;
     button.setAttribute('aria-label', hint);
   });
