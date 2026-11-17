@@ -3,7 +3,7 @@
    Texts that change with the language have an `es` and an `en` version.
    Have a lawyer or data-protection adviser review the final text before the site goes live. */
 import type { Lang } from '../i18n/config';
-import { turnstileSiteKey } from './forms';
+import { turnstileSiteKey, whatsappAlerts } from './forms';
 
 /** A text in both languages. */
 export type Bilingual = Record<Lang, string>;
@@ -94,7 +94,26 @@ export const processors: Processor[] = [
       en: 'EU-US Data Privacy Framework (art. 45 GDPR)',
     },
   },
-  // WhatsApp (Meta) for the quick form: add here before it is switched on.
+  // Listed automatically once WhatsApp alerts are on (whatsappAlerts in src/data/forms.ts).
+  ...(whatsappAlerts
+    ? [
+        {
+          name: 'Meta Platforms Ireland Ltd. (WhatsApp Business)',
+          purpose: {
+            es: 'Aviso interno por WhatsApp al equipo de PCA cuando llega una consulta general o del formulario rápido (nombre, teléfono y formulario).',
+            en: 'Internal WhatsApp alert to the PCA team when a general enquiry or quick-form request arrives (name, phone and form).',
+          },
+          location: {
+            es: 'Irlanda (UE), con posibles transferencias a Estados Unidos',
+            en: 'Ireland (EU), with possible transfers to the United States',
+          },
+          safeguard: {
+            es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)',
+            en: 'EU-US Data Privacy Framework (art. 45 GDPR)',
+          },
+        },
+      ]
+    : []),
   // Listed automatically while the "are you human?" check is on (turnstileSiteKey in src/data/forms.ts).
   ...(turnstileSiteKey
     ? [

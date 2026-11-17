@@ -20,6 +20,10 @@ export const buildings = ['14', '16', '18'];
     (TURNSTILE_SECRET_KEY on the website-intake function) — add it AFTER this site key is live. */
 export const turnstileSiteKey = '0x4AAAAAAGFtYTS1bmnNUjnr';
 
+/** Turn on (true) when WhatsApp alerts are switched on in Supabase (WHATSAPP_* secrets, see the CRM repo's
+    docs/whatsapp-setup.md). Lists Meta on the privacy page, because it then receives the lead's name and phone. */
+export const whatsappAlerts = false;
+
 /** Turn on (true) once confirmation emails are switched on in Supabase (RESEND_API_KEY on the
     website-intake function, see the CRM README). While false, the forms don't promise an email. */
 export const confirmationEmails = true;
