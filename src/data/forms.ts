@@ -70,7 +70,7 @@ export const areas: Area[] = [
     short: 'Procesos, CRM, IA.',
     description: 'Digitalización de procesos, inteligencia artificial, CRM y herramientas para mejorar la eficiencia de tu empresa.',
     icon: 'laptop',
-    calLink: '', // Cal.com account: Tecnología
+    calLink: 'https://cal.com/tecnologiapca/primera-reunion', // Cal.com account: Tecnología
   },
   {
     slug: 'telecomunicaciones',
