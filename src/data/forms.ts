@@ -62,7 +62,7 @@ export const areas: Area[] = [
     short: 'Seguros, ahorro e inversión, hipotecas.',
     description: 'Seguros, ahorro e inversión, hipotecas y financiación para empresas, autónomos y particulares.',
     icon: 'shield',
-    calLink: '', // Cal.com account: Irene (same as Giza) — to confirm
+    calLink: 'https://cal.com/peydro-capital-alliance/primera-reunion', // Cal.com account: Irene (same as Giza)
   },
   {
     slug: 'tecnologia',
@@ -113,7 +113,7 @@ export const giza = {
   /** Who the visitor books with. */
   specialist: 'Irene',
   /** Irene's public Cal.com booking page. Empty = not connected yet. */
-  calLink: '', // Cal.com account: Irene
+  calLink: 'https://cal.com/peydro-capital-alliance/giza', // Cal.com account: Irene
 };
 
 /* ------------------------------------------------------------------ */
