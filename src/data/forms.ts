@@ -22,7 +22,7 @@ export const turnstileSiteKey = '0x4AAAAAAGFtYTS1bmnNUjnr';
 
 /** Turn on (true) once confirmation emails are switched on in Supabase (RESEND_API_KEY on the
     website-intake function, see the CRM README). While false, the forms don't promise an email. */
-export const confirmationEmails = false;
+export const confirmationEmails = true;
 
 /** The privacy page every form links to (src/pages/privacidad.astro). */
 export const privacyHref = '/privacidad';
