@@ -80,11 +80,19 @@ export const processors: Processor[] = [
     safeguard: { es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)', en: 'EU-US Data Privacy Framework (art. 45 GDPR)' },
   },
   {
-    // Fill in when the email service is chosen (e.g. Resend), before the forms send real emails.
-    name: '[Servicio de envío de correos]',
-    purpose: { es: 'Envío de los correos de confirmación de tu solicitud.', en: 'Sending the confirmation emails for your request.' },
-    location: { es: '[País]', en: '[Country]' },
-    safeguard: { es: '[Garantía para la transferencia, si es fuera de la UE]', en: '[Safeguard for the transfer, if outside the EU]' },
+    name: 'Resend, Inc.',
+    purpose: {
+      es: 'Envío de los correos automáticos: la confirmación de tu solicitud y el aviso interno al equipo que la atiende.',
+      en: 'Sending the automatic emails: the confirmation of your request and the internal notice to the team handling it.',
+    },
+    location: {
+      es: 'Estados Unidos (empresa); los correos se envían desde servidores en Irlanda (UE)',
+      en: 'United States (company); emails are sent from servers in Ireland (EU)',
+    },
+    safeguard: {
+      es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)',
+      en: 'EU-US Data Privacy Framework (art. 45 GDPR)',
+    },
   },
   // WhatsApp (Meta) for the quick form: add here before it is switched on.
   // Listed automatically while the "are you human?" check is on (turnstileSiteKey in src/data/forms.ts).
