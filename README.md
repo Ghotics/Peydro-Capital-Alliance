@@ -198,7 +198,7 @@ so the site works both at `ghotics.github.io/Peydro-Capital-Alliance` and on a c
 
 - [x] Move to the real domain (see "Moving to the real domain" above).
 - [x] Legal pages: Aviso legal (`/aviso-legal`), Términos de uso (`/terminos`), Información regulatoria (`/informacion-regulatoria`) and Privacidad, in Spanish and English. No separate cookie policy is needed while the site uses no analytics or advertising cookies (explained in Privacidad, section 10).
-- [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
+- [x] Self-host the fonts (Astro Fonts API in `astro.config.mjs`): visitors' browsers no longer contact Google.
 - [x] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
 - [x] With the real domain: add it to `ALLOWED_ORIGINS` of the `website-intake` function in Supabase.
 - [ ] Fill in the company details and regulatory status in `src/data/legal.ts` (highlighted on the legal pages until done) and have a lawyer review all four legal pages (base texts).

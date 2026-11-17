@@ -69,16 +69,6 @@ export const processors: Processor[] = [
     },
   },
   {
-    // Remove this entry once the fonts are served from our own site (see README, "Before launch").
-    name: 'Google LLC (Google Fonts)',
-    purpose: {
-      es: 'Tipografías de la web. Al cargarlas, tu navegador envía tu dirección IP a Google.',
-      en: "The website's fonts. When loading them, your browser sends your IP address to Google.",
-    },
-    location: { es: 'Estados Unidos', en: 'United States' },
-    safeguard: { es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)', en: 'EU-US Data Privacy Framework (art. 45 GDPR)' },
-  },
-  {
     name: 'Supabase, Inc.',
     purpose: {
       es: 'Base de datos donde se guardan las solicitudes de los formularios.',
