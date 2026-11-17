@@ -78,7 +78,7 @@ export const areas: Area[] = [
     short: 'Telefonía, fibra, luz y gas.',
     description: 'Revisión de contratos, tarifas y consumos para detectar posibles mejoras y oportunidades de ahorro.',
     icon: 'antenna',
-    calLink: '', // Cal.com account: Suministros
+    calLink: 'https://cal.com/suministrospca/primera-reunion', // Cal.com account: Suministros
   },
   {
     slug: 'marketing',
@@ -86,7 +86,7 @@ export const areas: Area[] = [
     short: 'Estrategia, visibilidad, campañas.',
     description: 'Estrategia, publicidad, redes sociales y sistemas de captación para impulsar la visibilidad y el crecimiento.',
     icon: 'megaphone',
-    calLink: '', // Cal.com account: Marketing
+    calLink: 'https://cal.com/marketingpca/primera-reunion', // Cal.com account: Marketing
   },
 ];
 
