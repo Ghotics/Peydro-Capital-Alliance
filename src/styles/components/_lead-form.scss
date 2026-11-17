@@ -451,3 +451,8 @@
   border: 1px solid var(--line);
   border-radius: 12px;
 }
+
+/* Cloudflare "are you human?" box: empty for most visitors, a small checkbox for suspicious ones. */
+.lf-human:not(:empty) {
+  margin-block: 1rem;
+}

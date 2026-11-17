@@ -8,7 +8,7 @@
    The field names (first_name, email, building…) are the names the database columns will have,
    so what the form collects and what gets saved line up one to one — in either language. */
 import type { FormKind } from '../../data/forms';
-import { buildings, confirmationEmails } from '../../data/forms';
+import { buildings, confirmationEmails, turnstileSiteKey } from '../../data/forms';
 import type { Lang } from '../../i18n/config';
 import { formTexts } from '../../i18n/forms';
 import { pathFor } from '../../i18n/routes';
@@ -69,7 +69,7 @@ const homeLink = url(homeHref);
 const privacyLink = url(pathFor('privacy', lang));
 const id = `lf-${kind}${area ? `-${area}` : ''}`;
 ---
-<div class="lead-form" data-lead-form data-kind={kind} data-area={area} data-cal={calLink}>
+<div class="lead-form" data-lead-form data-kind={kind} data-area={area} data-cal={calLink} data-turnstile={turnstileSiteKey || undefined} data-lang={lang}>
   <form class="lf-form" novalidate>
     <section class="lf-step on" data-step="contact" aria-labelledby={`${id}-t2`}>
       <h2 class="lf-title" id={`${id}-t2`} tabindex="-1">{title}</h2>
@@ -138,6 +138,9 @@ const id = `lf-${kind}${area ? `-${area}` : ''}`;
       </div>
 
       <PrivacyNotice lang={lang} />
+
+      {/* "Are you human?" check (Cloudflare Turnstile): usually invisible, only when turnstileSiteKey is set. */}
+      {turnstileSiteKey && <div class="lf-human" data-turnstile-box></div>}
 
       <div class="lf-alert" role="alert" data-send-error hidden>{t.sendError}</div>
 

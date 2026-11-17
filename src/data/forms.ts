@@ -15,6 +15,11 @@ export type IconName = 'shield' | 'laptop' | 'antenna' | 'megaphone' | 'chat' | 
 /** Renta 92 buildings offered in the Business Office forms. */
 export const buildings = ['14', '16', '18'];
 
+/** Cloudflare Turnstile "are you human?" check on every form. Paste the SITE key here (it's public;
+    Cloudflare → Turnstile → the widget). Empty = no check. The SECRET key goes only into Supabase
+    (TURNSTILE_SECRET_KEY on the website-intake function) — add it AFTER this site key is live. */
+export const turnstileSiteKey = '';
+
 /** Turn on (true) once confirmation emails are switched on in Supabase (RESEND_API_KEY on the
     website-intake function, see the CRM README). While false, the forms don't promise an email. */
 export const confirmationEmails = false;

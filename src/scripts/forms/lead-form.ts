@@ -5,6 +5,7 @@ import type { FormKind } from '../../data/forms';
 import { prefersReducedMotion } from '../utils/motion';
 import { carryAttribution, readAttribution } from './attribution';
 import { submitLead, type LeadPayload } from './submit';
+import { startHumanCheck } from './turnstile';
 
 type StepName = 'contact' | 'done' | 'finished';
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -44,6 +45,11 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
   const idleLabel = submitLabel?.textContent ?? '';
   const sendError = form.querySelector<HTMLElement>('[data-send-error]');
   const attribution = readAttribution();
+  const humanCheck = startHumanCheck(
+    root.querySelector<HTMLElement>('[data-turnstile-box]'),
+    root.dataset.turnstile ?? '',
+    root.dataset.lang ?? 'es',
+  );
 
   let busy = false;
   let sent: { lead: LeadPayload; leadId: string } | null = null;
@@ -143,12 +149,16 @@ function initLeadForm(root: HTMLElement, form: HTMLFormElement): void {
     if (submitLabel) submitLabel.textContent = submitButton?.dataset.sendingLabel ?? 'Enviando…';
     if (sendError) sendError.hidden = true;
     try {
-      const { leadId } = await submitLead(lead);
+      /* With the human check on, wait for its token first (usually ready long before the click). */
+      const token = humanCheck ? await humanCheck.token() : null;
+      if (humanCheck && !token) throw new Error('Human check did not finish');
+      const { leadId } = await submitLead(lead, token);
       showSent(lead, leadId);
     } catch (error) {
       console.error('Lead could not be sent', error);
       if (sendError) sendError.hidden = false;
     } finally {
+      humanCheck?.reset(); // each token works once
       busy = false;
       if (submitButton) submitButton.disabled = false;
       if (submitLabel) submitLabel.textContent = idleLabel;
