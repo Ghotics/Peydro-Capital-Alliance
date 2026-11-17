@@ -11,6 +11,7 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import { privacyHref } from '../data/forms';
 import { site } from '../data/site';
 import { url } from '../utils/url';
+import { pathFor } from '../i18n/routes';
 import type { NavItem } from '../data/site';
 
 interface Props {
@@ -67,7 +68,8 @@ const year = new Date().getFullYear();
         <span>© {year} {site.name}{partner ? ` · En colaboración con ${partner}` : ''}</span>
         <nav aria-label="Legal">
           <a href={url(privacyHref)}>Política de privacidad</a>
-          <a href="#">Aviso legal</a>
+          <a href={url(pathFor('legalNotice', 'es'))}>Aviso legal</a>
+          <a href={url(pathFor('terms', 'es'))}>Términos de uso</a>
         </nav>
       </div>
     </footer>

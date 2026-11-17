@@ -6,7 +6,7 @@ Every "Contactar" / "Get in touch" / "Solicitar reunión" button leads to the Gi
 See [Languages](#languages-es--en).
 It also holds the three lead forms (Giza, Business Office, quick form) — see [Lead forms](#lead-forms).
 
-> **Placeholder content.** The contact emails and the footer legal links are still placeholders until PCA provides the real details.
+> **Company details pending.** The legal pages show PCA's legal name, NIF, address, registry and regulatory status highlighted until they are filled in (`src/data/legal.ts`).
 > The CRM is a separate application and is **not** part of this repository.
 
 ## Getting started
@@ -196,13 +196,12 @@ so the site works both at `ghotics.github.io/Peydro-Capital-Alliance` and on a c
 
 ## Before launch
 
-- [ ] Replace the remaining placeholders (contact emails, footer legal links).
-- [ ] Move to the real domain (see "Moving to the real domain" above).
-- [ ] Legal pages (Spain/EU): Aviso legal, Política de privacidad, Política de cookies — the footer links are placeholders.
+- [x] Move to the real domain (see "Moving to the real domain" above).
+- [x] Legal pages: Aviso legal (`/aviso-legal`), Términos de uso (`/terminos`), Información regulatoria (`/informacion-regulatoria`) and Privacidad, in Spanish and English. No separate cookie policy is needed while the site uses no analytics or advertising cookies (explained in Privacidad, section 10).
 - [ ] Self-host the fonts instead of loading them from Google (GDPR), e.g. with Astro's built-in Fonts API.
 - [x] Connect the lead forms to the backend (`src/scripts/forms/submit.ts`) and remove the demo note.
-- [ ] With the real domain: add it to `ALLOWED_ORIGINS` of the `website-intake` function in Supabase.
-- [ ] Fill in the company details in `src/data/legal.ts` (highlighted in red on the privacy page until done) and have a lawyer review `/privacidad`.
+- [x] With the real domain: add it to `ALLOWED_ORIGINS` of the `website-intake` function in Supabase.
+- [ ] Fill in the company details and regulatory status in `src/data/legal.ts` (highlighted on the legal pages until done) and have a lawyer review all four legal pages (base texts).
 - [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.
 - [ ] Cal.com links for Irene and the four specialists (`calLink` in `src/data/forms.ts`).
 - [ ] Analytics only with cookie consent.

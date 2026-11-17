@@ -1,4 +1,4 @@
-/* Details for the privacy page (components/pages/PrivacyPage.astro) and the short notice under every form.
+/* Details for the legal pages (privacy, legal notice, terms, disclosures) and the short notice under every form.
    Anything in [square brackets] is a placeholder: the page shows it highlighted until it is filled in.
    Texts that change with the language have an `es` and an `en` version.
    Have a lawyer or data-protection adviser review the final text before the site goes live. */
@@ -18,10 +18,27 @@ export const controller = {
   address: '[Domicilio social completo]',
   /** Mailbox for privacy requests (access, deletion…). Someone must read it. */
   email: '[privacidad@peydrocapitalalliance.com]',
+  /** Commercial registry details (Registro Mercantil: tomo, folio, hoja), shown on the legal notice. */
+  registry: '[Datos de inscripción en el Registro Mercantil]',
 };
 
+/** PCA's regulatory status, shown on the disclosures page (src/i18n/pages/legal.ts). Confirm with the lawyer. */
+export const regulatory: Record<'insurance' | 'investment', Bilingual> = {
+  insurance: {
+    es: '[Indicar si PCA es mediador de seguros inscrito en la DGSFP (con su número) o con qué mediador inscrito colabora]',
+    en: '[State whether PCA is an insurance intermediary registered with the DGSFP (with its number) or which registered intermediary it works with]',
+  },
+  investment: {
+    es: '[Indicar si PCA está autorizada por la CNMV (con su número) o con qué entidad autorizada colabora; si no presta servicios de inversión, decirlo]',
+    en: "[State whether PCA is authorised by the CNMV (with its number) or which authorised firm it works with; if it doesn't provide investment services, say so]",
+  },
+};
+
+/** Last time the legal notice, terms or disclosures changed. Update both languages when they do. */
+export const legalUpdated: Bilingual = { es: '17 de noviembre de 2026', en: '17 November 2026' };
+
 /** Last time the privacy text changed. Update it (both languages) whenever the policy changes. */
-export const privacyUpdated: Bilingual = { es: '16 de noviembre de 2026', en: '16 November 2026' };
+export const privacyUpdated: Bilingual = { es: '17 de noviembre de 2026', en: '17 November 2026' };
 
 /** How long leads that never become clients are kept after the last contact. */
 export const leadRetention: Bilingual = { es: '12 meses', en: '12 months' };

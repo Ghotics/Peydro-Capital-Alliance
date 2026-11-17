@@ -1,0 +1,68 @@
+---
+/* Layout shared by the legal notice, terms of use and disclosures pages, in both languages.
+   Texts: src/i18n/pages/legal.ts · Company details and regulatory status: src/data/legal.ts
+   Routes: src/pages/{aviso-legal,terminos,informacion-regulatoria}.astro and src/pages/en/{legal-notice,terms,disclosures}.astro
+   Styles: src/styles/pages/legal.scss. Base texts: have a lawyer review them before relying on them. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import { controller, isPlaceholder, legalUpdated, regulatory } from '../../data/legal';
+import type { Lang } from '../../i18n/config';
+import { legal, type LegalDocKey } from '../../i18n/pages/legal';
+import { pathFor } from '../../i18n/routes';
+import { ui } from '../../i18n/ui';
+import { url } from '../../utils/url';
+import '../../styles/pages/legal.scss';
+
+interface Props {
+  lang: Lang;
+  doc: LegalDocKey;
+}
+
+const { lang, doc } = Astro.props;
+const all = legal[lang];
+const t = all[doc];
+
+const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/** A company detail: highlighted while it's still a [placeholder] (same look as components/legal/Fill.astro). */
+const value = (text: string) =>
+  isPlaceholder(text) ? `<mark class="todo" title="Falta por rellenar en src/data/legal.ts">${escape(text)}</mark>` : escape(text);
+const link = (page: 'privacy' | LegalDocKey) => `<a href="${url(pathFor(page, lang))}">${all.linkNames[page]}</a>`;
+
+const tokens: Record<string, string> = {
+  company: value(controller.name),
+  taxId: value(controller.taxId),
+  address: value(controller.address),
+  email: isPlaceholder(controller.email) ? value(controller.email) : `<a href="mailto:${controller.email}">${controller.email}</a>`,
+  registry: value(controller.registry),
+  insurance: value(regulatory.insurance[lang]),
+  investment: value(regulatory.investment[lang]),
+  privacy: link('privacy'),
+  legalNotice: link('legalNotice'),
+  terms: link('terms'),
+  disclosures: link('disclosures'),
+};
+const fill = (text: string) => text.replace(/\{(\w+)\}/g, (whole, key: string) => tokens[key] ?? whole);
+---
+<BaseLayout lang={lang} page={doc} title={t.title} description={t.description}>
+  <PageHero eyebrow="Legal" lead={t.lead} hint={ui[lang].keepScrolling} compact><Fragment set:html={t.heading} /></PageHero>
+
+  <section class="sec legal-sec">
+    <div class="wrap legal">
+      <p class="legal-updated">{all.updated} {legalUpdated[lang]}</p>
+      {all.translationNote && <p class="legal-updated">{all.translationNote}</p>}
+
+      {t.sections.map((section) => (
+        <>
+          <h2>{section.title}</h2>
+          {section.paras?.map((p) => <p set:html={fill(p)} />)}
+          {section.items && (
+            <ul>
+              {section.items.map((item) => <li set:html={fill(item)} />)}
+            </ul>
+          )}
+          {section.after?.map((p) => <p set:html={fill(p)} />)}
+        </>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

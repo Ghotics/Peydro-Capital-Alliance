@@ -104,7 +104,7 @@ const es = {
   },
   s10: {
     title: '10. Cookies y datos en tu navegador',
-    text: 'Esta web no usa cookies de análisis ni de publicidad. Solo guarda en tu navegador dos preferencias, y solo si las cambias tú, para recordarlas cuando vuelvas: el estilo de colores (Dorado u Oscuro) y el idioma (español o inglés). Puedes borrarlas desde los ajustes de tu navegador. El código de campaña viaja en la dirección de la página y no se guarda en tu navegador.',
+    text: 'Esta web no usa cookies de análisis ni de publicidad. Solo guarda en tu navegador dos preferencias, y solo si las cambias tú, para recordarlas cuando vuelvas: el estilo de colores (Dorado u Oscuro) y el idioma (español o inglés). Puedes borrarlas desde los ajustes de tu navegador. El código de campaña viaja en la dirección de la página y no se guarda en tu navegador. Al enviar un formulario, la comprobación antispam de Cloudflare (Turnstile) usa datos técnicos de tu navegador solo para la seguridad del formulario.',
   },
   s11: {
     title: '11. Si nos das datos de otra persona',
@@ -217,7 +217,7 @@ const en: typeof es = {
   },
   s10: {
     title: '10. Cookies and data in your browser',
-    text: "This website doesn't use analytics or advertising cookies. It only saves two preferences in your browser, and only if you change them yourself, so they're remembered when you come back: the colour style (Gold or Dark) and the language (Spanish or English). You can delete them in your browser settings. The campaign code travels in the page address and isn't saved in your browser.",
+    text: "This website doesn't use analytics or advertising cookies. It only saves two preferences in your browser, and only if you change them yourself, so they're remembered when you come back: the colour style (Gold or Dark) and the language (Spanish or English). You can delete them in your browser settings. The campaign code travels in the page address and isn't saved in your browser. When you send a form, Cloudflare's anti-spam check (Turnstile) uses technical data from your browser only to keep the form secure.",
   },
   s11: {
     title: "11. If you give us someone else's data",

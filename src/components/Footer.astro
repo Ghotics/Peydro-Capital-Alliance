@@ -35,13 +35,14 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h5>{f.legal}</h5>
-        <a href="#">{f.terms}</a>
+        <a href={url(pathFor('legalNotice', lang))}>{f.legalNotice}</a>
+        <a href={url(pathFor('terms', lang))}>{f.terms}</a>
         <a href={url(pathFor('privacy', lang))}>{f.privacy}</a>
-        <a href="#">{f.disclosures}</a>
+        <a href={url(pathFor('disclosures', lang))}>{f.disclosures}</a>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© {year} {site.name}. <span class="demo-tag">{f.demo}</span></span>
+      <span>© {year} {site.name}.</span>
       <a href="#top" class="to-top">{f.toTop}</a>
     </div>
   </div>
