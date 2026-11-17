@@ -206,3 +206,13 @@ so the site works both at `ghotics.github.io/Peydro-Capital-Alliance` and on a c
 - [ ] Keep the provider list in `src/data/legal.ts` true (email service, WhatsApp, a new host…), and remove the Google Fonts line once fonts are self-hosted.
 - [ ] Cal.com links for Irene and the four specialists (`calLink` in `src/data/forms.ts`).
 - [ ] Analytics only with cookie consent.
+
+### Anti-spam check (Cloudflare Turnstile)
+
+Every form can ask Cloudflare "is this a person?" before sending. Most visitors see nothing; a suspicious one gets a small box to tick.
+
+1. Cloudflare → Turnstile → Add widget. Hostnames: `www.peydrocapitalalliance.com` and `peydrocapitalalliance.com`. Mode: Managed.
+2. Paste the **site key** (public) into `turnstileSiteKey` in `src/data/forms.ts` and deploy. Cloudflare is then also listed on the privacy page automatically.
+3. Only after that is live: put the **secret key** in Supabase as `TURNSTILE_SECRET_KEY` (Edge Functions → Secrets). From then on the server rejects sends without a valid check.
+
+Turning it off: remove the secret first, then empty the site key.

@@ -43,15 +43,16 @@ export interface SubmitResult {
   leadId: string;
 }
 
-/** Sends the lead. Throws when it couldn't be saved (the form then shows its error message). */
-export async function submitLead(payload: LeadPayload): Promise<SubmitResult> {
+/** Sends the lead (plus the "are you human?" token when that check is on).
+    Throws when it couldn't be saved (the form then shows its error message). */
+export async function submitLead(payload: LeadPayload, humanToken?: string | null): Promise<SubmitResult> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
     const response = await fetch(`${INTAKE_URL}/lead`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(humanToken ? { ...payload, turnstile_token: humanToken } : payload),
       signal: controller.signal,
     });
     if (!response.ok) {

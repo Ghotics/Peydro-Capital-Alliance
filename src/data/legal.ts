@@ -3,6 +3,7 @@
    Texts that change with the language have an `es` and an `en` version.
    Have a lawyer or data-protection adviser review the final text before the site goes live. */
 import type { Lang } from '../i18n/config';
+import { turnstileSiteKey } from './forms';
 
 /** A text in both languages. */
 export type Bilingual = Record<Lang, string>;
@@ -86,6 +87,23 @@ export const processors: Processor[] = [
     safeguard: { es: '[Garantía para la transferencia, si es fuera de la UE]', en: '[Safeguard for the transfer, if outside the EU]' },
   },
   // WhatsApp (Meta) for the quick form: add here before it is switched on.
+  // Listed automatically while the "are you human?" check is on (turnstileSiteKey in src/data/forms.ts).
+  ...(turnstileSiteKey
+    ? [
+        {
+          name: 'Cloudflare, Inc. (Turnstile)',
+          purpose: {
+            es: 'Comprobación antispam de los formularios: analiza datos técnicos del navegador, como la dirección IP, para distinguir personas de programas automáticos.',
+            en: 'Anti-spam check on the forms: it looks at technical data from the browser, such as the IP address, to tell people from automated programs.',
+          },
+          location: { es: 'Estados Unidos', en: 'United States' },
+          safeguard: {
+            es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)',
+            en: 'EU-US Data Privacy Framework (art. 45 GDPR)',
+          },
+        },
+      ]
+    : []),
 ];
 
 /** Spain's data-protection authority, where anyone can file a complaint. */
