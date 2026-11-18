@@ -8,6 +8,14 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* No page scrollbar on any page: the page still scrolls with the mouse wheel, trackpad,
+     keyboard and touch. Inner areas that really need it (e.g. wide tables on phones) keep theirs. */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* same, for older Safari / Chrome */
 }
 
 body {
