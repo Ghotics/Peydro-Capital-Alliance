@@ -10,8 +10,8 @@ export type Bilingual = Record<Lang, string>;
 
 /** Who is responsible for the data ("responsable del tratamiento"). Same in both languages. */
 export const controller = {
-  /** Legal company name, e.g. "Peydró Capital Alliance, S.L." */
-  name: '[Razón social de PCA]',
+  /** Legal company name (razón social). */
+  name: 'Peydró Sabido Capital Alliance S.L.',
   /** Tax number (NIF / CIF). */
   taxId: '[NIF]',
   /** Registered address. */
