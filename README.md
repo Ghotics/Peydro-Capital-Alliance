@@ -192,6 +192,7 @@ so the site works both at `ghotics.github.io/Peydro-Capital-Alliance` and on a c
 | --- | --- | --- |
 | Cal.com booking pages (one per specialist) | `calLink` in `src/data/forms.ts` (4 departments + Giza) | empty: the button says the calendar isn't connected |
 | "You'll receive a confirmation at…" line | `confirmationEmails` in `src/data/forms.ts` | `false`: turn on when confirmation emails are on in Supabase |
+| Telegram listed on the privacy page | `telegramAlerts` in `src/data/forms.ts` | `false`: turn on together with the Telegram alerts in Supabase (CRM repo, `docs/telegram-setup.md`) |
 | Backend address | `PUBLIC_INTAKE_URL` (build variable, optional) | the PCA Supabase project |
 
 ## Before launch

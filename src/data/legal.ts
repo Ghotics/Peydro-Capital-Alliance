@@ -3,7 +3,7 @@
    Texts that change with the language have an `es` and an `en` version.
    Have a lawyer or data-protection adviser review the final text before the site goes live. */
 import type { Lang } from '../i18n/config';
-import { turnstileSiteKey, whatsappAlerts } from './forms';
+import { telegramAlerts, turnstileSiteKey, whatsappAlerts } from './forms';
 
 /** A text in both languages. */
 export type Bilingual = Record<Lang, string>;
@@ -117,6 +117,27 @@ export const processors: Processor[] = [
           safeguard: {
             es: 'Marco de Privacidad de Datos UE-EE. UU. (art. 45 RGPD)',
             en: 'EU-US Data Privacy Framework (art. 45 GDPR)',
+          },
+        },
+      ]
+    : []),
+  // Listed automatically once Telegram alerts are on (telegramAlerts in src/data/forms.ts).
+  // Telegram doesn't sign data-processing agreements like the others: check the safeguard with the adviser.
+  ...(telegramAlerts
+    ? [
+        {
+          name: 'Telegram Messenger Inc.',
+          purpose: {
+            es: 'Aviso interno por Telegram al grupo del equipo de PCA cuando llega una solicitud (nombre, teléfono y área).',
+            en: 'Internal Telegram alert to the PCA team group when a request arrives (name, phone and area).',
+          },
+          location: {
+            es: 'Centros de datos en los Países Bajos (UE); empresa con sede fuera de la UE',
+            en: 'Data centres in the Netherlands (EU); company based outside the EU',
+          },
+          safeguard: {
+            es: '[Garantía para Telegram: revisar con el asesor de protección de datos]',
+            en: '[Safeguard for Telegram: check with the data-protection adviser]',
           },
         },
       ]
